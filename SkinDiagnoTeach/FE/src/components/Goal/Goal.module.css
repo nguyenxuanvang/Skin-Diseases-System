@@ -1,0 +1,39 @@
+.introduction_Goal_Left
+{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    margin-top: 100px ;
+}
+
+.goal_Icon
+{
+    margin: 50px 0 0 50px;
+}
+
+.goal_Icon img
+{
+    width: 50px;
+    height: 50px;
+}
+
+.goal_Title
+{
+    font-size: 15px;
+    font-weight: bold;
+    margin-left: 20px;
+}
+
+.goal_Des
+{
+    margin-top: 50px;
+    display: flex;
+}
+
+
+.goal_img_list
+{
+    width: 330px;
+    height: 210px;
+    margin-top: 30px;
+}

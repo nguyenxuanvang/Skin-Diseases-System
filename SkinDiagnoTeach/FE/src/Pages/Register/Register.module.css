@@ -1,0 +1,289 @@
+
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.flex{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.flex-row{
+    display: flex;
+}
+
+.banner{
+    width: 100%;
+    height: 425px;
+}
+.banner img{
+    width: 100%;
+    height: 100%;
+}
+
+
+.container{
+    display: flex;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    margin-top: 5%;
+    margin-bottom: 7%;
+}
+.container .form{
+    width: 40%;
+    display: flex;
+    align-items: center;
+}
+.container .form .title{
+    font-family: 'Yeseva One';
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 36.96px;
+    height: 37px;
+}
+.container .form .des{
+    font-family: 'Poppins';
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    height: 24px;
+    margin-top: 20px;
+}
+.container .form .link{
+    font-family: 'Work Sans';
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 18.77px;
+    height: 24px;
+    margin-top: 5px;
+}
+.container .form .link a{
+    font-family: 'Poppins';
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    height: 24px;
+    color: #0C21C1;
+    text-decoration: none;
+}
+.container .form form{
+    width: 431px;
+}
+
+.container .form form .group{
+    margin-top: 30px;
+    position: relative;
+}
+.container .form form .group label{
+    font-family: 'Work Sans';
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18.77px;
+    height: 19px;
+    color: #999999;
+}
+.container .form form .group input{
+    font-family: 'Work Sans';
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21.11px;
+    height: 21px;
+    color: #000842;
+    border-width: 0px;
+    border-bottom-width: 2px;
+    width: 100%;
+    margin-top: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 35px;
+    position: relative;
+    border-color: #999999;
+}
+.container .form form .group input::placeholder{
+    color: #000842;
+}
+#password{
+    margin-bottom: 10px;
+}
+.forgotPassword{
+    margin-left: auto;
+    margin-right: -30px;
+    line-height: 18.77px;
+    font-family: 'Work Sans';
+    font-weight: 300;
+    font-size: 16px;
+    height: 19px;
+    color: #4D4D4D;
+}
+.remember{
+    line-height: 18.77px;
+    font-family: 'Work Sans';
+    font-weight: 300;
+    font-size: 16px;
+    height: 19px;
+    color: #000000;
+}
+.cbRemember{
+    display: flex;
+    align-items: center;
+}
+.button{
+    width: 107%;
+    height: 53px;
+    color: #FFFFFF;
+    background-color: #159EEC;
+    border-width: 0;
+    border-radius: 55px;
+    margin-top: 55px;
+}
+.continue{
+    text-align: center;
+    color: #B5B5B5;
+    font-size: 16px;
+    line-height: 18.77px;
+    font-family: 'Work Sans';
+    font-weight: 400;
+    width: 107%;
+    margin-top: 55px;
+}
+.container .form form input[type="checkbox"]{
+    margin-right: 10px;
+    border-width: 1px;
+    height: 15px;
+    width: 15px;
+}
+.container .form form .group input:focus{
+    outline: 0;
+}
+.container .form form .group .icon{
+    position: absolute;
+    top: 36px;
+    width: 17px;
+    height: 17px;
+    left: 5px;
+}
+.showPassword{
+    color: #ABABAB;
+    position: absolute;
+    right: -25px;
+    bottom: 12px;
+}
+.showPassword:hover{
+    color: black;
+}
+.google{
+    width: 107%;
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+    position: relative;
+}
+.google .icon{
+    position: absolute;
+    left: 110px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+}
+.btn-gg{
+    width: 298px;
+    height: 55px;
+    background-color: #E9F1FF;
+    color: #4285F4;
+    font-size: 16px;
+    font-family: 'Poppins';
+    font-weight: 400;
+    border: 0;
+    border-radius: 5px;
+}
+
+.container .image{
+    display: flex;
+    width: 60%;
+    border-radius: 15px;
+    height: 859px;
+    background-color: #1F2B6C;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.container .image img{
+    width: 635px;
+    height: 720px;
+}
+
+footer{
+    background-color: #93C8E6;
+    height: 235px;
+    width: 100%;
+    margin-top: auto;
+}
+footer .content{
+    display: flex;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    margin-top: 50px;
+    border-bottom-width: 1px;
+    border-bottom-color: #000000;
+    border-bottom-style: solid;
+    padding-bottom: 50px;
+}
+footer .content .left{
+    width: 100%;
+}
+footer .content .left .title{
+    color: #3652EA;
+    font-size: 23px;
+    font-family: 'Inknut Antiqua';
+    font-weight: 400;
+    height: 48px;
+    line-height: 59.32px;
+}
+footer .content .left .p{
+    color: #000000;
+    font-size: 15px;
+    font-family: 'Inknut Antiqua';
+    font-weight: 400;
+    height: 39px;
+    line-height: 38.69px;
+}
+footer .content .right{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+footer .content .right .title{
+    width: 320px;
+    text-align: justify;
+    font-family: 'Work Sans';
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 21.11px;
+    height: 16.46px;
+}
+footer .content .right .info{
+    width: 320px;
+    text-align: justify;
+    font-family: 'Work Sans';
+    margin-top: 20px;
+}
+footer .content .right .info div{
+    height: 17.25px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22.4px;
+    margin-top: 5px;
+}
+footer .copyright{
+    font-family: 'Work Sans';
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18.77px;
+    color: #FCFEFE;
+    height: 14.89px;
+    margin-left: 3%;
+    margin-top: 10px;
+}

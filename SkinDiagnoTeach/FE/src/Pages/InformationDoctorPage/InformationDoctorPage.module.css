@@ -1,0 +1,54 @@
+/*----------InformationDoctorPage-----------*/
+
+
+.informationDoctorPage_List
+{
+    margin-bottom: 20px;
+}
+/*---------------*/
+.informationDoctor_header img
+{
+    height: 300px;
+}
+
+.informationDoctor_header
+{
+    position: relative;
+}
+
+.informationDoctor_Title
+{
+    position: absolute;
+    top: 30%;
+    left: 10%;
+    font-size: 40px;
+    color: aliceblue;
+    font-weight: bold;
+}
+
+
+/*-------------InformationDoctorList--------------*/
+.informationDoctor_Subtitle
+{
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 0;
+}
+.informationDoctor_List
+{
+    width: 1000px;
+    margin: 0 auto;
+    height: 1000px;
+}
+
+/*-------------------------*/
+.pagination_pageNumber
+{
+    display: flex;
+    justify-content: center;
+}
+
+.paginationNumbers li button {
+    width: 20px;
+}
