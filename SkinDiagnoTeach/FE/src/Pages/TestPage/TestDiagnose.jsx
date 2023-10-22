@@ -3,6 +3,7 @@ import Styles from "./TestPage.module.css";
 function TestDiagno() {
     const [avatar, setAvatar] = useState();
     const [uploadDescription, setUploadDescription] = useState("Upload the image");
+    const [result, setResult] = useState('');
     const fileInputRef = useRef(null);
 
     useEffect(() => {
@@ -11,8 +12,12 @@ function TestDiagno() {
 
     const handlePreviewAvatar = (e) => {
         const file = e.target.files[0];
-        file.preview = URL.createObjectURL(file);
-        setAvatar(file);
+        if(file.type === 'image/png' || file.type === 'image/jpeg') {
+            file.preview = URL.createObjectURL(file);
+            setAvatar(file);
+        } else {
+            alert('Image invalid');
+        }
     };
 
     const handleUploadClick = () => {
@@ -20,6 +25,22 @@ function TestDiagno() {
         fileInputRef.current.click();
     };
 
+    const handleScanClick = async () => {
+        if(!avatar) {
+            alert('Please Upload Image');
+        }
+        else {
+            const formData = new FormData();
+            formData.append('image',avatar);
+            const response = await fetch('http://localhost:3000/scan',{
+                method: 'POST',
+                body: formData
+            });
+            const data =  await response.json();
+            setResult(data)
+            console.log(data);
+        }
+    }
 
 
     return (
@@ -38,6 +59,7 @@ function TestDiagno() {
                 <input
                     ref={fileInputRef}
                     type="file"
+                    accept="image/*"
                     onChange={handlePreviewAvatar}
                     style={{ display: "none" }}
                     aria-label={uploadDescription}
@@ -48,7 +70,7 @@ function TestDiagno() {
                     Upload
                 </button>
 
-                <button className={Styles.btn_scna}>
+                <button className={Styles.btn_scan} onClick={handleScanClick}>
                     Scan
                 </button>
             </div>
