@@ -19,9 +19,9 @@ const corOptions = {
 const storage = multer.diskStorage({
   destination: './src/predictImage',
   filename: (req, file, cb) => {
-    const oldImage = fs.readdirSync('.scr/predictImage')[0];
+    const oldImage = fs.readdirSync('./src/predictImage')[0];
     if(oldImage) {
-      fs.unlinkSync(`.scr/predictImage/${oldImage}`)
+      fs.unlinkSync(`./src/predictImage/${oldImage}`)
     }
 
     const originalExtension = path.extname(file.originalname);

@@ -6,7 +6,7 @@ import os
 keras.utils.disable_interactive_logging()
 model_path = 'best_model.h5'
 model = keras.models.load_model(model_path)
-image_path = './src/predictImage/' + os.listdir('.src/predictImage')[0]
+image_path = './src/predictImage/' + os.listdir('./src/predictImage')[0]
 img = Image.open(image_path)
 img = img.convert('RGB')
 img = img.resize((180, 180)) 

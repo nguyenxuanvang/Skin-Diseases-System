@@ -5,7 +5,7 @@ const { tutorialModel } = require("../models/tutorial");
 const host = "localhost";
 const port = 3306;
 const user = "root";
-const password = "123123";
+const password = "123456";
 const databaseName = "SkinDiagnoTechCap1";
 
 const pool = mysql.createPool({ host, port, user, password });
