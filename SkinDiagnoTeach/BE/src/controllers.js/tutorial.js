@@ -105,10 +105,10 @@ const create = async (req, res, next) => {
     const { title, description, publishedStatus, tagId } = req.body;
     const currUser = await getUserFromToken(req, res, next);
     const newTutorial = await Tutorial.create({
-      title,
-      description,
+      username ,
+      avatar,
       publishedStatus,
-      UserId: currUser.id,
+      UserId: "STD" + currUser.id,
     });
     await addTagToTutorial(newTutorial.id, tagId);
     return res.json({

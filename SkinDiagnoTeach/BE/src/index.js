@@ -37,6 +37,7 @@ const upload = multer({ storage: storage });
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors(corOptions));
+app.use(express.json());
 app.use("/user", userRouter);
 app.use("/api/tutorials", tutorialRouter);
 
@@ -46,6 +47,7 @@ app.post('/scan',upload.single('image'),(req,res) => {
   pythonProcess.stdout.on('data', (data) => {
       res.json(data.trim())
   });
+  
 })
 
 sequelize

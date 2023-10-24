@@ -53,7 +53,7 @@ function App() {
             </ul>
           </div>
         </div>
-        <div style={{ backgroundColor: "white", height: "5000px" }}>
+        <div style={{ backgroundColor: "white" }}>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/Introduction" element={<IntrductionPage />} />

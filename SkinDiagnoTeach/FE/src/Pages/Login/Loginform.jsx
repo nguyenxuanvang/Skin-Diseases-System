@@ -113,7 +113,7 @@ const LoginForm = () => {
             </div>
           </form>
         </div>
-        <div>
+        {/* <div>
           <div className={Styles.continue}>or continue with</div>
           <div className={Styles.google}>
             <button className="btn-gg">Sign in with Google</button>
@@ -121,7 +121,7 @@ const LoginForm = () => {
               <img src="./images/Login/google.png" alt="" />
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
       <ToastContainer />
     </div>

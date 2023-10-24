@@ -8,6 +8,20 @@ const { getUserFromToken } = require("../middlewares/check-login.middleware");
 const createUser = async (req, res, next) => {
   try {
     const { email, username, password } = req.body;
+    const emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({
+        message: "Invalid email format",
+      });
+    }
+    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    if (!passwordRegex.test(password)) {
+      return res.status(400).json({
+        message:
+          "Mật khẩu phải chứa ít nhất một chữ hoa, một chữ thường, một chữ số và dài ít nhất 8 ký tự",
+      });
+    }
+
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
 
@@ -69,8 +83,6 @@ const signIn = async (req, res, next) => {
       role: currUser.role,
       message: "Login Successfully",
     });
-    
-
   } catch (error) {
     return next(error);
   }
