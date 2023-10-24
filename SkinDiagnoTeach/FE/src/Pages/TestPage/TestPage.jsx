@@ -19,9 +19,9 @@ function TestPage() {
         <TestDiagno />
       </div>
 
-      <div className={Styles.testPage_Result}>
+      {/* <div className={Styles.testPage_Result}>
           <TestDiagno_Result/>
-      </div>
+      </div> */}
 
       <div className={Styles.testPage_Footer}>
           <Footer/>

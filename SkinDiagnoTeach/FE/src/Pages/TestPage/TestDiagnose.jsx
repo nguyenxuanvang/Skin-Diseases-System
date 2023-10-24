@@ -11,15 +11,16 @@ function TestDiagno() {
     return () => avatar && URL.revokeObjectURL(avatar.preview);
   }, [avatar]);
 
-  const handlePreviewAvatar = (e) => {
-    const file = e.target.files[0];
-    if (file.type === "image/png" || file.type === "image/jpeg") {
-      file.preview = URL.createObjectURL(file);
-      setAvatar(file);
-    } else {
-      alert("Image invalid");
-    }
-  };
+    const handlePreviewAvatar = (e) => {
+        const file = e.target.files[0];
+        if (file.type === 'image/png' || file.type === 'image/jpeg') {
+            file.preview = URL.createObjectURL(file);
+            setAvatar(file);
+        } else {
+            alert('Image invalid');
+        }
+    };
+
 
   const handleUploadClick = () => {
     setUploadDescription("Upload the image");
@@ -75,6 +76,15 @@ function TestDiagno() {
           Scan
         </button>
       </div>
+      <div className={Styles.result_Title}>
+                Result:
+            </div>
+
+            <div className={Styles.result_Des}>
+            <p className={Styles.disease_Des}>
+                {result}
+            </p>
+        </div>
     </>
   );
 }
