@@ -12,7 +12,7 @@ function TestDiagno() {
 
     const handlePreviewAvatar = (e) => {
         const file = e.target.files[0];
-        if(file.type === 'image/png' || file.type === 'image/jpeg') {
+        if (file.type === 'image/png' || file.type === 'image/jpeg') {
             file.preview = URL.createObjectURL(file);
             setAvatar(file);
         } else {
@@ -26,20 +26,22 @@ function TestDiagno() {
     };
 
     const handleScanClick = async () => {
-        if(!avatar) {
+        if (!avatar) {
             alert('Please Upload Image');
         }
         else {
             const formData = new FormData();
-            formData.append('image',avatar);
-            const response = await fetch('http://localhost:3000/scan',{
+            formData.append('image', avatar);
+            const response = await fetch('http://localhost:3000/scan', {
                 method: 'POST',
                 body: formData
             });
-            const data =  await response.json();
+            const data = await response.json();
             setResult(data)
             console.log(data);
         }
+
+        setResult("Tên bệnh này là");
     }
 
 
@@ -73,6 +75,16 @@ function TestDiagno() {
                 <button className={Styles.btn_scan} onClick={handleScanClick}>
                     Scan
                 </button>
+            </div>
+
+            <div className={Styles.result_Title}>
+                Result:
+            </div>
+
+            <div className={Styles.result_Des}>
+            <p className={Styles.disease_Des}>
+                {result}
+            </p>
             </div>
         </>
     );
