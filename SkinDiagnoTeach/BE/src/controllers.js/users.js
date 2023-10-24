@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const { User, Tutorial } = require("../database/sequelize");
 const { faker } = require("@faker-js/faker");
 const { getUserFromToken } = require("../middlewares/check-login.middleware");
-
+//ok
 const createUser = async (req, res, next) => {
   try {
     const { email, username, password } = req.body;
