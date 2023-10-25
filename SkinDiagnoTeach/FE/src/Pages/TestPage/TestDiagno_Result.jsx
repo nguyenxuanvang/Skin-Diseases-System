@@ -9,7 +9,7 @@ function TestDiagno_Result() {
 
     <div className={Styles.result_Des}>
         <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nihil, sapiente voluptas! Cum voluptates dignissimos ipsam, id dolorum similique! Ut eaque unde nam rerum nostrum doloribus suscipit ducimus autem perspiciatis tempora?
+            
         </p>
     </div>
     </>

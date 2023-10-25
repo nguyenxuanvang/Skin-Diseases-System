@@ -40,8 +40,6 @@ function TestDiagno() {
             setResult(data)
             console.log(data);
         }
-
-        setResult("Tên bệnh này là");
     }
 
 
