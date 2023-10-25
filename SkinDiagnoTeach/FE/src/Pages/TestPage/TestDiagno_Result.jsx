@@ -5,7 +5,15 @@ function TestDiagno_Result() {
     <>
       <div className={Styles.result_Title}>Result:</div>
 
+<<<<<<< HEAD
       <div className={Styles.result_Des}></div>
+=======
+    <div className={Styles.result_Des}>
+        <p>
+            
+        </p>
+    </div>
+>>>>>>> b446e99dd3c51bf67b5243d72657b732848ca71a
     </>
   );
 }

@@ -22,6 +22,7 @@ function TestDiagno() {
     };
 
 
+<<<<<<< HEAD
   const handleUploadClick = () => {
     setUploadDescription("Upload the image");
     fileInputRef.current.click();
@@ -40,6 +41,23 @@ function TestDiagno() {
       const data = await response.json();
       setResult(data);
       console.log(data);
+=======
+    const handleScanClick = async () => {
+        if (!avatar) {
+            alert('Please Upload Image');
+        }
+        else {
+            const formData = new FormData();
+            formData.append('image', avatar);
+            const response = await fetch('http://localhost:3000/scan', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            setResult(data)
+            console.log(data);
+        }
+>>>>>>> b446e99dd3c51bf67b5243d72657b732848ca71a
     }
   };
 
