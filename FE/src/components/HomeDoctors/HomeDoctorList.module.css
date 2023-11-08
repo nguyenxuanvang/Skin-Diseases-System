@@ -1,0 +1,153 @@
+/* HomeDoctorbanner.jsx */
+.home_DoctorHeader
+{
+    background: url(//sbb.vn/wp-content/themes/leea.sbbv2/image/dn.png);
+    width: 100%;
+    height: 974px;
+    margin-top: 80px;
+}
+
+.home_DoctorContainer
+{
+    display: flex;
+    height: 350px;
+}
+
+.home_DoctorTeamImg 
+{
+    margin-left: 100px;
+    margin-top: 100px;
+}
+
+.home_DoctorTeamImg img
+{
+    width: 540;
+    height: 260px;
+}
+
+.home_DoctorTeamIntro
+{
+    padding: 150px 0 0 50px;
+}
+
+.home_DoctorTeam
+{
+    color: #fbd774;
+    font-weight: bold;
+    font-size: 20px;
+
+}
+.home_DoctorTitle
+{
+    margin-top: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 40px;
+}
+.home_DoctorDes
+{
+    color: white;
+    font-size: 10px;
+}
+.home_DoctorTeamBtn
+{
+    margin-top: 10px;
+}
+
+.home_DoctorTeamList
+{
+    margin-top: 100px;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px;
+}
+
+.btn_TeamseeMore
+{
+    margin-top: 20px;
+    width: 150px;
+    height: 40px;
+    background: linear-gradient(to right, #fbd774, #f5adad);
+    color: #0073c6;
+    border-color: 1px solid #0073c6;
+    border-radius: 20px;
+}
+
+.btn_TeamseeMore:hover
+{
+    background: white;
+}
+/* HomeDoctorList.jsx */
+
+.container
+{
+    width: 230px;
+    height: 450px;
+    background-color: white;
+    border: 1px solid black;
+    margin-left: 20px;
+    margin-top: 20px;
+    border-radius: 30px;
+    float: left;
+}
+
+.container:hover
+{
+    background-color: #fbd774;
+}
+
+.doctorImage{
+    width: 200px;
+    height: 200px;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.doctorImage img{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #4070F4;
+}
+
+.doctorContext
+{
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.doctorName
+{
+    font-weight: bold;
+    color: #4070F4;
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.doctorExperience
+{
+    font-weight: 500;
+}
+
+.btn_seeMore
+{
+    width: 130px;
+    height: 40px;
+    background-color: white;
+    color: #0073c6;
+    border-color: 1px solid #0073c6;
+    border-radius: 20px;
+}
+
+.btn_seeMore:hover
+{
+
+    background-color: #0073c6;
+    color: white;
+    border-color: 1px solid white;
+    border-radius: 20px;
+}
