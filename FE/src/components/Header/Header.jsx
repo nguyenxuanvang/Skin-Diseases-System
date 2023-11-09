@@ -1,12 +1,47 @@
-import React from "react";
-import HeaderHome from "./HeaderHome";
-
+import React from 'react'
+import { Link} from 'react-router-dom';
+import {BsFillBellFill} from 'react-icons/bs'
+import styles from './Header.module.css'
 function Header() {
   return (
-    <div>
-      <HeaderHome />
-    </div>
-  );
+    <div className={styles.header}>
+        <div className={styles.linkLeftColumn}>
+          <Link to="/Home">SkinDiagnoTech</Link>
+        </div>
+        <div className={styles.linkRightColumn}>
+          <ul className={styles.navigation}>
+            <li className={styles.link}>
+              <Link to="/Introduction">Introduction</Link>
+            </li>
+            <li className={styles.link}>
+              <Link to="/Doctor">Doctor</Link>
+            </li>
+            <li className={styles.link}>
+              <Link to="/TestPage">Test</Link>
+            </li>
+            <li className={styles.link}>
+              <Link to="/NewsPage">News</Link>
+            </li>
+            <li className={styles.link}>
+              <Link to="/TestPage">Q&A</Link>
+            </li>
+            <li className={styles.link}>
+              <Link to="/Contact">Contact</Link>
+            </li>
+            <li className={styles.link}>
+              <div className={styles.bell_Icon}>
+                <BsFillBellFill />
+              </div>
+            </li>
+            <div className={styles.linkToLogin}>
+              <button className={styles.formatToLogin}>
+                <Link to="/Login">Login</Link>
+              </button>
+            </div>
+          </ul>
+        </div>
+      </div>
+  )
 }
 
-export default Header;
+export default Header

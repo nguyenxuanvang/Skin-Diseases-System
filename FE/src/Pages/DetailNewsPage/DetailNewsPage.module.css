@@ -1,0 +1,29 @@
+.DetailNewsPage_content
+{
+    width: 100%;
+    margin: 50px 0 0 50px;
+    display: flex;
+    margin-bottom: 50px;
+}
+
+.DetailNewsPage_post
+{
+    width: 60%;
+}
+
+.DetailNewsPage_latest
+{
+    width: 400px;
+    border: 1px solid black;
+    border-radius: 20px;
+    margin: 20px 0 0 30px;
+}
+
+.DetailNewsPage_latest_title
+{
+    width: 90%;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 20px 0 0 20px;
+    border-bottom: 1px solid gray;
+}

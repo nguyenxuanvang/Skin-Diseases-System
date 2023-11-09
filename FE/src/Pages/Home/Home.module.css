@@ -6,6 +6,13 @@
     width: 100%;
 }
 
+/* Home.jsx */
+.home_Introduction
+{
+    margin-top: 150px;
+    padding-left: 100px;
+    width: 100%;
+}
 
 /* HomeIntroduction.jsx */
 .introduction_rectangle
@@ -35,6 +42,7 @@
 {
     width: 100%;
     margin-top: 30px;
+    height: 700px;
 }
 
 .home_newsHeader
