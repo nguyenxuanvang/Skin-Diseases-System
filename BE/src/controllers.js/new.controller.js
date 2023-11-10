@@ -1,15 +1,18 @@
 const { News } = require("../database/sequelize");
+const { getUserFromToken } = require("../middlewares/check-login.middleware");
+const { v4: uuidv4 } = require("uuid");
 
 const createNew = async (req, res, next) => {
   try {
-    const { title, content } = req.body;
+    const { Title, Content } = req.body;
+    const News_id = uuidv4();
     const currUser = await getUserFromToken(req, res, next);
-    const newPageUser = await News.createNew({
-      title,
-      content,
-      UserId: currUser.id,
+    const newPageUser = await News.create({
+      News_id,
+      Title,
+      Content,
+      User_id: currUser.User_id,
     });
-    await addTagToTutorial(newPageUser.id);
     return res.json({
       data: {
         newPageUser,
@@ -23,16 +26,16 @@ const createNew = async (req, res, next) => {
 
 const updateNew = async (req, res, next) => {
   try {
-    const { title, content } = req.body;
-    const { id } = req.params;
+    const { Title, Content } = req.body;
+    const { News_id } = req.params;
     const updateNews = await News.update(
       {
-        title,
-        content,
+        Title,
+        Content,
       },
       {
         where: {
-          id: id,
+          News_id: News_id,
         },
       }
     );
@@ -50,10 +53,10 @@ const updateNew = async (req, res, next) => {
 
 const deleteNew = async (req, res, next) => {
   try {
-    const { id } = req.params;
+    const { News_id } = req.params;
 
     const deleteNew = await News.destroy({
-      where: { id },
+      where: { News_id },
     });
 
     return res.json({

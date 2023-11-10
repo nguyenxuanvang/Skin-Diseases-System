@@ -5,13 +5,14 @@ const multer = require("multer");
 const path = require("path");
 const { spawn } = require("child_process");
 const { sequelize } = require("./database/sequelize");
-const { userRouter } = require("./routes/users");
+const { userRouter } = require("./routes/users.route");
 const bodyParser = require("body-parser");
 const { tutorialRouter } = require("./routes/tutorial");
-const { newRouter } = require("./routes/new");
+const { newRouter } = require("./routes/new.route");
+const { doctorRouter } = require("./routes/doctor.route");
 const app = express();
 const PORT = 3000;
-
+const { loggerErrorMiddleware, errorResponseMiddleware} = require('./middlewares/handle-error.middleware');
 const corOptions = {
   origin: "http://localhost:3001",
 };
@@ -40,6 +41,7 @@ app.use(cors(corOptions));
 app.use("/user", userRouter);
 app.use("/api/tutorials", tutorialRouter);
 app.use("/new", newRouter);
+app.use("/doctor", doctorRouter);
 
 app.post("/scan", upload.single("image"), (req, res) => {
   const pythonProcess = spawn("python", ["./src/python/predict.py"]);
@@ -48,6 +50,9 @@ app.post("/scan", upload.single("image"), (req, res) => {
     res.json(data.trim());
   });
 });
+
+app.use(loggerErrorMiddleware);
+app.use(errorResponseMiddleware);
 
 sequelize
   .authenticate()

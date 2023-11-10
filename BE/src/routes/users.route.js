@@ -7,15 +7,14 @@ const {
   getUserListAPI,
   getUserAPI,
   forgotPassword,
-  reserPassword,
   resetPassword,
-} = require("../controllers.js/users");
+} = require("../controllers.js/users.controller");
 const {
   checkLoginMiddleware,
 } = require("../middlewares/check-login.middleware");
 
 const userRouter = express.Router();
-userRouter.route("/sign-In").post(signIn);
+userRouter.route("/sign-In").get(signIn);
 userRouter.route("/create-User").post(createUser);
 userRouter.route("/test").post([checkLoginMiddleware], createUser);
 userRouter.route("/fake-data-user").get(fakeUserData);
