@@ -5,6 +5,7 @@
     background-color: #0073C6;
     display: flex;
     justify-content: space-between;
+    margin-top: 20px;
 }
 
 .nameFooter

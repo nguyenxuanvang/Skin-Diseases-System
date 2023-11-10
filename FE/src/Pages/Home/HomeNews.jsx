@@ -14,12 +14,6 @@ function HomeNews() {
         <div className={Styles.home_newsLatest}>Tin mới nhất</div>
       </div>
       <div className={Styles.home_newsLists}>
-        <Swiper
-          navigation
-          pagination={{ clickable: true }}
-          className={Styles.newsSwiper}
-        >
-          <SwiperSlide>
             <HomeNewsList
               img_newsImage="newsImage_2.jpg"
               title="Những căn bệnh da liễu thường gặp"
@@ -30,8 +24,6 @@ function HomeNews() {
               title="Cách phòng chống căn bệnh mẩn đỏ thường gặp ở Việt Nam"
             />
             <HomeNewsList />
-          </SwiperSlide>
-        </Swiper>
       </div>
     </div>
   );

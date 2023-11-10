@@ -1,4 +1,4 @@
-import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
+import { Navigate, Routes, Route } from "react-router-dom";
 import HomePage from "./Pages/Home";
 import IntrductionPage from "./Pages/Introduction";
 import styles from "./style.module.css";
@@ -10,6 +10,12 @@ import Sidebar from "./Admin/components/Sidebar/Sidebar";
 import OverviewPage from "./Admin/Pages/OverviewPage";
 import DoctorManagementPage from "./Admin/Pages/DoctorManagementPage";
 import NewsManagementPage from "./Admin/Pages/NewsManagementPage";
+import DetailNewsPage from './Pages/DetailNewsPage/DetailNewsPage';
+import DetailDoctorPage from './Pages/DetailDoctorPage';
+import ScrollToTop from './components/ScrollToTop';
+import { configRoutes } from './utils/configRoutes'
+import Header from './components/Header';
+import NewsPage from './Pages/News/NewsPage';
 function App() {
   return (
     <>
