@@ -11,7 +11,6 @@ const { tutorialRouter } = require("./routes/tutorial");
 const { newRouter } = require("./routes/new");
 const app = express();
 const PORT = 3000;
-
 const corOptions = {
   origin: "http://localhost:3001",
 };
