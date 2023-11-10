@@ -1,10 +1,10 @@
-const { DataTypes, Model } = require("sequelize");
+const { DataTypes } = require("sequelize");
 
-const doctorsModel = (sequelize, DataTypes) => {
+const userModel = (sequelize, DataTypes) => {
   return sequelize.define(
-    "doctors",
+    "User",
     {
-      Doctor_id: {
+      User_id: {
         type: DataTypes.STRING,
         primaryKey: true,
         allowNull: false,
@@ -23,11 +23,11 @@ const doctorsModel = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      Phone: {
+      role: {
         type: DataTypes.STRING,
         allowNull: false,
+        // defaultValue: "user",
       },
-    
     },
     {
       timestamps: true,
@@ -35,5 +35,5 @@ const doctorsModel = (sequelize, DataTypes) => {
   );
 };
 module.exports = {
-  doctorsModel,
+  userModel,
 };

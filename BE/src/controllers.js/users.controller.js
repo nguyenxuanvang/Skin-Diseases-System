@@ -11,7 +11,9 @@ const nodemailer = require("nodemailer");
 
 const createUser = async (req, res, next) => {
   try {
-    const { email, username, password } = req.body;
+    // Tao bien isDoctor de phan biet nguoi dung
+    // hay la bac si dang ky tai khoan
+    const { email, username, password, isDoctor } = req.body;
     const User_id = uuidv4();
     const emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
     if (!emailRegex.test(email)) {
@@ -44,6 +46,7 @@ const createUser = async (req, res, next) => {
       email,
       username,
       password: hash,
+      role: isDoctor ? 'doctor' : 'user'
     });
 
     const { password: anotherPassword, ...result } = newUser.get({
@@ -99,7 +102,7 @@ const signIn = async (req, res, next) => {
 
     const accessToken = jwt.sign(
       {
-        id: currUser.id,
+        User_id: currUser.User_id,
         email: currUser.email,
         role: currUser.role,
       },

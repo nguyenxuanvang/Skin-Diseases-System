@@ -126,8 +126,6 @@ const updateOne = async (req, res, next) => {
   try {
     const { title, description, publishedStatus } = req.body;
     const { id } = req.params;
-    console.log("🚀 ~ file: tutorial.controller.js:67 ~ updateOne ~ id:", id);
-
     const updateTutorial = await Tutorial.update(
       {
         title,
