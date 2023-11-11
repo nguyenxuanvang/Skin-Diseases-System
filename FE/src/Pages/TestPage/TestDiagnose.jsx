@@ -32,13 +32,13 @@ function TestDiagno() {
         else {
             const formData = new FormData();
             formData.append('image',avatar);
-            const response = await fetch('http://localhost:3000/scan',{
+            const response = await fetch('http://localhost:3000/disease/predict',{
                 method: 'POST',
                 body: formData
             });
             const data =  await response.json();
-            setResult(data)
-            console.log(data);
+            setResult(data.result);
+            console.log(data.result);
         }
     }
 
