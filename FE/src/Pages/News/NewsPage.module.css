@@ -1,0 +1,88 @@
+/*-----------NewsBanner----------*/
+.news_header {
+    position: relative;
+}
+
+.news_Title {
+    position: absolute;
+    top: 30%;
+    left: 10%;
+    font-size: 40px;
+    color: aliceblue;
+    font-weight: bold;
+}
+
+/*-----------NewsList----------*/
+.newsList_title
+{
+    font-weight: bold;
+    font-size: 35px;
+    text-align: center;
+}
+
+.newsList_list_news
+{
+    margin: 20px 0 0 100px;
+}
+
+.pagination_pageNumber
+{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.paginationNumbers li button {
+    width: 20px;
+}
+
+/*-----------NewsPage----------*/
+.newsPage_banner
+{
+    width: 100%;
+}
+
+.newsPage_list
+{
+    margin-top: 20px;
+}
+
+.newsPage_content
+{
+    display: flex;
+}
+
+/*-----------NewsType----------*/
+.newsPage_type
+{
+    margin-top: 20px;
+}
+.newsType
+{
+    width: 400px;
+    border: 1px solid black;
+    border-radius: 20px;
+    margin: 20px 0 0 30px;
+}
+
+.newsType_list
+{
+    margin: 20px 0 0 20px;
+}
+
+.newsType_title
+{
+    width: 90%;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 20px 0 0 20px;
+    border-bottom: 1px solid gray;
+}
+
+.newsType_list_des
+{
+    margin-bottom: 20px;
+    border-bottom: 1px solid gray;
+    width: 90%;
+}
+
