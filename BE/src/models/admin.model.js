@@ -11,8 +11,7 @@ const adminModels = (sequelize, DataTypes) => {
       },
       username: {
         type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
+        allowNull: false
       },
       email: {
         type: DataTypes.STRING,
@@ -23,6 +22,10 @@ const adminModels = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      role: {
+        type: DataTypes.STRING,
+        allowNull: false
+      }
     },
     {
       timestamps: true,
