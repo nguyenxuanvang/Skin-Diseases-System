@@ -4,7 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { signInService } from "../../services/author/auth.service";
 import "react-toastify/dist/ReactToastify.css";
-import '../Login/Login.css'
+import "../Login/Login.css";
 const LoginForm = () => {
   const [show, setShow] = useState(false);
 
@@ -22,7 +22,7 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
+
   const handLogin = async () => {
     try {
       const response = await signInService(email, password);
@@ -36,10 +36,14 @@ const LoginForm = () => {
         setTimeout(() => {
           navigate("/");
         }, [1000]);
+      } else if (response.data.role === "doctor") {
+        setTimeout(() => {
+          navigate("/doctor");
+        }, [1000]);
       } else {
         setTimeout(() => {
           navigate("/admin");
-        }, [1000]);
+        });
       }
     } catch (error) {
       const message = error.response.data.message;
@@ -52,9 +56,7 @@ const LoginForm = () => {
       <div>
         <div>
           <div className="title">Login</div>
-          <div className="des">
-            If you don’t have an account register
-          </div>
+          <div className="des">If you don’t have an account register</div>
           <div>
             <div className="link">
               You can &nbsp;
@@ -75,7 +77,14 @@ const LoginForm = () => {
                 onChange={handChangeEmailValue}
               ></input>
               <div className="icon">
-                <img src='/images/login/email.png' style={{width: "17px", height: "17px", verticalAlign: "top"}}/>
+                <img
+                  src="/images/login/email.png"
+                  style={{
+                    width: "17px",
+                    height: "17px",
+                    verticalAlign: "top",
+                  }}
+                />
               </div>
             </div>
             <div className="group">
@@ -90,7 +99,14 @@ const LoginForm = () => {
                 onChange={handChangePasswordValue}
               ></input>
               <div className="icon">
-              <img src='/images/login/lock.png' style={{width: "17px", height: "17px", verticalAlign: "top"}}/>
+                <img
+                  src="/images/login/lock.png"
+                  style={{
+                    width: "17px",
+                    height: "17px",
+                    verticalAlign: "top",
+                  }}
+                />
               </div>
               <div className="showPassword">
                 <i
@@ -119,7 +135,11 @@ const LoginForm = () => {
           <div className="google">
             <button className="btn-gg">Sign in with Google</button>
             <div className="icon">
-              <img src="./images/Login/google.png" alt="" style={{width: "26px", height: "26px"}} />
+              <img
+                src="./images/Login/google.png"
+                alt=""
+                style={{ width: "26px", height: "26px" }}
+              />
             </div>
           </div>
         </div>

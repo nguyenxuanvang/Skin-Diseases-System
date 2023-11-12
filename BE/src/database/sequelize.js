@@ -34,7 +34,6 @@ const sequelize = new Sequelize(databaseName, user, password, {
   },
 });
 
-
 const User = userModel(sequelize, DataTypes);
 const Admin = adminModels(sequelize, DataTypes);
 const Doctor = doctorsModel(sequelize, DataTypes);

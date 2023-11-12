@@ -70,18 +70,16 @@ const checkSignUp = async (req, res, next) => {
     if (user) {
       return res.status(400).json({
         status: 400,
-        message:
-          "Email already exists !",
+        message: "Email already exists !",
       });
     }
-    
-    return next();
 
+    return next();
   } catch (error) {
     return next(error);
   }
 };
-const checkLogin = async (req,res,next) => {
+const checkLogin = async (req, res, next) => {
   try {
     const { email } = req.body;
 
@@ -91,7 +89,7 @@ const checkLogin = async (req,res,next) => {
       },
       raw: true,
     });
-    if(!user) {
+    if (!user) {
       user = await Doctor.findOne({
         where: {
           email: email,
@@ -99,7 +97,7 @@ const checkLogin = async (req,res,next) => {
         raw: true,
       });
     }
-    if(!user) {
+    if (!user) {
       user = await Admin.findOne({
         where: {
           email: email,
@@ -109,21 +107,19 @@ const checkLogin = async (req,res,next) => {
     }
 
     if (!user) {
-      return res.
-              status(400)
-              .json({
-                status: 400,
-                message: 'Email does not exist !'
-              });
+      return res.status(400).json({
+        status: 400,
+        message: "Email does not exist !",
+      });
     }
     req.user = user;
     return next();
   } catch (error) {
     return next(error);
   }
-}
+};
 module.exports = {
   checkValidate,
   checkSignUp,
-  checkLogin
-}
+  checkLogin,
+};
