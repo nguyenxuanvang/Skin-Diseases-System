@@ -113,6 +113,7 @@ const checkLogin = async (req, res, next) => {
       });
     }
     req.user = user;
+    
     return next();
   } catch (error) {
     return next(error);

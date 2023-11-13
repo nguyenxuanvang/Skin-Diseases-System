@@ -138,18 +138,9 @@ const updateUser = async (req, res, next) => {
           User_id: user.User_id,
         }
       });
-      const accessToken = jwt.sign(
-        {
-          User_id: user.User_id,
-          role: user.role,
-        },
-        process.env.SECRET_KEY,
-        { expiresIn: 3 * 30 * 24 * 60 * 60 }
-      );
     return res.status(200).json({
       status: 200,
       data: {
-        accessToken,
         newUser: user
       },
       message: 'Updated Successfully !'

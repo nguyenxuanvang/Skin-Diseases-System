@@ -133,18 +133,9 @@ const updateDoctor = async (req, res, next) => {
           Doctor_id: user.Doctor_id,
         }
       });
-      const accessToken = jwt.sign(
-        {
-          Doctor_id: user.Doctor_id,
-          role: user.role,
-        },
-        process.env.SECRET_KEY,
-        { expiresIn: 3 * 30 * 24 * 60 * 60 }
-      );
     return res.status(200).json({
       status: 200,
       data: {
-        accessToken,
         newDoctor: user
       },
       message: 'Updated Successfully !'

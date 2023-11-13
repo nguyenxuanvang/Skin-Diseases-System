@@ -24,6 +24,7 @@ const createNew = async (req, res, next) => {
 
 const getNews = async (req, res, next) => {
   try {
+    
     const news = await News.findAll({
       order: [["createdAt", /*"DESC"*/ "ASC"]],
     });
