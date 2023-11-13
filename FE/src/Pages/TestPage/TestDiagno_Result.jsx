@@ -1,6 +1,8 @@
 import React from 'react'
+import { useMyContext } from '../../MyContext/context';
 import Styles from "./TestPage.module.css";
 function TestDiagno_Result() {
+  const { data, updateData } = useMyContext();
   return (
     <>
     <div className={Styles.result_Title}>
@@ -9,7 +11,7 @@ function TestDiagno_Result() {
 
     <div className={Styles.result_Des}>
         <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nihil, sapiente voluptas! Cum voluptates dignissimos ipsam, id dolorum similique! Ut eaque unde nam rerum nostrum doloribus suscipit ducimus autem perspiciatis tempora?
+            {data.result}
         </p>
     </div>
     </>

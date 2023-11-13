@@ -26,6 +26,12 @@ const predict = async (req,res,next) => {
     const pythonProcess = spawn("python", ["./src/python/predict.py"]);
     pythonProcess.stdout.setEncoding("utf-8");
     pythonProcess.stdout.on("data", (data) => {
+      if(data.trim() === "false") {
+        return res.status(200).json({
+          status: 400,
+          result: "Invalid Image !"
+        });
+      }
       return res.status(200).json({
           status: 200,
           result: data.trim()
