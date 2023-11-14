@@ -98,7 +98,6 @@ const login = async (req, res, next) => {
       );
 
     } else {
-
       accessToken = jwt.sign(
         {
           Admin_id: user.Admin_id,

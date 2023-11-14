@@ -70,7 +70,7 @@ const updateNew = async (req, res, next) => {
   try {
     const { Title, Content } = req.body;
     const { id } = req.params;
-    const updateNews = await News.update(
+    await News.update(
       {
         Title,
         Content
@@ -81,7 +81,11 @@ const updateNew = async (req, res, next) => {
         },
       }
     );
-
+    const updateNews = await News.findOne({
+      where: {
+        News_id: id
+      }
+    })
     return res.status(200).json({
       status: 200,
       data: {
