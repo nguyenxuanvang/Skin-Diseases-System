@@ -10,7 +10,11 @@ const { newsRouter } = require("./routes/news.route");
 const { diseaseRouter } = require("./routes/disease.route");
 const { tutorialRouter } = require("./routes/tutorial");
 
-const { loggerErrorMiddleware, errorResponseMiddleware} = require('./middlewares/handle-error.middleware');
+const {
+  loggerErrorMiddleware,
+  errorResponseMiddleware,
+} = require("./middlewares/handle-error.middleware");
+const { questionRoute } = require("./routes/question.route");
 
 const app = express();
 const PORT = 3000;
@@ -27,8 +31,9 @@ app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use("/doctor", doctorRouter);
 app.use("/news", newsRouter);
-app.use("/disease",diseaseRouter);
+app.use("/disease", diseaseRouter);
 app.use("/api/tutorials", tutorialRouter);
+app.use("/question", questionRoute);
 
 app.use(loggerErrorMiddleware);
 app.use(errorResponseMiddleware);

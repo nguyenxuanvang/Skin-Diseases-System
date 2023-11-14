@@ -22,7 +22,7 @@ const signUp = async (req, res, next) => {
         email,
         username,
         password: hash,
-        role: 'doctor'
+        role: "doctor",
       });
     } else {
       const User_id = uuidv4();
@@ -31,7 +31,7 @@ const signUp = async (req, res, next) => {
         email,
         username,
         password: hash,
-        role: 'user'
+        role: "user",
       });
     }
 
@@ -39,15 +39,13 @@ const signUp = async (req, res, next) => {
     //   plain: true,
     // });
 
-    res
-      .status(200)
-      .json({
-        status: 200,
-        data: {
-          newMember
-        },
-        message: "Create New Member Successfully !"
-      });
+    res.status(200).json({
+      status: 200,
+      data: {
+        newMember,
+      },
+      message: "Create New Member Successfully !",
+    });
   } catch (error) {
     return next(error);
   }
@@ -60,18 +58,19 @@ const login = async (req, res, next) => {
     const isValidPassword = bcrypt.compareSync(password, user.password);
 
     if (user.role !== 'admin') {
+
       if (!isValidPassword) {
         return res.status(400).json({
           status: 400,
-          message: 'Email Or Password Is Not Correct !'
+          message: "Email Or Password Is Not Correct !",
         });
       }
     } else {
       if (password !== user.password) {
         return res.status(400).json({
           status: 400,
-          message: 'Email Or Password Is Not Correct !'
-        })
+          message: "Email Or Password Is Not Correct !",
+        });
       }
     }
 
@@ -86,7 +85,6 @@ const login = async (req, res, next) => {
         process.env.SECRET_KEY,
         { expiresIn: 3 * 30 * 24 * 60 * 60 }
       );
-
     } else if (user.role === 'doctor') {
       accessToken = jwt.sign(
         {
@@ -96,7 +94,6 @@ const login = async (req, res, next) => {
         process.env.SECRET_KEY,
         { expiresIn: 3 * 30 * 24 * 60 * 60 }
       );
-
     } else {
       accessToken = jwt.sign(
         {
@@ -112,15 +109,15 @@ const login = async (req, res, next) => {
       status: 200,
       data: {
         accessToken,
-        user
+        user,
       },
       message: "Login Successfully",
     });
   } catch (error) {
     return next(error);
   }
-}
+};
 module.exports = {
   signUp,
-  login
-}
+  login,
+};

@@ -1,10 +1,10 @@
 const { DataTypes, Model } = require("sequelize");
 
-const answersModel = (sequelize, DataTypes) => {
+const commentModel = (sequelize, DataTypes) => {
   return sequelize.define(
-    "answers",
+    "comment",
     {
-      Answers_id: {
+      Comment_id: {
         type: DataTypes.STRING,
         primaryKey: true,
         allowNull: false,
@@ -29,5 +29,5 @@ const answersModel = (sequelize, DataTypes) => {
   );
 };
 module.exports = {
-  answersModel,
+  commentModel,
 };
