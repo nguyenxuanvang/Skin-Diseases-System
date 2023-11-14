@@ -1,6 +1,5 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const { User, Doctor, Admin } = require("../database/sequelize");
-const { da } = require('@faker-js/faker');
 const auth = async (req, res, next) => {
   try {
     const bearerToken = req.headers.authorization;
@@ -8,33 +7,34 @@ const auth = async (req, res, next) => {
     if (!bearerToken) {
       return res.status(401).json({
         status: 401,
-        message: 'Unauthorized - User Not Logged In !'
-      })
+        message: "Unauthorized - User Not Logged In !",
+      });
     }
+
     let { roles } = req;
-    if(!roles) roles = ['admin','user','doctor'];
+    if (!roles) roles = ["admin", "user", "doctor"];
     const accessToken = bearerToken.split(" ")[1];
-    const data = jwt.verify(accessToken, "secret_key");
+    const data = jwt.verify(accessToken, process.env.SECRET_KEY);
     if (!roles.includes(data.role)) {
       return res.status(403).json({
         status: 403,
-        message: 'Unauthorized access to this resource !'
+        message: "Unauthorized access to this resource !",
       });
     }
-    if(data.role === 'user') {
+    if (data.role === "user") {
       let user = await User.findOne({
         where: {
-          email: data.email,
+          User_id: data.User_id,
         },
         raw: true,
       });
       req.user = user;
       return next();
     }
-    if(data.role === 'doctor') {
+    if (data.role === "doctor") {
       let doctor = await Doctor.findOne({
         where: {
-          email: data.email,
+          Doctor_id: data.Doctor_id,
         },
         raw: true,
       });
@@ -43,7 +43,7 @@ const auth = async (req, res, next) => {
     }
     let admin = await Admin.findOne({
       where: {
-        email: data.email,
+        Admin_id: data.Admin_id,
       },
       raw: true,
     });
@@ -54,7 +54,6 @@ const auth = async (req, res, next) => {
   }
 };
 
-
 module.exports = {
-  auth
-}
+  auth,
+};

@@ -4,7 +4,7 @@ const { userModel } = require("../models/users.model");
 const { tutorialModel } = require("../models/tutorial.model");
 const { doctorsModel } = require("../models/doctor.model");
 const { questionsModel } = require("../models/questions.model");
-const { answersModel } = require("../models/answersmodel");
+const { commentModel } = require("../models/comment.model");
 const { repliesModel } = require("../models/replies.model");
 const { newsModel } = require("../models/news.model");
 const { diseasesModel } = require("../models/diseases.model");
@@ -13,7 +13,7 @@ const { otpModel } = require("../models/otp.model");
 const host = "localhost";
 const port = 3306;
 const user = "root";
-const password = "123456";
+const password = "123123";
 const databaseName = "SkinDiagnoTechCap1";
 
 const pool = mysql.createPool({ host, port, user, password });
@@ -38,7 +38,7 @@ const User = userModel(sequelize, DataTypes);
 const Admin = adminModels(sequelize, DataTypes);
 const Doctor = doctorsModel(sequelize, DataTypes);
 const Questions = questionsModel(sequelize, DataTypes);
-const Answers = answersModel(sequelize, DataTypes);
+const Comment = commentModel(sequelize, DataTypes);
 const Replies = repliesModel(sequelize, DataTypes);
 const News = newsModel(sequelize, DataTypes);
 const Diseases = diseasesModel(sequelize, DataTypes);
@@ -50,30 +50,22 @@ User.hasOne(Otp);
 sequelize.sync({
   force: false,
 });
-// User.hasMany(
-//   Tutorial
-//   //   , {
-//   //   foreign_key: "TutorialId",
-//   //   as: "Tutorial",
-//   // }
-// );
-
-// Tutorial.belongsTo(
-//   User
-//   //   , {
-//   //   foreign_key: "TutorialId",
-//   //   as: "User",
-//   // }
-// );
 
 Questions.belongsTo(User, { foreignKey: "User_id" });
 Questions.belongsTo(Doctor, { foreignKey: "Doctor_id" });
-Answers.belongsTo(User, { foreignKey: "User_id" });
-Answers.belongsTo(Doctor, { foreignKey: "Doctor_id" });
-Answers.belongsTo(Questions, { foreignKey: "Question_id" });
+Comment.belongsTo(User, { foreignKey: "User_id" });
+Comment.belongsTo(Doctor, { foreignKey: "Doctor_id" });
+Comment.belongsTo(Questions, { foreignKey: "Question_id" });
 Replies.belongsTo(User, { foreignKey: "User_id" });
 Replies.belongsTo(Doctor, { foreignKey: "Doctor_id" });
-Replies.belongsTo(Answers, { foreignKey: "Answers_id" });
+Replies.belongsTo(Comment, { foreignKey: "Answers_id" });
+
+User.hasMany(Questions, {
+  foreignKey: "Question_id",
+});
+Doctor.hasMany(Questions, {
+  foreignKey: "Question_id",
+});
 
 module.exports = {
   sequelize,
@@ -82,7 +74,7 @@ module.exports = {
   Admin,
   Doctor,
   Questions,
-  Answers,
+  Comment,
   Replies,
   News,
   Diseases,

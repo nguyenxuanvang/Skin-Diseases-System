@@ -4,7 +4,6 @@ const { Doctor, Admin, User } = require("../database/sequelize");
 const saltRounds = 10;
 const getDoctors = async (req, res, next) => {
   try {
-
     const doctors = await Doctor.findAll({
       order: [["createdAt", /*"DESC"*/ "ASC"]],
     });
@@ -13,9 +12,8 @@ const getDoctors = async (req, res, next) => {
       status: 200,
       data: {
         doctors,
-      }
+      },
     });
-
   } catch (error) {
     return next(error);
   }
@@ -28,37 +26,35 @@ const getDoctor = async (req, res, next) => {
     const findDoctor = await Doctor.findOne({
       where: {
         Doctor_id: id,
-      }
+      },
     });
-    if (user.role === 'admin') {
-
+    if (user.role === "admin") {
       if (!findDoctor) {
         return res.status(400).json({
           status: 400,
-          message: 'Doctor Is Not Exist !'
+          message: "Doctor Is Not Exist !",
         });
       }
       return res.status(200).json({
         status: 200,
         data: {
           findDoctor,
-        }
+        },
       });
     }
 
     if (user.Doctor_id !== id) {
       return res.status(403).json({
         status: 403,
-        message: 'Unauthorized access to this resource !'
-      })
+        message: "Unauthorized access to this resource !",
+      });
     }
     return res.status(200).json({
       status: 200,
       data: {
-        findDoctor
-      }
-    })
-
+        findDoctor,
+      },
+    });
   } catch (error) {
     return next(error);
   }
@@ -70,49 +66,45 @@ const deleteDoctor = async (req, res, next) => {
     await Doctor.destroy({
       where: {
         Doctor_id: id,
-      }
+      },
     });
     return res.status(200).json({
       status: 200,
-      message: 'Deleted successfully !'
-    })
+      message: "Deleted successfully !",
+    });
   } catch (error) {
     return next(error);
   }
-}
+};
 
 const updateDoctor = async (req, res, next) => {
   try {
     const { user } = req;
-    const {
-      email,
-      password,
-      username
-    } = req.body;
+    const { email, password, username } = req.body;
 
     if (email) {
       let findDoctor = await Doctor.findOne({
         where: {
           email: email,
-        }
+        },
       });
       findDoctor = await Admin.findOne({
         where: {
           email: email,
-        }
+        },
       });
       findDoctor = await User.findOne({
         where: {
           email: email,
-        }
+        },
       });
       if (findDoctor) {
         return res.status(400).json({
           status: 400,
-          message: 'Email already exists !'
-        })
+          message: "Email already exists !",
+        });
       }
-      
+
       user.email = email;
     }
     user.email = email || user.email;
@@ -126,84 +118,29 @@ const updateDoctor = async (req, res, next) => {
       {
         email: user.email,
         password: user.password,
-        username: user.username
+        username: user.username,
       },
       {
         where: {
           Doctor_id: user.Doctor_id,
-        }
-      });
-      const accessToken = jwt.sign(
-        {
-          Doctor_id: user.Doctor_id,
-          role: user.role,
         },
-        process.env.SECRET_KEY,
-        { expiresIn: 3 * 30 * 24 * 60 * 60 }
-      );
+      }
+    );
     return res.status(200).json({
       status: 200,
       data: {
-        accessToken,
-        newDoctor: user
+        newDoctor: user,
       },
-      message: 'Updated Successfully !'
-    })
+      message: "Updated Successfully !",
+    });
   } catch (error) {
     return next(error);
   }
-}
-
-
-// const deleteDoctor = async (req, res, next) => {
-//   try {
-//     const { Doctor_id } = req.params;
-//     const deleteDoctor = await Doctor.destroy({
-//       where: {
-//         Doctor_id,
-//       },
-//     });
-//     return res.json({
-//       data: {
-//         deleteDoctor,
-//       },
-//       message: "Delete Doctor success",
-//     });
-//   } catch (error) {
-//     return next(error);
-//   }
-// };
-
-// const updateDoctor = async (req, res, next) => {
-//   try {
-//     const { username, email, password } = req.body;
-//     const { Doctor_id } = req.params;
-//     const updateDoctor = await Doctor.update(
-//       {
-//         username,
-//         email,
-//         password,
-//       },
-//       {
-//         where: {
-//           Doctor_id: Doctor_id,
-//         },
-//       }
-//     );
-//     return res.json({
-//       data: {
-//         updateDoctor,
-//       },
-//       message: "Update Doctor success",
-//     });
-//   } catch (error) {
-//     return next(error);
-//   }
-// };
+};
 
 module.exports = {
   getDoctors,
   getDoctor,
   deleteDoctor,
-  updateDoctor
+  updateDoctor,
 };

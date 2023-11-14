@@ -37,7 +37,7 @@ const getNews = async (req, res, next) => {
   } catch (error) {
     return next(error);
   }
-}
+};
 
 const getNew = async (req, res, next) => {
   try {
@@ -45,34 +45,33 @@ const getNew = async (req, res, next) => {
     const findNew = await News.findOne({
       where: {
         News_id: id,
-      }
+      },
     });
     if (!findNew) {
       return res.status(400).json({
         status: 400,
-        message: 'News Is Not Exist !'
+        message: "News Is Not Exist !",
       });
     }
     return res.status(200).json({
       status: 200,
       data: {
         news: findNew,
-      }
+      },
     });
-
   } catch (error) {
     return next(error);
   }
-}
+};
 
 const updateNew = async (req, res, next) => {
   try {
     const { Title, Content } = req.body;
     const { id } = req.params;
-    const updateNews = await News.update(
+    await News.update(
       {
         Title,
-        Content
+        Content,
       },
       {
         where: {
@@ -80,13 +79,17 @@ const updateNew = async (req, res, next) => {
         },
       }
     );
-
+    const updateNews = await News.findOne({
+      where: {
+        News_id: id,
+      },
+    });
     return res.status(200).json({
       status: 200,
       data: {
         updateNews,
       },
-      message: "Update News Successfully"
+      message: "Update News Successfully",
     });
   } catch (error) {
     return next(error);
@@ -98,9 +101,9 @@ const deleteNew = async (req, res, next) => {
     const { id } = req.params;
 
     await News.destroy({
-      where: { 
-        News_id: id
-       }
+      where: {
+        News_id: id,
+      },
     });
 
     return res.status(200).json({
