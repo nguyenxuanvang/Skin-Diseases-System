@@ -2,40 +2,44 @@ import React from 'react'
 import { Link} from 'react-router-dom';
 import {BsFillBellFill} from 'react-icons/bs'
 import styles from './Header.module.css'
+import { Spin } from 'antd';
 function Header() {
+  const [spinning, setSpinning] = React.useState(false);
+  const showLoader1 = () => {
+    setSpinning(true);
+    setTimeout(() => {
+      setSpinning(false);
+    }, 3000);
+  };
   return (
     <div className={styles.header}>
+        <Spin spinning={spinning} fullscreen size="large"/>
         <div className={styles.linkLeftColumn}>
-          <Link to="/Home">SkinDiagnoTech</Link>
+          <Link to="/Home" onClick={showLoader1}>SkinDiagnoTech</Link>
         </div>
         <div className={styles.linkRightColumn}>
           <ul className={styles.navigation}>
             <li className={styles.link}>
-              <Link to="/Introduction">Introduction</Link>
+              <Link to="/Introduction" onClick={showLoader1}>Introduction</Link>
             </li>
             <li className={styles.link}>
-              <Link to="/Doctor">Doctor</Link>
+              <Link to="/Doctor" onClick={showLoader1}>Doctor</Link>
             </li>
             <li className={styles.link}>
-              <Link to="/TestPage">Test</Link>
+              <Link to="/TestPage" onClick={showLoader1}>Test</Link>
             </li>
             <li className={styles.link}>
-              <Link to="/NewsPage">News</Link>
+              <Link to="/NewsPage" onClick={showLoader1}>News</Link>
             </li>
             <li className={styles.link}>
-              <Link to="/TestPage">Q&A</Link>
+              <Link to="/ForumPage" onClick={showLoader1}>Q&A</Link>
             </li>
             <li className={styles.link}>
-              <Link to="/Contact">Contact</Link>
-            </li>
-            <li className={styles.link}>
-              <div className={styles.bell_Icon}>
-                <BsFillBellFill />
-              </div>
+              <Link to="/Contact" onClick={showLoader1}>Contact</Link>
             </li>
             <div className={styles.linkToLogin}>
               <button className={styles.formatToLogin}>
-                <Link to="/Login">Login</Link>
+                <Link to="/Login" onClick={showLoader1}>Login</Link>
               </button>
             </div>
           </ul>

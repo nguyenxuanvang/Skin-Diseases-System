@@ -16,6 +16,10 @@ import ScrollToTop from './components/ScrollToTop';
 import { configRoutes } from './utils/configRoutes'
 import Header from './components/Header';
 import NewsPage from './Pages/News/NewsPage';
+import DetailForumPage from './Pages/DetailForumPage';
+import ForumPage from './Pages/ForumPage/ForumPage';
+import Contact from './Pages/Contact';
+import AddNewsPage from '../src/Admin/Pages/OverviewPage/OverviewPage'
 function App() {
   return (
     <>
@@ -37,6 +41,9 @@ function App() {
             <Route path={configRoutes.NewsPage} element={<NewsPage />} />
             <Route path={configRoutes.DetailNewsPage} element={<DetailNewsPage />} />
             <Route path={configRoutes.DetailDoctorPage} element={<DetailDoctorPage />} />
+            <Route path={configRoutes.ForumPage} element={<ForumPage />} />
+            <Route path={configRoutes.DetailForumPage} element={<DetailForumPage />} />
+            <Route path={configRoutes.Contact} element={<Contact />} />
             <Route path={configRoutes.Login} element={<Login />} />
             <Route path={configRoutes.Register} extract element={<Register />} />
             <Route
@@ -52,22 +59,25 @@ function App() {
       </div>
       <div className="d-flex ">
         <Sidebar />
-        <div className="overview w-75 bg-white">
-          <Routes>
-            <Route path="/menu-list" element={<OverviewPage />} />
-            <Route
-              path="/doctor-management"
-              element={<DoctorManagementPage />}
-            />
-            <Route
-              path="/news-management"
-              element={<NewsManagementPage />}
-            />
-            <Route
-              path="*"
-              element={<main style={{ padding: "1rem" }}></main>}
-            />
-          </Routes>
+        <div className='overview w-75 bg-white'>
+        <Routes>   
+        <Route
+            path="/"
+            element={<Navigate to='/menu-list' replace={true} />}
+          /> 
+          <Route path='/menu-list' element={<OverviewPage />} />
+          <Route path='/doctor-management' element={<DoctorManagementPage />} />
+          <Route path='/news-management' element={<NewsManagementPage />} />
+          <Route path='/add-news' element={<AddNewsPage />} />                
+          <Route
+            path='*'
+            element={
+              <main style={{ padding: '1rem' }}>
+                <p>404 Page not found 😂😂😂</p>
+              </main>
+            }
+          />
+        </Routes>
         </div>
       </div>
     </>

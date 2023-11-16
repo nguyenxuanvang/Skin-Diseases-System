@@ -1,0 +1,12 @@
+.detailForumPage_header {
+    position: relative;
+}
+
+.detailForumPage_Title {
+    position: absolute;
+    top: 30%;
+    left: 10%;
+    font-size: 40px;
+    color: aliceblue;
+    font-weight: bold;
+}

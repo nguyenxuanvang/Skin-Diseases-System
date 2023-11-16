@@ -2,8 +2,6 @@ import React from 'react';
 import { Table, Button, Form, Input, Modal, Select, Space, Popconfirm, Upload, message } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 function DoctorManagement() {
-  const [selectedRecord, setSelectedRecord] = React.useState(null);
-  const [editFormVisible, setEditFormVisible] = React.useState(false);
   const columns = [
     {
       title: 'ID',
@@ -59,27 +57,11 @@ function DoctorManagement() {
             >
               <Button danger type='dashed' icon={<DeleteOutlined />} />
             </Popconfirm>
-            <Button
-              type='dashed'
-              icon={<EditOutlined />}
-              onClick={() => {
-                setSelectedRecord(record);
-                console.log('Selected Record', record);
-                updateForm.setFieldsValue(record);
-                setEditFormVisible(true);
-              }}
-            />
           </Space>
         );
       },
     },
   ];
-  const onFinish = (values) => {
-    message.success('Thêm mới thành công!');
-  };
-  const onUpdateFinish = (values) => {
-    message.success('Cập nhật thành công!');
-  };
   const dataSource = [
     {
       ID: '1',
@@ -114,110 +96,9 @@ function DoctorManagement() {
       room: 'Room 1',
     },
   ];
-  const [createForm] = Form.useForm();
-  const [updateForm] = Form.useForm();
   return (
     <div>
-      <Form form={createForm} name='create-form' labelCol={{ span: 8 }} wrapperCol={{ span: 10 }} initialValues={{ remember: true }} onFinish={onFinish} autoComplete='on'>
-        <Form.Item label='Họ' name='fullName' rules={[{ required: true, message: 'Chưa nhập Họ và Tên' }]} hasFeedback>
-          <Input />
-        </Form.Item>
-
-
-        <Form.Item label='Số điện thoại' name='phone' rules={[{ required: true, message: 'Chưa nhập Số điện thoại' }]} hasFeedback>
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          hasFeedback
-          label='Thư điện tử'
-          name='email'
-          rules={[
-            { required: true, message: 'Chưa nhập Thư điện tử' },
-            { type: 'email', message: 'Thư điện tử không hợp lệ' },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item label="Bộ phận" name='room' rules={[{ required: true, message: 'Chưa chọn Phòng ban' }]} hasFeedback>
-          <Select>
-            <Select.Option value="demo">1</Select.Option>
-            <Select.Option value="demo">2</Select.Option>
-            <Select.Option value="demo">3</Select.Option>
-            <Select.Option value="demo">4</Select.Option>
-          </Select>
-        </Form.Item>
-
-        <Form.Item label="Upload" valuePropName="fileList">
-          <Upload action="/upload.do" listType="picture-card">
-            <div>
-              <PlusOutlined />
-              <div style={{ marginTop: 8 }}>Upload</div>
-            </div>
-          </Upload>
-        </Form.Item>
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type='primary' htmlType='submit'>
-            Lưu thông tin
-          </Button>
-        </Form.Item>
-      </Form>
       <Table columns={columns} dataSource={dataSource} />;
-      <Modal
-        centered
-        open={editFormVisible}
-        title='Cập nhật thông tin'
-        onOk={() => {
-          updateForm.submit();
-        }}
-        onCancel={() => {
-          setEditFormVisible(false);
-        }}
-        okText='Lưu thông tin'
-        cancelText='Đóng'
-      >
-        <Form form={updateForm} name='update-form' labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} initialValues={{ remember: true }} onFinish={onUpdateFinish} autoComplete='on'>
-          <Form.Item label='Họ' name='fullName' rules={[{ required: true, message: 'Chưa nhập Họ và Tên' }]} hasFeedback>
-            <Input />
-          </Form.Item>
-
-
-          <Form.Item label='Số điện thoại' name='phone' rules={[{ required: true, message: 'Chưa nhập Số điện thoại' }]} hasFeedback>
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            hasFeedback
-            label='Thư điện tử'
-            name='email'
-            rules={[
-              { required: true, message: 'Chưa nhập Thư điện tử' },
-              { type: 'email', message: 'Thư điện tử không hợp lệ' },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item label="Bộ phận" name='room' rules={[{ required: true, message: 'Chưa chọn Phòng ban' }]} hasFeedback>
-            <Select>
-              <Select.Option value="demo">1</Select.Option>
-              <Select.Option value="demo">2</Select.Option>
-              <Select.Option value="demo">3</Select.Option>
-              <Select.Option value="demo">4</Select.Option>
-            </Select>
-          </Form.Item>
-
-          <Form.Item label="Upload" valuePropName="fileList">
-            <Upload action="/upload.do" listType="picture-card">
-              <div>
-                <PlusOutlined />
-                <div style={{ marginTop: 8 }}>Upload</div>
-              </div>
-            </Upload>
-          </Form.Item>
-        </Form>
-      </Modal>
     </div>
   )
 }
