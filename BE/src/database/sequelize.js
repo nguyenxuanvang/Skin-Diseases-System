@@ -58,7 +58,7 @@ Comment.belongsTo(Doctor, { foreignKey: "Doctor_id" });
 Comment.belongsTo(Questions, { foreignKey: "Question_id" });
 Replies.belongsTo(User, { foreignKey: "User_id" });
 Replies.belongsTo(Doctor, { foreignKey: "Doctor_id" });
-Replies.belongsTo(Comment, { foreignKey: "Answers_id" });
+Replies.belongsTo(Comment, { foreignKey: "Comment_id" });
 
 User.hasMany(Questions, {
   foreignKey: "Question_id",
@@ -66,7 +66,24 @@ User.hasMany(Questions, {
 Doctor.hasMany(Questions, {
   foreignKey: "Question_id",
 });
-
+User.hasMany(Comment, {
+  foreignKey: "Comment_id",
+});
+Doctor.hasMany(Comment, {
+  foreignKey: "Comment_id",
+});
+Questions.hasMany(Comment, {
+  foreignKey: "Comment_id",
+});
+User.hasMany(Replies, {
+  foreignKey: "Replies_id",
+});
+Doctor.hasMany(Replies, {
+  foreignKey: "Replies_id",
+});
+Comment.hasMany(Replies, {
+  foreignKey: "Replies_id",
+});
 module.exports = {
   sequelize,
   User,

@@ -15,6 +15,7 @@ const {
   errorResponseMiddleware,
 } = require("./middlewares/handle-error.middleware");
 const { questionRoute } = require("./routes/question.route");
+const { commentRoute } = require("./routes/comment.route");
 
 const app = express();
 const PORT = 3000;
@@ -34,6 +35,7 @@ app.use("/news", newsRouter);
 app.use("/disease", diseaseRouter);
 app.use("/api/tutorials", tutorialRouter);
 app.use("/question", questionRoute);
+app.use("/comment", commentRoute);
 
 app.use(loggerErrorMiddleware);
 app.use(errorResponseMiddleware);
