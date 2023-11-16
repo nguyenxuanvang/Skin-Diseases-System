@@ -26,25 +26,20 @@ const createQuestion = async (req, res, next) => {
 
 const updateQuestion = async (req, res, next) => {
   try {
-    let existingQuestion;
     const { Content } = req.body;
     const { id } = req.params;
-    const { User_id, Doctor_id } = req.user;
-    if (User_id) {
-      existingQuestion = await Questions.findOne({
-        where: {
-          Question_id: id,
-          User_id,
-        },
-      });
-    } else {
-      existingQuestion = await Questions.findOne({
-        where: {
-          Question_id: id,
-          Doctor_id,
-        },
-      });
-    }
+    let { User_id, Doctor_id } = req.user;
+
+    User_id = User_id || null;
+    Doctor_id = Doctor_id || null;
+
+    const existingQuestion = await Questions.findOne({
+      where: {
+        Question_id: id,
+        User_id,
+        Doctor_id
+      }
+    });
 
     if (!existingQuestion) {
       return res.status(403).json({
@@ -52,33 +47,20 @@ const updateQuestion = async (req, res, next) => {
         message: "Unauthorized - You are not the creator of this question!",
       });
     }
-    let updateQuestion;
-    if (User_id) {
-      updateQuestion = await Questions.update(
-        {
-          Content,
+
+    await Questions.update(
+      {
+        Content,
+      },
+      {
+        where: {
+          Question_id: id,
+          User_id,
+          Doctor_id
         },
-        {
-          where: {
-            Question_id: id,
-            User_id,
-          },
-        }
-      );
-    } else {
-      updateQuestion = await Questions.update(
-        {
-          Content,
-        },
-        {
-          where: {
-            Question_id: id,
-            Doctor_id,
-          },
-        }
-      );
-    }
-    updateQuestionNew = await Questions.findOne({
+      }
+    );
+    const updateQuestion = await Questions.findOne({
       where: {
         Question_id: id,
       },
@@ -86,7 +68,7 @@ const updateQuestion = async (req, res, next) => {
     return res.status(200).json({
       status: 200,
       data: {
-        updateQuestionNew,
+        updateQuestion,
       },
       message: "Update Questions Successfully",
     });
@@ -97,28 +79,31 @@ const updateQuestion = async (req, res, next) => {
 
 const deleteQuestion = async (req, res, next) => {
   try {
-    let deleteItemquestion;
     const { id } = req.params;
-    const { User_id, Doctor_id } = req.user;
-    if (User_id) {
+    let { User_id, Doctor_id, Admin_id } = req.user;
+
+    User_id = User_id || null;
+    Doctor_id = Doctor_id || null;
+    let deleteItemquestion;
+    if(Admin_id) {
       deleteItemquestion = await Questions.destroy({
         where: {
-          Question_id: id,
-          User_id,
+          Question_id: id
         },
       });
     } else {
       deleteItemquestion = await Questions.destroy({
         where: {
           Question_id: id,
-          Doctor_id,
+          User_id,
+          Doctor_id
         },
       });
     }
     if (!deleteItemquestion) {
       return res.status(403).json({
-        status: 403,
-        message: "Unauthorized - You are not the creator of this question!",
+        status: 404,
+        message: "Question Not Exist !",
       });
     }
     return res.status(200).json({
@@ -132,22 +117,25 @@ const deleteQuestion = async (req, res, next) => {
 
 const getQuestions = async (req, res, next) => {
   try {
+    let { User_id, Doctor_id, Admin_id } = req.user;
+
+    User_id = User_id || null;
+    Doctor_id = Doctor_id || null;
+
     let listAllQuestions;
-    const { User_id, Doctor_id } = req.user;
-    if (User_id) {
+    if(Admin_id) {
       listAllQuestions = await Questions.findAll({
-        where: {
-          User_id,
-        },
+        
       });
     } else {
       listAllQuestions = await Questions.findAll({
         where: {
-          Doctor_id,
+          User_id,
+          Doctor_id
         },
       });
     }
-
+    
     return res.status(200).json({
       status: 200,
       data: {
@@ -160,27 +148,41 @@ const getQuestions = async (req, res, next) => {
   }
 };
 
+const getPublicQuestions = async (req, res, next) => {
+  try {
+    const questions = await Questions.findAll({
+
+    });
+    return res.status(200).json({
+      status: 200,
+      data: {
+        questions,
+      },
+      message: "Get Questions Successfully",
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
 const getQuestion = async (req, res, next) => {
   try {
-    let listOneQuestion;
-    const { User_id, Doctor_id } = req.user;
-    if (User_id) {
-      listOneQuestion = await Questions.findOne({
-        where: {
-          User_id,
-        },
-      });
-    } else {
-      listOneQuestion = await Questions.findOne({
-        where: {
-          Doctor_id,
-        },
-      });
+    const { id } = req.params;
+    const question = await Questions.findOne({
+      where: {
+        Question_id: id
+      },
+    });
+    if(!question) {
+      return res.status(404).json({
+        status: 404,
+        message: "Question Is Not Found !"
+      })
     }
     return res.status(200).json({
       status: 200,
       data: {
-        listOneQuestion,
+        question,
       },
       message: "Get Questions Successfully",
     });
@@ -194,5 +196,6 @@ module.exports = {
   updateQuestion,
   deleteQuestion,
   getQuestions,
+  getPublicQuestions,
   getQuestion,
 };

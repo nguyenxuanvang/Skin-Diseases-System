@@ -5,11 +5,17 @@ const {
   deleteQuestion,
   updateQuestion,
   getQuestions,
+  getPublicQuestions,
   getQuestion,
 } = require("../controllers.js/question.controller");
 
 const questionRoute = express.Router();
-
+questionRoute
+  .route("/public")
+  .get(
+    getPublicQuestions
+  );
+  
 questionRoute
   .route("/")
   .post(
@@ -22,10 +28,6 @@ questionRoute
   )
 
   .get(
-    (req, res, next) => {
-      req.roles = ["doctor", "user"];
-      return next();
-    },
     auth,
     getQuestions
   );
@@ -33,11 +35,6 @@ questionRoute
 questionRoute
   .route("/:id")
   .get(
-    (req, res, next) => {
-      req.roles = ["doctor", "user"];
-      return next();
-    },
-    auth,
     getQuestion
   )
   .patch(
@@ -49,10 +46,6 @@ questionRoute
     updateQuestion
   )
   .delete(
-    (req, res, next) => {
-      req.roles = ["doctor", "user"];
-      return next();
-    },
     auth,
     deleteQuestion
   );
