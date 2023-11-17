@@ -8,7 +8,6 @@ const { userRouter } = require("./routes/user.route");
 const { doctorRouter } = require("./routes/doctor.route");
 const { newsRouter } = require("./routes/news.route");
 const { diseaseRouter } = require("./routes/disease.route");
-const { tutorialRouter } = require("./routes/tutorial");
 
 const {
   loggerErrorMiddleware,
@@ -33,7 +32,6 @@ app.use("/user", userRouter);
 app.use("/doctor", doctorRouter);
 app.use("/news", newsRouter);
 app.use("/disease", diseaseRouter);
-app.use("/api/tutorials", tutorialRouter);
 app.use("/question", questionRoute);
 app.use("/comment", commentRoute);
 

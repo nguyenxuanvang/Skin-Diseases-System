@@ -11,7 +11,7 @@ const userModel = (sequelize, DataTypes) => {
       },
       username: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
       },
       email: {
         type: DataTypes.STRING,
@@ -25,7 +25,6 @@ const userModel = (sequelize, DataTypes) => {
       role: {
         type: DataTypes.STRING,
         allowNull: false,
-        // defaultValue: "user",
       },
     },
     {

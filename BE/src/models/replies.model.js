@@ -19,7 +19,7 @@ const repliesModel = (sequelize, DataTypes) => {
       Doctor_id: {
         type: DataTypes.STRING,
       },
-      Answer_id: {
+      Comment_id: {
         type: DataTypes.STRING,
       },
     },
