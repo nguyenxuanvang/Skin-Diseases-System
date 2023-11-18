@@ -6,8 +6,7 @@ const {
   updateQuestion,
   getQuestions,
   getPublicQuestions,
-  getQuestion,
-  getPublicQuestions,
+  getQuestion
 } = require("../controllers.js/question.controller");
 
 const questionRoute = express.Router();

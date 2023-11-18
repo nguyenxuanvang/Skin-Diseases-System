@@ -4,12 +4,16 @@ const {
   createReplies,
   updateReplies,
   deleteReplies,
+  getReplies
 } = require("../controllers.js/replies.controller");
 
 const repliesRoute = express.Router();
 
 repliesRoute
   .route("/:id")
+  .get(
+    getReplies
+  )
   .post(
     (req, res, next) => {
       req.roles = ["doctor", "user"];
@@ -27,10 +31,6 @@ repliesRoute
     updateReplies
   )
   .delete(
-    (req, res, next) => {
-      req.roles = ["doctor", "user"];
-      return next();
-    },
     auth,
     deleteReplies
   );

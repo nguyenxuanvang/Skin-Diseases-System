@@ -10,11 +10,19 @@ const auth = async (req, res, next) => {
         message: "Unauthorized - User Not Logged In !",
       });
     }
-
+    
     let { roles } = req;
     if (!roles) roles = ["admin", "user", "doctor"];
     const accessToken = bearerToken.split(" ")[1];
-    const data = jwt.verify(accessToken, process.env.SECRET_KEY);
+    let data;
+    try {
+      data = jwt.verify(accessToken, process.env.SECRET_KEY);
+    } catch (error) {
+      return res.status(401).json({
+        status: 401,
+        message: "Unauthorized - Invalid Access Token !",
+      });
+    }
     if (!roles.includes(data.role)) {
       return res.status(403).json({
         status: 403,

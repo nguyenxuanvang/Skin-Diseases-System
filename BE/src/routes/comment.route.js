@@ -4,21 +4,24 @@ const {
   updateCommentQuestion,
   deleteCommentQuestion,
   createComment,
+  getComments
 } = require("../controllers.js/comment.controller");
 
 const commentRoute = express.Router();
 
-commentRoute.route("/:id").post(
+commentRoute
+  .route("/:id")
+  .get(
+    getComments
+  )
+  .post(
   (req, res, next) => {
     req.roles = ["doctor", "user"];
     return next();
   },
   auth,
   createComment
-);
-
-commentRoute
-  .route("/:id")
+  )
   .patch(
     (req, res, next) => {
       req.roles = ["doctor", "user"];
@@ -28,10 +31,6 @@ commentRoute
     updateCommentQuestion
   )
   .delete(
-    (req, res, next) => {
-      req.roles = ["doctor", "user"];
-      return next();
-    },
     auth,
     deleteCommentQuestion
   );

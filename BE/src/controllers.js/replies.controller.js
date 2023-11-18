@@ -5,7 +5,10 @@ const createReplies = async (req, res, next) => {
   try {
     const { Content } = req.body;
     const { id } = req.params;
-    const { User_id, Doctor_id } = req.user;
+    let { User_id, Doctor_id } = req.user;
+
+    User_id = User_id || null;
+    Doctor_id = Doctor_id || null;
 
     const comment = await Comment.findOne({
       where: {
@@ -16,7 +19,7 @@ const createReplies = async (req, res, next) => {
     if (!comment) {
       return res.status(404).json({
         status: 404,
-        message: "Comment not found!",
+        message: "Comment Not Found !",
       });
     }
 
@@ -45,18 +48,21 @@ const updateReplies = async (req, res, next) => {
     const { Content } = req.body;
     const { id } = req.params;
     let { User_id, Doctor_id } = req.user;
+
     User_id = User_id || null;
     Doctor_id = Doctor_id || null;
 
     const replies = await Replies.findOne({
       where: {
         Replies_id: id,
+        User_id,
+        Doctor_id
       },
     });
     if (!replies) {
       return res.status(404).json({
         status: 404,
-        message: "Replies not found !",
+        message: "Replies Not Found!",
       });
     }
     replies.Content = Content;
@@ -67,7 +73,7 @@ const updateReplies = async (req, res, next) => {
       data: {
         updatedReplies: replies,
       },
-      message: "Replies updated successfully!",
+      message: "Updated Replies Successfully!",
     });
   } catch (error) {
     return next(error);
@@ -77,22 +83,33 @@ const updateReplies = async (req, res, next) => {
 const deleteReplies = async (req, res, next) => {
   try {
     const { id } = req.params;
-    let { User_id, Doctor_id } = req.user;
+    let { User_id, Doctor_id, Admin_id } = req.user;
 
     User_id = User_id || null;
     Doctor_id = Doctor_id || null;
+    Admin_id = Admin_id || null;
 
-    const replies = await Replies.findOne({
-      where: {
-        Replies_id: id,
-        User_id,
-        Doctor_id,
-      },
-    });
+    let replies;
+    if (Admin_id) {
+      replies = await Replies.findOne({
+        where: {
+          Replies_id: id,
+        },
+      })
+    } else {
+      replies = await Replies.findOne({
+        where: {
+          Replies_id: id,
+          User_id,
+          Doctor_id,
+        },
+      });
+    }
+
     if (!replies) {
       return res.status(404).json({
         status: 404,
-        message: "Replies not found for this comment!",
+        message: "Replies Not Found !",
       });
     }
 
@@ -100,15 +117,33 @@ const deleteReplies = async (req, res, next) => {
 
     return res.status(200).json({
       status: 200,
-      message: "Replies deleted successfully!",
+      message: "Deleted Replies Successfully!",
     });
   } catch (error) {
     return next(error);
   }
 };
 
+const getReplies = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const replies = await Replies.findAll({
+      where: {
+        Comment_id: id,
+      },
+    });
+    return res.status(200).json({
+      status: 200,
+      data: replies
+    });
+  } catch(error) {
+    return next(error);
+  }
+}
+
 module.exports = {
   createReplies,
   updateReplies,
   deleteReplies,
+  getReplies
 };

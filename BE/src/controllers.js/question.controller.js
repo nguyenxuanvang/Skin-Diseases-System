@@ -29,7 +29,6 @@ const updateQuestion = async (req, res, next) => {
     const { Content } = req.body;
     const { id } = req.params;
     let { User_id, Doctor_id } = req.user;
-
     User_id = User_id || null;
     Doctor_id = Doctor_id || null;
 
@@ -103,9 +102,9 @@ const deleteQuestion = async (req, res, next) => {
       });
     }
     if (!deleteItemquestion) {
-      return res.status(403).json({
+      return res.status(404).json({
         status: 404,
-        message: "Question Not Exist !",
+        message: "Question Not Found !",
       });
     }
     return res.status(200).json({
@@ -120,7 +119,6 @@ const deleteQuestion = async (req, res, next) => {
 const getQuestions = async (req, res, next) => {
   try {
     let { User_id, Doctor_id, Admin_id } = req.user;
-
     User_id = User_id || null;
     Doctor_id = Doctor_id || null;
 

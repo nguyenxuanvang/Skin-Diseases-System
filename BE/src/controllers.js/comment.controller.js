@@ -52,15 +52,15 @@ const updateCommentQuestion = async (req, res, next) => {
     const comment = await Comment.findOne({
       where: {
         Comment_id: id,
-        // User_id,
-        // Doctor_id,
+        User_id,
+        Doctor_id,
       },
     });
 
     if (!comment) {
       return res.status(404).json({
         status: 404,
-        message: "Comment not found !",
+        message: "Update Denied!",
       });
     }
 
@@ -72,7 +72,7 @@ const updateCommentQuestion = async (req, res, next) => {
       data: {
         updatedComment: comment,
       },
-      message: "Comment updated successfully!",
+      message: "Updated Comment Successfully!",
     });
   } catch (error) {
     return next(error);
@@ -82,23 +82,33 @@ const updateCommentQuestion = async (req, res, next) => {
 const deleteCommentQuestion = async (req, res, next) => {
   try {
     const { id } = req.params;
-    let { User_id, Doctor_id } = req.user;
+    let { User_id, Doctor_id, Admin_id } = req.user;
 
     User_id = User_id || null;
     Doctor_id = Doctor_id || null;
+    Admin_id = Admin_id || null;
 
-    const comment = await Comment.findOne({
-      where: {
-        Comment_id: id,
-        User_id,
-        Doctor_id,
-      },
-    });
+    let comment;
+    if(Admin_id) {
+      comment = await Comment.findOne({
+        where: {
+          Comment_id: id,
+        },
+      });
+    } else {
+      comment = await Comment.findOne({
+        where: {
+          Comment_id: id,
+          User_id,
+          Doctor_id,
+        },
+      });
+    }
 
     if (!comment) {
       return res.status(404).json({
         status: 404,
-        message: "Comment not found for this question!",
+        message: "Comment Not Found !",
       });
     }
 
@@ -106,15 +116,33 @@ const deleteCommentQuestion = async (req, res, next) => {
 
     return res.status(200).json({
       status: 200,
-      message: "Comment deleted successfully!",
+      message: "Deleted Comment Successfully!",
     });
   } catch (error) {
     return next(error);
   }
 };
+const getComments = async(req,res) => {
+  try {
+    const { id } = req.params;
+
+    const comments = await Comment.findAll({
+      where: {
+        Question_id: id,
+      },
+    });
+    return res.status(200).json({
+      status: 200,
+      data: comments
+    })
+  } catch (error) {
+    return next(error);
+  }
+}
 
 module.exports = {
   createComment,
   updateCommentQuestion,
   deleteCommentQuestion,
+  getComments
 };

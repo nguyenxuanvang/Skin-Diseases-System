@@ -2,7 +2,7 @@ const { DataTypes, Model } = require("sequelize");
 
 const repliesModel = (sequelize, DataTypes) => {
   return sequelize.define(
-    "Replies ",
+    "Replies",
     {
       Replies_id: {
         type: DataTypes.STRING,

@@ -10,7 +10,7 @@ const { newsRouter } = require("./routes/news.route");
 const { diseaseRouter } = require("./routes/disease.route");
 const { questionRoute } = require("./routes/question.route");
 const { commentRoute } = require("./routes/comment.route");
-const { tutorialRouter } = require("./routes/tutorial");
+const { repliesRoute } = require("./routes/replies.route");
 
 
 const {
@@ -18,9 +18,6 @@ const {
   errorResponseMiddleware,
 } = require("./middlewares/handle-error.middleware");
 
-const { questionRoute } = require("./routes/question.route");
-const { commentRoute } = require("./routes/comment.route");
-const { repliesRoute } = require("./routes/replies.route");
 
 const app = express();
 const PORT = 3000;
