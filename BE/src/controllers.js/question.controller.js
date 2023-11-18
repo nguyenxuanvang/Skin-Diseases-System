@@ -39,6 +39,7 @@ const updateQuestion = async (req, res, next) => {
         User_id,
         Doctor_id
       }
+
     });
 
     if (!existingQuestion) {
@@ -84,6 +85,7 @@ const deleteQuestion = async (req, res, next) => {
 
     User_id = User_id || null;
     Doctor_id = Doctor_id || null;
+
     let deleteItemquestion;
     if(Admin_id) {
       deleteItemquestion = await Questions.destroy({
@@ -124,9 +126,7 @@ const getQuestions = async (req, res, next) => {
 
     let listAllQuestions;
     if(Admin_id) {
-      listAllQuestions = await Questions.findAll({
-        
-      });
+      listAllQuestions = await Questions.findAll({});
     } else {
       listAllQuestions = await Questions.findAll({
         where: {
@@ -182,7 +182,7 @@ const getQuestion = async (req, res, next) => {
     return res.status(200).json({
       status: 200,
       data: {
-        question,
+        question
       },
       message: "Get Questions Successfully",
     });
@@ -198,4 +198,5 @@ module.exports = {
   getQuestions,
   getPublicQuestions,
   getQuestion,
+  getPublicQuestions,
 };

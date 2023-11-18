@@ -1,21 +1,41 @@
 const express = require("express");
+const { auth } = require("../middlewares/jwtMiddleware");
 const {
-  createComment
+  updateCommentQuestion,
+  deleteCommentQuestion,
+  createComment,
 } = require("../controllers.js/comment.controller");
-const {
-  auth
-} = require("../middlewares/jwtMiddleware");
+
 const commentRoute = express.Router();
+
+commentRoute.route("/:id").post(
+  (req, res, next) => {
+    req.roles = ["doctor", "user"];
+    return next();
+  },
+  auth,
+  createComment
+);
+
 commentRoute
   .route("/:id")
-  .post(
+  .patch(
     (req, res, next) => {
-      req.roles = ["user","doctor"];
+      req.roles = ["doctor", "user"];
       return next();
     },
     auth,
-    createComment
+    updateCommentQuestion
   )
+  .delete(
+    (req, res, next) => {
+      req.roles = ["doctor", "user"];
+      return next();
+    },
+    auth,
+    deleteCommentQuestion
+  );
+
 module.exports = {
   commentRoute,
 };

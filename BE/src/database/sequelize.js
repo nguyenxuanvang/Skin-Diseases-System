@@ -1,7 +1,6 @@
 const mysql = require("mysql2");
 const { Sequelize, DataTypes } = require("sequelize");
 const { userModel } = require("../models/users.model");
-const { tutorialModel } = require("../models/tutorial.model");
 const { doctorsModel } = require("../models/doctor.model");
 const { questionsModel } = require("../models/questions.model");
 const { commentModel } = require("../models/comment.model");
@@ -43,7 +42,6 @@ const Replies = repliesModel(sequelize, DataTypes);
 const News = newsModel(sequelize, DataTypes);
 const Diseases = diseasesModel(sequelize, DataTypes);
 const Otp = otpModel(sequelize, DataTypes);
-const Tutorial = tutorialModel(sequelize, DataTypes);
 
 User.hasOne(Otp);
 
@@ -61,34 +59,34 @@ Replies.belongsTo(Doctor, { foreignKey: "Doctor_id" });
 Replies.belongsTo(Comment, { foreignKey: "Comment_id" });
 
 User.hasMany(Questions, {
-  foreignKey: "Question_id",
+  foreignKey: "User_id",
 });
 Doctor.hasMany(Questions, {
-  foreignKey: "Question_id",
+  foreignKey: "Doctor_id",
 });
 User.hasMany(Comment, {
-  foreignKey: "Comment_id",
+  foreignKey: "User_id",
 });
 Doctor.hasMany(Comment, {
-  foreignKey: "Comment_id",
+  foreignKey: "Doctor_id",
 });
 Questions.hasMany(Comment, {
-  foreignKey: "Comment_id",
+  foreignKey: "Question_id",
 });
+
 User.hasMany(Replies, {
-  foreignKey: "Replies_id",
+  foreignKey: "User_id",
 });
 Doctor.hasMany(Replies, {
-  foreignKey: "Replies_id",
+  foreignKey: "Doctor_id",
 });
 Comment.hasMany(Replies, {
-  foreignKey: "Replies_id",
+  foreignKey: "Comment_id",
 });
 
 module.exports = {
   sequelize,
   User,
-  Tutorial,
   Admin,
   Doctor,
   Questions,

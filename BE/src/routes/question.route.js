@@ -7,6 +7,7 @@ const {
   getQuestions,
   getPublicQuestions,
   getQuestion,
+  getPublicQuestions,
 } = require("../controllers.js/question.controller");
 
 const questionRoute = express.Router();
@@ -31,6 +32,8 @@ questionRoute
     auth,
     getQuestions
   );
+
+questionRoute.route("/public").get(getPublicQuestions);
 
 questionRoute
   .route("/:id")
