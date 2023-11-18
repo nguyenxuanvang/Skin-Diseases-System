@@ -1,0 +1,21 @@
+.detailNews
+{
+    width: 100%;
+}
+
+.detailNews_title
+{
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.detailNews_date
+{
+    font-size: 20px;
+    margin: 20px 0 30px 0;
+}
+
+.detailNews_des
+{
+    margin-top: 20px;
+}

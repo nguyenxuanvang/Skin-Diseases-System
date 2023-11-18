@@ -1,0 +1,65 @@
+.doctorInformation
+{
+    width: 100%;
+}
+.doctorInformation_img
+{
+    margin-top: 20px;
+    position: relative;
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
+}
+
+.doctorInformation_doctor_img
+{
+    position: absolute;
+    top: 10px;
+    left: 100px;
+    display: flex;
+}
+
+.doctorInformation_link
+{
+    margin-top: 30px;
+    font-weight: bold;
+}
+
+.doctorInformation_link a
+{
+    color: black;
+    text-decoration: none;
+}
+
+.doctorInformation_detail p
+{
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.doctorInformation_des
+{
+    margin-top: 50px;
+    margin-left: 350px;
+}
+/*----------------DoctorInformationDetail--------------*/
+.doctorInformationDetail
+{
+    width: 70%;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.doctorInformationDetail_header
+{
+    border-bottom: 1px solid gray ;
+}
+
+.doctorInformationDetail_headerIntro
+{
+    margin: 20px 0 10px 50px;
+}
+
+.doctorInformationDetail_content p
+{
+    margin: 20px;
+}

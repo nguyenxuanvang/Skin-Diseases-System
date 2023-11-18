@@ -2,11 +2,8 @@ import React from "react";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
-import Styles from "./Register.module.css";
 import { signUpService } from "../../services/author/auth.service";
-import { Button } from "@mui/material";
-import "react-toastify/dist/ReactToastify.css";
-
+import '../Register/Register.css'
 function RegisterForm() {
   const navigate = useNavigate();
   const [showConfirmPass, setShowConfirmPass] = useState(false);
@@ -28,7 +25,6 @@ function RegisterForm() {
     password: "",
     confirmPassword: "",
   });
-  const [isLoading, setIsLoading] = useState(false);
 
   const onClickShowConfirmPassword = () => {
     setShowConfirmPass(!showConfirmPass);
@@ -36,37 +32,34 @@ function RegisterForm() {
 
   const handleRegister = async () => {
     try {
-      setIsLoading(true);
       if (confirmPassword === password) {
         const response = await signUpService(signUpPayLoad);
         const message = response.data.message;
         toast.success(message);
         setTimeout(() => {
-          setIsLoading(false);
           navigate("/Login");
-        }, [3000]);
+        }, [1000]);
       } else {
         toast.error("Password not match");
       }
     } catch (error) {
       const message = error.response.data.message;
       toast.error(message);
-      setIsLoading(false);
     }
   };
 
   const { email, username, password, confirmPassword } = signUpPayLoad;
 
   return (
-    <div className={Styles.form}>
+    <div className="form">
       <div>
         <div>
-          <div className={Styles.title}>Sign up</div>
-          <div className={Styles.des}>
+          <div className="title">Sign up</div>
+          <div className="des">
             If you already have an account register
           </div>
           <div>
-            <div className={Styles.link}>
+            <div className="link">
               You can &nbsp;
               <Link to="/Login">Login here !</Link>
             </div>
@@ -74,7 +67,7 @@ function RegisterForm() {
         </div>
         <div>
           <form>
-            <div className={Styles.group}>
+            <div className="group">
               <label for="email">Email</label>
               <br></br>
               <input
@@ -85,9 +78,11 @@ function RegisterForm() {
                 value={email}
                 onChange={handChangeSignUpPayLoad}
               ></input>
-              <div className="icon"></div>
+              <div className="icon">
+                <img src='/images/Login/email.png' alt="" style={{width: "17px", height: "17px", verticalAlign: "top"}}/>
+              </div>
             </div>
-            <div className={Styles.group}>
+            <div className="group">
               <label for="username">Username</label>
               <br></br>
               <input
@@ -98,9 +93,11 @@ function RegisterForm() {
                 value={username}
                 onChange={handChangeSignUpPayLoad}
               ></input>
-              <div className={Styles.icon}></div>
+              <div className="icon">
+                <img src='/images/Login/user.png' alt="" style={{width: "17px", height: "17px", verticalAlign: "top"}}/>
+              </div>
             </div>
-            <div className={Styles.group}>
+            <div className="group">
               <label for="password">Password</label>
               <br></br>
               <input
@@ -111,7 +108,9 @@ function RegisterForm() {
                 value={password}
                 onChange={handChangeSignUpPayLoad}
               ></input>
-              <div className="icon"></div>
+              <div className="icon">
+                <img src='/images/Login/lock.png' alt="" style={{width: "17px", height: "17px", verticalAlign: "top"}}/>
+              </div>
               <div className="showPassword">
                 <i
                   class={showPass ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"}
@@ -119,7 +118,7 @@ function RegisterForm() {
                 ></i>
               </div>
             </div>
-            <div className={Styles.group}>
+            <div className="group">
               <label for="confirmpass">Confirm Password</label>
               <br></br>
               <input
@@ -130,8 +129,10 @@ function RegisterForm() {
                 value={confirmPassword}
                 onChange={handChangeSignUpPayLoad}
               ></input>
-              <div className={Styles.icon}></div>
-              <div className={Styles.showPassword}>
+              <div className="icon">
+                <img src='/images/Login/lock.png' alt="" style={{width: "17px", height: "17px", verticalAlign: "top"}}/>
+              </div>
+              <div className="showPassword">
                 <i
                   class={
                     showConfirmPass
@@ -142,10 +143,16 @@ function RegisterForm() {
                 ></i>
               </div>
             </div>
+            <div className="flex-row" id="rememberRegister">
+                <div className="cbRemember">
+                  <input type="checkbox"></input>
+                </div>
+                <div className="remember">You are a Doctor?</div>
+              </div>
             <div>
-              <Button className={Styles.button} onClick={handleRegister}>
-                {isLoading ? "Loading…" : "Register"}{" "}
-              </Button>
+              <button className="button" onClick={handleRegister}>
+                Register
+              </button>
             </div>
           </form>
         </div>

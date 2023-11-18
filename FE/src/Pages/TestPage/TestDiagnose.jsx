@@ -1,11 +1,16 @@
 import { useEffect, useState, useRef } from "react";
+import diseaseApi from "../../redux/api/disease.slice";
+import { useMyContext } from "../../MyContext/context";
 import Styles from "./TestPage.module.css";
 function TestDiagno() {
+    const { data, updateData } = useMyContext();
     const [avatar, setAvatar] = useState();
     const [uploadDescription, setUploadDescription] = useState("Upload the image");
-    const [result, setResult] = useState('');
+    const [predict, {data: result = ''}] = diseaseApi.usePredictMutation();
     const fileInputRef = useRef(null);
-
+    useEffect(()=>{
+        updateData(result);
+    },[result])
     useEffect(() => {
         return () => avatar && URL.revokeObjectURL(avatar.preview);
     }, [avatar]);
@@ -32,13 +37,7 @@ function TestDiagno() {
         else {
             const formData = new FormData();
             formData.append('image',avatar);
-            const response = await fetch('http://localhost:3000/scan',{
-                method: 'POST',
-                body: formData
-            });
-            const data =  await response.json();
-            setResult(data)
-            console.log(data);
+            predict(formData);
         }
     }
 

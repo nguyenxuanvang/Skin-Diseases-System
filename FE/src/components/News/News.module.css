@@ -1,0 +1,58 @@
+.newsList_posts
+{
+    margin: 10px 0 30px 0;
+}
+
+.newsList_postsList {
+    display: flex;
+    height: 300px;
+    width: 850px;
+    border-radius: 20px;
+    border: 1px solid black;
+}
+
+.newsList_inf {
+    margin: 20px 0 0 20px;
+    height: 100%;
+}
+
+.newsList_date {
+    color: red;
+    font-weight: bold;
+    height: 15%;
+}
+
+.newsList_name {
+    font-weight: bold;
+    height: 15%;
+}
+
+.newsList_des p {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+
+.btn_seeMore
+{
+    width: 150px;
+    height: 40px;
+    background-color: white;
+    color: #0073c6;
+    border-color: 1px solid #0073c6;
+    border-radius: 20px;
+}
+
+.btn_seeMore:hover
+{
+    background-color: rgb(233, 233, 233);
+    color: rgb(219, 97, 97);
+}
+
+.btn_seeMore a {
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 20px;
+}

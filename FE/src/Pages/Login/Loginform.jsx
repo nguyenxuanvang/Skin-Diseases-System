@@ -1,15 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Styles from "./Login.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { signInService } from "../../services/author/auth.service";
-import { Button } from "@mui/material";
 import "react-toastify/dist/ReactToastify.css";
-
+import "../Login/Login.css";
 const LoginForm = () => {
   const [show, setShow] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const onClickShowPassword = () => {
     setShow(!show);
@@ -28,7 +25,6 @@ const LoginForm = () => {
 
   const handLogin = async () => {
     try {
-      setIsLoading(true);
       const response = await signInService(email, password);
       const message = response.data.message;
       const accessToken = response.data.accessToken;
@@ -38,32 +34,31 @@ const LoginForm = () => {
       toast.success(message);
       if (response.data.role === "user") {
         setTimeout(() => {
-          setIsLoading(false);
           navigate("/");
-        }, [3000]);
+        }, [1000]);
+      } else if (response.data.role === "doctor") {
+        setTimeout(() => {
+          navigate("/doctor");
+        }, [1000]);
       } else {
         setTimeout(() => {
-          setIsLoading(false);
           navigate("/admin");
-        }, [3000]);
+        });
       }
     } catch (error) {
       const message = error.response.data.message;
       toast.error(message);
-      setIsLoading(false);
     }
   };
 
   return (
-    <div className={Styles.form}>
+    <div className="form">
       <div>
         <div>
-          <div className={Styles.title}>Login</div>
-          <div className={Styles.des}>
-            If you don’t have an account register
-          </div>
+          <div className="title">Login</div>
+          <div className="des">If you don’t have an account register</div>
           <div>
-            <div className={Styles.link}>
+            <div className="link">
               You can &nbsp;
               <Link to="/Register">Register here !</Link>
             </div>
@@ -71,63 +66,83 @@ const LoginForm = () => {
         </div>
         <div>
           <form>
-            <div className={Styles.group}>
+            <div className="group">
               <label for="email">Email</label>
               <br></br>
               <input
                 type="email"
-                id={Styles.email}
+                id="email"
                 placeholder="Enter your email address"
                 name="email"
-                value={email}
                 onChange={handChangeEmailValue}
               ></input>
-              <div className={Styles.icon}></div>
+              <div className="icon">
+                <img
+                  src="/images/login/email.png"
+                  style={{
+                    width: "17px",
+                    height: "17px",
+                    verticalAlign: "top",
+                  }}
+                />
+              </div>
             </div>
-            <div className={Styles.group}>
+            <div className="group">
               <label for="password">Password</label>
               <br></br>
               <input
                 type={show ? "text" : "password"}
-                id={Styles.password}
+                id="password"
                 placeholder="Enter your Password"
                 name="password"
                 value={password}
                 onChange={handChangePasswordValue}
               ></input>
-              <div className={Styles.icon} style={{ top: "34px" }}></div>
-              <div className={Styles.showPassword}>
+              <div className="icon">
+                <img
+                  src="/images/login/lock.png"
+                  style={{
+                    width: "17px",
+                    height: "17px",
+                    verticalAlign: "top",
+                  }}
+                />
+              </div>
+              <div className="showPassword">
                 <i
-                  class={show ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"}
+                  className={show ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"}
                   onClick={onClickShowPassword}
                 ></i>
               </div>
             </div>
-            <div className={Styles.flex_row}>
-              <div className={Styles.flex_row}>
-                <div className={Styles.cbRemember}>
+            <div className="flex-row">
+              <div className="flex-row">
+                <div className="cbRemember">
                   <input type="checkbox"></input>
                 </div>
-                <div className={Styles.remember}>Remember me</div>
+                <div className="remember">Remember me</div>
               </div>
-              <div className={Styles.forgotPassword}>Forgot Password ?</div>
             </div>
             <div>
-              <Button className={Styles.button} onClick={handLogin}>
-                {isLoading ? "Loading…" : "Login"}{" "}
-              </Button>
+              <button className="button" onClick={handLogin}>
+                Login
+              </button>
             </div>
           </form>
         </div>
-        {/* <div>
-          <div className={Styles.continue}>or continue with</div>
-          <div className={Styles.google}>
+        <div>
+          <div className="continue">or continue with</div>
+          <div className="google">
             <button className="btn-gg">Sign in with Google</button>
-            <div className={Styles.icon}>
-              <img src="./images/Login/google.png" alt="" />
+            <div className="icon">
+              <img
+                src="./images/Login/google.png"
+                alt=""
+                style={{ width: "26px", height: "26px" }}
+              />
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
       <ToastContainer />
     </div>
