@@ -1,59 +1,51 @@
 .sidebar {
-    background-color: #000;
-    width: 20%;
-    height: 100vh;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-    position: fixed;
-  }
-  
-  .menu {
-    margin-bottom: 20px;
-  }
-  
-  .menu h2 {
-    margin-top: 0;
-  }
-  
-  .menu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .menu li {
-    margin-bottom: 10px;
-  }
-  
-  .menu a {
-    color: #fff;
-    text-decoration: none;
-  }
-  
-  .user_info {
-    position: absolute;
-    bottom: 0px;
-    display: flex;
-    width: 260px;
-    justify-content: space-between;
-  }
+  background-color: #000;
+  width: 20%;
+  height: 100vh;
+  color: #fff;
+  padding: 20px;
+  position: fixed;
+}
 
-  .btn_logout
-  {
-    width: 100px;
-    height: 30px;
-    border-radius: 20px;
-  }
+.menu {
+  margin-bottom: 20px;
+}
 
-  .white_rect
-  {
-    background-color: white;
-    height: 2px;
-    width: 75%;
-    margin: 0 auto;
-  }
-  .list_menu
-  {
-    margin-top: 10px;
-  }
+.menu h2 {
+  margin-top: 0;
+}
+
+.menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu li {
+  margin-bottom: 10px;
+}
+
+.menu a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.user_info {
+  position: absolute;
+  bottom: 0px;
+  display: flex;
+
+  justify-content: space-between;
+}
+
+.btn_logout
+{
+  width: 100px;
+  height: 30px;
+  border-radius: 20px;
+}
+
+.list_menu
+{
+  margin-top: 10px;
+}

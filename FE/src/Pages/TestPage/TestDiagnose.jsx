@@ -17,12 +17,8 @@ function TestDiagno() {
 
     const handlePreviewAvatar = (e) => {
         const file = e.target.files[0];
-        if(file.type === 'image/png' || file.type === 'image/jpeg') {
-            file.preview = URL.createObjectURL(file);
-            setAvatar(file);
-        } else {
-            alert('Image invalid');
-        }
+        file.preview = URL.createObjectURL(file);
+        setAvatar(file);
     };
 
     const handleUploadClick = () => {
@@ -58,7 +54,6 @@ function TestDiagno() {
                 <input
                     ref={fileInputRef}
                     type="file"
-                    accept="image/*"
                     onChange={handlePreviewAvatar}
                     style={{ display: "none" }}
                     aria-label={uploadDescription}
@@ -69,9 +64,19 @@ function TestDiagno() {
                     Upload
                 </button>
 
-                <button className={Styles.btn_scan} onClick={handleScanClick}>
+                <button className={Styles.btn_scna} onClick={handleScanClick}>
                     Scan
                 </button>
+            </div>
+
+            <div className={Styles.result_Title}>
+                Result:
+            </div>
+
+            <div className={Styles.result_Des}>
+                <p className={Styles.disease_Des}>
+                {diseaseDescription}
+                </p>
             </div>
         </>
     );
