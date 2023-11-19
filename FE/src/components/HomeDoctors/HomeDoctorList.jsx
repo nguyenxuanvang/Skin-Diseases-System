@@ -24,7 +24,7 @@ function HomeDoctorList({
             </div>
 
             <div className={Styles.doctorBtn}>
-            <button className={Styles.btn_seeMore}><Link to='/DetailDoctorPage'>{btn_seeMore}</Link><FaAngleRight /></button>
+            <button className={Styles.btn_seeMore}><Link to='/DetailDoctorPage' style={{textDecoration:'none', color:'black', fontWeight:'bold'}}>{btn_seeMore}</Link><FaAngleRight /></button>
 
             </div>
         </div>

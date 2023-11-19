@@ -1,50 +1,42 @@
-import React from 'react'
+import React from 'react';
 import { Link} from 'react-router-dom';
-import {BsFillBellFill} from 'react-icons/bs'
 import styles from './Header.module.css'
-import { Spin } from 'antd';
 function Header() {
-  const [spinning, setSpinning] = React.useState(false);
-  const showLoader1 = () => {
-    setSpinning(true);
-    setTimeout(() => {
-      setSpinning(false);
-    }, 3000);
-  };
   return (
+    <>
     <div className={styles.header}>
-        <Spin spinning={spinning} fullscreen size="large"/>
         <div className={styles.linkLeftColumn}>
-          <Link to="/Home" onClick={showLoader1}>SkinDiagnoTech</Link>
+          <Link to="/Home" >SkinDiagnoTech</Link>
         </div>
         <div className={styles.linkRightColumn}>
           <ul className={styles.navigation}>
             <li className={styles.link}>
-              <Link to="/Introduction" onClick={showLoader1}>Introduction</Link>
+              <Link to="/Introduction" >Introduction</Link>
             </li>
             <li className={styles.link}>
-              <Link to="/Doctor" onClick={showLoader1}>Doctor</Link>
+              <Link to="/Doctor" >Doctor</Link>
             </li>
             <li className={styles.link}>
-              <Link to="/TestPage" onClick={showLoader1}>Test</Link>
+              <Link to="/TestPage">Test</Link>
             </li>
             <li className={styles.link}>
-              <Link to="/NewsPage" onClick={showLoader1}>News</Link>
+              <Link to="/NewsPage" >News</Link>
             </li>
             <li className={styles.link}>
-              <Link to="/ForumPage" onClick={showLoader1}>Q&A</Link>
+              <Link to="/ForumPage" >Q&A</Link>
             </li>
             <li className={styles.link}>
-              <Link to="/Contact" onClick={showLoader1}>Contact</Link>
+              <Link to="/Contact" >Contact</Link>
             </li>
             <div className={styles.linkToLogin}>
               <button className={styles.formatToLogin}>
-                <Link to="/Login" onClick={showLoader1}>Login</Link>
+                <Link to="/Login" >Login</Link>
               </button>
             </div>
           </ul>
         </div>
       </div>
+      </>
   )
 }
 

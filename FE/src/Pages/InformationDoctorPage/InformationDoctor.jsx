@@ -29,7 +29,7 @@ function InformationDoctorPage() {
         </div>
 
         <div className={Styles.informationDoctorPage_Footer}>
-          <Footer />
+          <Footer/>
         </div>
       </Spin>
     </>

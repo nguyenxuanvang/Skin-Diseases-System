@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { signInService } from "../../services/author/auth.service";
 import "react-toastify/dist/ReactToastify.css";
 import '../Login/Login.css'
 const LoginForm = () => {
@@ -23,27 +22,29 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   
-  const handLogin = async () => {
-    try {
-      const response = await signInService(email, password);
-      const message = response.data.message;
-      const accessToken = response.data.accessToken;
-      const avatar = response.data.avatar;
-      localStorage.setItem("token", accessToken);
-      localStorage.setItem("avatar", avatar);
-      toast.success(message);
-      if (response.data.role === "user") {
-        setTimeout(() => {
-          navigate("/");
-        }, [1000]);
-      } else {
-        setTimeout(() => {
-          navigate("/admin");
-        }, [1000]);
-      }
-    } catch (error) {
-      const message = error.response.data.message;
-      toast.error(message);
+  const handleLogin = () => {
+    if (email === "admin123" && password === "123") {
+      toast.success('Login successful!');
+      
+      navigate('/menu-list'); 
+    } else {
+      toast.error('Invalid credentials. Please try again.');
+    }
+
+    if (email === "doctor123" && password === "123") {
+      toast.success('Login successful!');
+      
+      navigate('/DoctorInformationPage'); 
+    } else {
+      toast.error('Invalid credentials. Please try again.');
+    }
+
+    if (email === "user123" && password === "123") {
+      toast.success('Login successful!');
+      
+      navigate('/UserInformationPage'); 
+    } else {
+      toast.error('Invalid credentials. Please try again.');
     }
   };
 
@@ -75,7 +76,7 @@ const LoginForm = () => {
                 onChange={handChangeEmailValue}
               ></input>
               <div className="icon">
-                <img src='/images/login/email.png' style={{width: "17px", height: "17px", verticalAlign: "top"}}/>
+                <img src='/images/login/email.png' alt="" style={{width: "17px", height: "17px", verticalAlign: "top"}}/>
               </div>
             </div>
             <div className="group">
@@ -90,7 +91,7 @@ const LoginForm = () => {
                 onChange={handChangePasswordValue}
               ></input>
               <div className="icon">
-              <img src='/images/login/lock.png' style={{width: "17px", height: "17px", verticalAlign: "top"}}/>
+              <img src='/images/login/lock.png'alt="" style={{width: "17px", height: "17px", verticalAlign: "top"}}/>
               </div>
               <div className="showPassword">
                 <i
@@ -108,7 +109,7 @@ const LoginForm = () => {
               </div>
             </div>
             <div>
-              <button className="button" onClick={handLogin}>
+              <button className="button" onClick={handleLogin} >
                 Login
               </button>
             </div>

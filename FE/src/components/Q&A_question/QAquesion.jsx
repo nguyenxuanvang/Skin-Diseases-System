@@ -17,7 +17,7 @@ function QaQuestion(
                     <img src={`./images/Doctor/${avatar_QA}`} alt="" />
                 </div>
                 <div className='title_question' style={{padding:'5px 0 0 20px'}}>
-                   <Link style={{textDecoration:'none', color:'black'}}><h3>{title_question}</h3></Link>
+                   <Link to='/DetailForumPage' style={{textDecoration:'none', color:'black'}}><h3>{title_question}</h3></Link>
                     <div className='d-flex'>
                         <p style={{paddingRight:'30px'}}>{date_question}</p>
                         <p style={{paddingRight:'30px'}}><FiMessageCircle/>{number_reply}</p>

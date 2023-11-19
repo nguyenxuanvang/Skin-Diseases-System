@@ -37,7 +37,6 @@ function DetailNewsPage() {
                                 <LatestNews />
                                 <LatestNews />
                                 <LatestNews />
-                                <LatestNews />
                             </div>
                         </div>
                     </div>

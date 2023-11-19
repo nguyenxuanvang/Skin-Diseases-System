@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 import Styles from './LatestNews.module.css'
 function LatestNews(
     {
@@ -13,7 +14,7 @@ function LatestNews(
                     <img src={`./images/News/${latest_img}`} alt="" style={{ height: '50px', width: '50px' }} />
                 </div>
                 <div className={Styles.latestNews_des} style={{padding:'10px 0 0 10px'}}>
-                    {latest_des}
+                    <Link to='/DetailNewsPage' style={{textDecoration:'none', color:'black', fontWeight:'bold'}}> {latest_des} </Link>
                 </div>
             </div>
         </>

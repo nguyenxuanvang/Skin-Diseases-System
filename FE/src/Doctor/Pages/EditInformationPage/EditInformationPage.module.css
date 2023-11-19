@@ -1,0 +1,38 @@
+.editInformationPage_carrer
+{
+    margin-left: 350px;
+}
+
+.editInformationPage_list
+{
+    width:800px;
+    height: 500px;
+}
+
+
+.editInformationPage_sidebar
+{
+    position: fixed;
+    top: 20;
+    left: 0;
+    height: 100%;
+    width: 350px;
+}
+
+.list_edit
+{
+    width: 50%;
+    margin-bottom: 10px;
+    border-bottom: 2px solid red;
+}
+
+.btn_update
+{
+    height: 50px;
+    width: 200px;
+    border-radius: 20px;
+    background-color: rgb(54, 54, 214);
+    color: white;
+    font-weight: bold;
+}
+

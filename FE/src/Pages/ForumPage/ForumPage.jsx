@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import QaQuestion from '../../components/Q&A_question'
-import ImageSlider from '../../components/ImageSlider';
+import ForumSlider from './ForumSlider';
 import Footer from '../../components/Footer/Footer'
 import Reactquill from '../../components/Text_Editor';
 import { Modal, Spin } from 'antd';
@@ -34,7 +34,7 @@ function ForumPage() {
       </div>
       <Spin spinning={loading} size="large" tip="SkinDiagnoTech..." >
         <div>
-          <ImageSlider />
+          <ForumSlider />
         </div>
         <h1 className='text-center mt-3 bg-primary text-white'>Question And Answer</h1>
         <div className='create_question' style={{ width: '60%' }}>
