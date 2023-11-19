@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-const React_Quill = () => {
+const ReactQuillForm = () => {
   const [content, setContent] = useState('');
 
   const handleContentChange = (value) => {
@@ -17,4 +17,4 @@ const React_Quill = () => {
   );
 };
 
-export default React_Quill;
+export default ReactQuillForm;

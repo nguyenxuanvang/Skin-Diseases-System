@@ -6,7 +6,6 @@ import TestPage from "./Pages/TestPage";
 import InformationDoctorPage from "./Pages/InformationDoctorPage";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
-import Sidebar from "./Admin/components/Sidebar/Sidebar";
 import OverviewPage from "./Admin/Pages/OverviewPage";
 import DoctorManagementPage from "./Admin/Pages/DoctorManagementPage";
 import NewsManagementPage from "./Admin/Pages/NewsManagementPage";
@@ -14,7 +13,6 @@ import DetailNewsPage from './Pages/DetailNewsPage/DetailNewsPage';
 import DetailDoctorPage from './Pages/DetailDoctorPage';
 import ScrollToTop from './components/ScrollToTop';
 import { configRoutes } from './utils/configRoutes'
-import Header from './components/Header';
 import NewsPage from './Pages/News/NewsPage';
 import DetailForumPage from './Pages/DetailForumPage';
 import ForumPage from './Pages/ForumPage/ForumPage';
@@ -25,9 +23,6 @@ function App() {
     <>
       <div className={styles.App}>
         <ScrollToTop />
-        <div style={{ position: 'fixed', width: '100%', backgroundColor: 'white', height: '100px', top: '0', zIndex: '1' }}>
-          <Header />
-        </div>
         <div style={{ backgroundColor: 'white', marginTop: '100px' }}>
           <Routes>
             <Route
@@ -57,14 +52,8 @@ function App() {
           </Routes>
         </div>
       </div>
-      <div className="d-flex ">
-        <Sidebar />
         <div className='overview w-75 bg-white'>
         <Routes>   
-        <Route
-            path="/"
-            element={<Navigate to='/menu-list' replace={true} />}
-          /> 
           <Route path='/menu-list' element={<OverviewPage />} />
           <Route path='/doctor-management' element={<DoctorManagementPage />} />
           <Route path='/news-management' element={<NewsManagementPage />} />
@@ -79,7 +68,6 @@ function App() {
           />
         </Routes>
         </div>
-      </div>
     </>
   );
 }

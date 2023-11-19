@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, Button, Form, Input, Modal, Space, Popconfirm, Upload, message } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import React_Quill from '../Text-Editor';
+import ReactQuillForm from '../Text-Editor';
 function NewsManagement() {
   const [selectedRecord, setSelectedRecord] = React.useState(null);
   const [editFormVisible, setEditFormVisible] = React.useState(false);
@@ -136,7 +136,7 @@ function NewsManagement() {
         </Form.Item>
 
         <Form.Item label='Nội dung' name='context' rules={[{ required: true, message: 'Chưa nhập Nội dung' }]} hasFeedback>
-          <React_Quill/>
+          <ReactQuillForm/>
         </Form.Item>
 
         <Form.Item label="Upload" valuePropName="fileList">
