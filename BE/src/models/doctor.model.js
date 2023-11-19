@@ -9,7 +9,7 @@ const doctorsModel = (sequelize, DataTypes) => {
         primaryKey: true,
         allowNull: false,
       },
-      username: {
+      name: {
         type: DataTypes.STRING,
         allowNull: false
       },
@@ -23,6 +23,22 @@ const doctorsModel = (sequelize, DataTypes) => {
         allowNull: false,
       },
       role: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      position: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
+      work_location: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
+      experience: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
+      avatar: {
         type: DataTypes.STRING,
         allowNull: false
       }

@@ -8,7 +8,7 @@ const saltRounds = 10;
 
 const signUp = async (req, res, next) => {
   try {
-    const { email, username, password, isDoctor } = req.body;
+    const { email, name, password, isDoctor } = req.body;
 
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
@@ -20,7 +20,7 @@ const signUp = async (req, res, next) => {
       newMember = await Doctor.create({
         Doctor_id,
         email,
-        username,
+        name,
         password: hash,
         role: "doctor",
       });
@@ -29,7 +29,7 @@ const signUp = async (req, res, next) => {
       newMember = await User.create({
         User_id,
         email,
-        username,
+        name,
         password: hash,
         role: "user",
       });
