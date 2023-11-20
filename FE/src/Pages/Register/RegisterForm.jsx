@@ -2,71 +2,58 @@ import React from "react";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
-import Styles from "./Register.module.css";
-import { signUpService } from "../../services/author/auth.service";
-import { Button } from "@mui/material";
-import "react-toastify/dist/ReactToastify.css";
-
+import authApi from "../../redux/api/auth.slice";
+import '../Register/Register.css'
 function RegisterForm() {
   const navigate = useNavigate();
-  const [showConfirmPass, setShowConfirmPass] = useState(false);
-  const [showPass, setShowPass] = useState(false);
-  const onClickShowPassword = () => {
-    setShowPass(!showPass);
-  };
+  const [signUp] = authApi.useSignUpMutation();
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [password, setPassWord] = useState('');
+  const [confirmPassword, setConfirmPassWord] = useState('');
+  const [isDoctor, setIsDoctor] = useState(false);
 
-  const handChangeSignUpPayLoad = (event) => {
-    setSignUpPayLoad({
-      ...signUpPayLoad,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const [signUpPayLoad, setSignUpPayLoad] = useState({
-    email: "",
-    username: "",
-    password: "",
-    confirmPassword: "",
-  });
-  const [isLoading, setIsLoading] = useState(false);
-
-  const onClickShowConfirmPassword = () => {
-    setShowConfirmPass(!showConfirmPass);
-  };
-
-  const handleRegister = async () => {
-    try {
-      setIsLoading(true);
-      if (confirmPassword === password) {
-        const response = await signUpService(signUpPayLoad);
-        const message = response.data.message;
-        toast.success(message);
-        setTimeout(() => {
-          setIsLoading(false);
-          navigate("/Login");
-        }, [3000]);
-      } else {
-        toast.error("Password not match");
-      }
-    } catch (error) {
-      const message = error.response.data.message;
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    if (email === '' || name === '' || password === '' || confirmPassword === '') {
+      const message = 'Not allowed to be empty !';
       toast.error(message);
-      setIsLoading(false);
+    } else {
+      if (password === confirmPassword) {
+        const response = await signUp({
+          email,
+          name,
+          password,
+          confirmPassword,
+          isDoctor
+        })
+        if (response.error) {
+          const message = response.error.data.message;
+          toast.error(message);
+        } else {
+          const message = response.data.message;
+          toast.success(message);
+          setTimeout(() => {
+            navigate("/Login");
+          }, [500]);
+        }
+      } else {
+        const message = "Password Confirmation does not match !";
+        toast.error(message);
+      }
     }
   };
 
-  const { email, username, password, confirmPassword } = signUpPayLoad;
-
   return (
-    <div className={Styles.form}>
+    <div className="form">
       <div>
         <div>
-          <div className={Styles.title}>Sign up</div>
-          <div className={Styles.des}>
+          <div className="title">Sign up</div>
+          <div className="des">
             If you already have an account register
           </div>
           <div>
-            <div className={Styles.link}>
+            <div className="link">
               You can &nbsp;
               <Link to="/Login">Login here !</Link>
             </div>
@@ -74,7 +61,7 @@ function RegisterForm() {
         </div>
         <div>
           <form>
-            <div className={Styles.group}>
+            <div className="group">
               <label for="email">Email</label>
               <br></br>
               <input
@@ -83,24 +70,28 @@ function RegisterForm() {
                 placeholder="Enter your email address"
                 name="email"
                 value={email}
-                onChange={handChangeSignUpPayLoad}
+                onChange={(e) => { setEmail(e.target.value) }}
               ></input>
-              <div className="icon"></div>
+              <div className="icon">
+                <img src='/images/Login/email.png' alt="" style={{ width: "17px", height: "17px", verticalAlign: "top" }} />
+              </div>
             </div>
-            <div className={Styles.group}>
-              <label for="username">Username</label>
+            <div className="group">
+              <label for="username">Name</label>
               <br></br>
               <input
                 type="text"
                 id="username"
-                placeholder="Enter your User name"
+                placeholder="Enter your Name"
                 name="username"
-                value={username}
-                onChange={handChangeSignUpPayLoad}
+                value={name}
+                onChange={(e) => { setName(e.target.value) }}
               ></input>
-              <div className={Styles.icon}></div>
+              <div className="icon">
+                <img src='/images/Login/user.png' alt="" style={{ width: "17px", height: "17px", verticalAlign: "top" }} />
+              </div>
             </div>
-            <div className={Styles.group}>
+            <div className="group">
               <label for="password">Password</label>
               <br></br>
               <input
@@ -109,17 +100,13 @@ function RegisterForm() {
                 placeholder="Enter your Password"
                 name="password"
                 value={password}
-                onChange={handChangeSignUpPayLoad}
+                onChange={(e) => { setPassWord(e.target.value) }}
               ></input>
-              <div className="icon"></div>
-              <div className="showPassword">
-                <i
-                  class={showPass ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"}
-                  onClick={onClickShowPassword}
-                ></i>
+              <div className="icon">
+                <img src='/images/Login/lock.png' alt="" style={{ width: "17px", height: "17px", verticalAlign: "top" }} />
               </div>
             </div>
-            <div className={Styles.group}>
+            <div className="group">
               <label for="confirmpass">Confirm Password</label>
               <br></br>
               <input
@@ -128,24 +115,23 @@ function RegisterForm() {
                 placeholder="Confirm your Password"
                 name="confirmPassword"
                 value={confirmPassword}
-                onChange={handChangeSignUpPayLoad}
+                onChange={(e) => { setConfirmPassWord(e.target.value) }}
               ></input>
-              <div className={Styles.icon}></div>
-              <div className={Styles.showPassword}>
-                <i
-                  class={
-                    showConfirmPass
-                      ? "fa-solid fa-eye"
-                      : "fa-solid fa-eye-slash"
-                  }
-                  onClick={onClickShowConfirmPassword}
-                ></i>
+              <div className="icon">
+                <img src='/images/Login/lock.png' alt="" style={{ width: "17px", height: "17px", verticalAlign: "top" }} />
               </div>
             </div>
+            <div className="flex-row" id="rememberRegister">
+              <div className="cbRemember">
+                <input type="checkbox" checked={isDoctor}
+                  onChange={(e) => { setIsDoctor(e.target.checked) }}></input>
+              </div>
+              <div className="remember">You are a Doctor?</div>
+            </div>
             <div>
-              <Button className={Styles.button} onClick={handleRegister}>
-                {isLoading ? "Loading…" : "Register"}{" "}
-              </Button>
+              <button className="button" onClick={handleRegister}>
+                Register
+              </button>
             </div>
           </form>
         </div>

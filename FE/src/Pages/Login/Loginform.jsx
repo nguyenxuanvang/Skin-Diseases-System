@@ -1,69 +1,61 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Styles from "./Login.module.css";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { signInService } from "../../services/author/auth.service";
-import { Button } from "@mui/material";
+import authApi from "../../redux/api/auth.slice";
 import "react-toastify/dist/ReactToastify.css";
-
+import "../Login/Login.css";
 const LoginForm = () => {
-  const [show, setShow] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const onClickShowPassword = () => {
-    setShow(!show);
-  };
-
-  const handChangeEmailValue = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handChangePasswordValue = (e) => {
-    setPassword(e.target.value);
-  };
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handLogin = async () => {
-    try {
-      setIsLoading(true);
-      const response = await signInService(email, password);
-      const message = response.data.message;
-      const accessToken = response.data.accessToken;
-      const avatar = response.data.avatar;
-      localStorage.setItem("token", accessToken);
-      localStorage.setItem("avatar", avatar);
-      toast.success(message);
-      if (response.data.role === "user") {
-        setTimeout(() => {
-          setIsLoading(false);
-          navigate("/");
-        }, [3000]);
-      } else {
-        setTimeout(() => {
-          setIsLoading(false);
-          navigate("/admin");
-        }, [3000]);
-      }
-    } catch (error) {
-      const message = error.response.data.message;
+  const [login] = authApi.useLoginMutation();
+  const [email, setEmail] = useState(JSON.parse(localStorage.getItem('rememberE')) || '');
+  const [password, setPassword] = useState(JSON.parse(localStorage.getItem('rememberP')) || '');
+  const [isRemember, setIsRemember] = useState((localStorage.getItem('rememberE')) ? true : false);
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    if (email === '' || password === '') {
+      const message = 'Not allowed to be empty !';
       toast.error(message);
-      setIsLoading(false);
+    } else {
+      const response = await login({
+        email,
+        password
+      });
+      if (response.error) {
+        const message = response.error.data.message;
+        toast.error(message);
+      } else {
+        const message = response.data.message;
+        toast.success(message);
+        if(isRemember) {
+          localStorage.setItem('rememberE',JSON.stringify(email));
+          localStorage.setItem('rememberP',JSON.stringify(password));
+        } else {
+          localStorage.removeItem('rememberE');
+          localStorage.removeItem('rememberP');
+        }
+        localStorage.setItem('token',JSON.stringify(response.data.data.accessToken));
+        if (response.data.data.role === 'admin') {
+          setTimeout(() => {
+            navigate("/menu-list");
+          }, [500]);
+        } else {
+          setTimeout(() => {
+            navigate("/Home");
+          }, [500]);
+        }
+      }
     }
   };
 
   return (
-    <div className={Styles.form}>
+    <div className="form">
       <div>
         <div>
-          <div className={Styles.title}>Login</div>
-          <div className={Styles.des}>
-            If you don’t have an account register
-          </div>
+          <div className="title">Login</div>
+          <div className="des">If you don’t have an account register</div>
           <div>
-            <div className={Styles.link}>
+            <div className="link">
               You can &nbsp;
               <Link to="/Register">Register here !</Link>
             </div>
@@ -71,63 +63,64 @@ const LoginForm = () => {
         </div>
         <div>
           <form>
-            <div className={Styles.group}>
+            <div className="group">
               <label for="email">Email</label>
               <br></br>
               <input
                 type="email"
-                id={Styles.email}
+                id="email"
                 placeholder="Enter your email address"
                 name="email"
                 value={email}
-                onChange={handChangeEmailValue}
+                onChange={(e) => { setEmail(e.target.value) }}
               ></input>
-              <div className={Styles.icon}></div>
+              <div className="icon">
+                <img src='/images/login/email.png' alt="" style={{ width: "17px", height: "17px", verticalAlign: "top" }} />
+              </div>
             </div>
-            <div className={Styles.group}>
+            <div className="group">
               <label for="password">Password</label>
               <br></br>
               <input
-                type={show ? "text" : "password"}
-                id={Styles.password}
+                type="password"
+                id="password"
                 placeholder="Enter your Password"
                 name="password"
                 value={password}
-                onChange={handChangePasswordValue}
+                onChange={(e) => { setPassword(e.target.value) }}
               ></input>
-              <div className={Styles.icon} style={{ top: "34px" }}></div>
-              <div className={Styles.showPassword}>
-                <i
-                  class={show ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"}
-                  onClick={onClickShowPassword}
-                ></i>
+              <div className="icon">
+                <img src='/images/login/lock.png' alt="" style={{ width: "17px", height: "17px", verticalAlign: "top" }} />
               </div>
             </div>
-            <div className={Styles.flex_row}>
-              <div className={Styles.flex_row}>
-                <div className={Styles.cbRemember}>
-                  <input type="checkbox"></input>
+            <div className="flex-row">
+              <div className="flex-row">
+                <div className="cbRemember">
+                  <input type="checkbox" checked={isRemember} onChange={(e) => { setIsRemember(e.target.checked) }}></input>
                 </div>
-                <div className={Styles.remember}>Remember me</div>
+                <div className="remember">Remember me</div>
               </div>
-              <div className={Styles.forgotPassword}>Forgot Password ?</div>
             </div>
             <div>
-              <Button className={Styles.button} onClick={handLogin}>
-                {isLoading ? "Loading…" : "Login"}{" "}
-              </Button>
+              <button className="button" onClick={handleLogin} >
+                Login
+              </button>
             </div>
           </form>
         </div>
-        {/* <div>
-          <div className={Styles.continue}>or continue with</div>
-          <div className={Styles.google}>
+        <div>
+          <div className="continue">or continue with</div>
+          <div className="google">
             <button className="btn-gg">Sign in with Google</button>
-            <div className={Styles.icon}>
-              <img src="./images/Login/google.png" alt="" />
+            <div className="icon">
+              <img
+                src="./images/Login/google.png"
+                alt=""
+                style={{ width: "26px", height: "26px" }}
+              />
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
       <ToastContainer />
     </div>

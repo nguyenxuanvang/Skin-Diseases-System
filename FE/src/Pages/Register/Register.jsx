@@ -1,12 +1,13 @@
 import React from 'react'
 import RegisterForm from './RegisterForm'
-import Styles from './Register.module.css'
+import Header from '../../components/Header'
 function Register() {
     return (
         <>
-            <div className={Styles.container}>
+            <Header/>
+            <div className="container">
                 <RegisterForm />
-                <div className={Styles.image}>
+                <div className="image">
                     <img src='./images/Login/image.png' alt=''/>
                 </div>
             </div>

@@ -1,0 +1,30 @@
+.detailUserInformation_sidebar
+{
+    position: fixed;
+    top: 20;
+    left: 0;
+    height: 100%;
+    width: 350px;
+}
+.detailUserInformation_avatar img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #4070F4;
+}
+
+.detailUserInformation_des
+{
+    margin: 0 0 0 50px;
+    width: 350px;
+    height: 200px;
+    border: 2px solid black;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+span
+{
+    color: black;
+}

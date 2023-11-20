@@ -1,7 +1,7 @@
 import React from 'react';
-import Styles from './NewsManagement.module.css'
-import { Table, Button, Form, Input, Modal, Select, Space, Popconfirm, Upload, message } from 'antd';
+import { Table, Button, Form, Input, Modal, Space, Popconfirm, Upload, message } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
+import ReactQuillForm from '../Text-Editor';
 function NewsManagement() {
   const [selectedRecord, setSelectedRecord] = React.useState(null);
   const [editFormVisible, setEditFormVisible] = React.useState(false);
@@ -73,6 +73,8 @@ function NewsManagement() {
   const onUpdateFinish = (values) => {
     message.success('Cập nhật thành công!');
   };
+
+
   const dataSource = [
     {
       image: 'image_url_1',
@@ -105,43 +107,15 @@ function NewsManagement() {
       context: 'Donec dictum augue non odio feugiat, eu tincidunt neque tincidunt.',
     },
   ];
-  const [createForm] = Form.useForm();
   const [updateForm] = Form.useForm();
   return (
     <div>
-      <Form form={createForm} name='create-form' labelCol={{ span: 8 }} wrapperCol={{ span: 10 }} initialValues={{ remember: true }} onFinish={onFinish} autoComplete='on'>
-        <Form.Item label='Tên bài viết' name='nameContent' rules={[{ required: true, message: 'Chưa nhập Tiêu đề' }]} hasFeedback>
-          <Input />
-        </Form.Item>
-
-
-        <Form.Item label='Ngày viết bài' name='date' rules={[{ required: true, message: 'Chưa nhập Thời gian' }]} hasFeedback>
-          <Input />
-        </Form.Item>
-
-        <Form.Item label='Nội dung' name='context' rules={[{ required: true, message: 'Chưa nhập Nội dung' }]} hasFeedback>
-          <TextArea rows={4} />
-        </Form.Item>
-
-        <Form.Item label="Upload" valuePropName="fileList">
-          <Upload action="/upload.do" listType="picture-card">
-            <div>
-              <PlusOutlined />
-              <div style={{ marginTop: 8 }}>Upload</div>
-            </div>
-          </Upload>
-        </Form.Item>
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type='primary' htmlType='submit'>
-            Lưu thông tin
-          </Button>
-        </Form.Item>
-      </Form>
       <Table columns={columns} dataSource={dataSource} />;
       <Modal
+        width={1000}
         centered
         open={editFormVisible}
-        title='Cập nhật thông tin'
+        title='Cập nhật bài viết'
         onOk={() => {
           updateForm.submit();
         }}
@@ -151,7 +125,7 @@ function NewsManagement() {
         okText='Lưu thông tin'
         cancelText='Đóng'
       >
-        <Form form={updateForm} name='update-form' labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} initialValues={{ remember: true }} onFinish={onUpdateFinish} autoComplete='on'>
+        <Form form={updateForm} name='update-form' labelCol={{ span: 3 }} initialValues={{ remember: true }} onFinish={onUpdateFinish} autoComplete='on'>
         <Form.Item label='Tên bài viết' name='nameContent' rules={[{ required: true, message: 'Chưa nhập Tiêu đề' }]} hasFeedback>
           <Input />
         </Form.Item>
@@ -162,7 +136,7 @@ function NewsManagement() {
         </Form.Item>
 
         <Form.Item label='Nội dung' name='context' rules={[{ required: true, message: 'Chưa nhập Nội dung' }]} hasFeedback>
-          <TextArea rows={4} />
+          <ReactQuillForm/>
         </Form.Item>
 
         <Form.Item label="Upload" valuePropName="fileList">

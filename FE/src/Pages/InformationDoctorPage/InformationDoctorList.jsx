@@ -19,11 +19,6 @@ function InformationDoctorList({
                 <HomeDoctorList />
                 <HomeDoctorList />
             </div>
-            <div className={Styles.pagination_pageNumber}>
-                <Stack spacing={2}>
-                <Pagination count={10} variant="outlined" color="primary" classes={{ ul: Styles.paginationNumbers }} />
-                </Stack>
-            </div>
         </>
     )
 }

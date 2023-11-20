@@ -1,22 +1,26 @@
 import { useEffect, useState, useRef } from "react";
+import diseaseApi from "../../redux/api/disease.slice";
+import { useMyContext } from "../../MyContext/context";
+import { Spin } from 'antd';
 import Styles from "./TestPage.module.css";
 function TestDiagno() {
+    const { data , updateData } = useMyContext();
     const [avatar, setAvatar] = useState();
     const [uploadDescription, setUploadDescription] = useState("Upload the image");
-    const [result, setResult] = useState('');
+    const [predict, {data: result = '', isLoading}] = diseaseApi.usePredictMutation();
     const fileInputRef = useRef(null);
-
+    useEffect(()=>{
+        console.log(result);
+        updateData(result);
+    },[result])
     useEffect(() => {
         return () => avatar && URL.revokeObjectURL(avatar.preview);
     }, [avatar]);
-
     const handlePreviewAvatar = (e) => {
         const file = e.target.files[0];
-        if(file.type === 'image/png' || file.type === 'image/jpeg') {
+        if(file) {
             file.preview = URL.createObjectURL(file);
             setAvatar(file);
-        } else {
-            alert('Image invalid');
         }
     };
 
@@ -27,24 +31,21 @@ function TestDiagno() {
 
     const handleScanClick = async () => {
         if(!avatar) {
-            alert('Please Upload Image');
+            alert('Please Upload Image !');
         }
         else {
-            const formData = new FormData();
-            formData.append('image',avatar);
-            const response = await fetch('http://localhost:3000/scan',{
-                method: 'POST',
-                body: formData
-            });
-            const data =  await response.json();
-            setResult(data)
-            console.log(data);
+            if(avatar.type === 'image/jpeg' || avatar.type === 'image/png') {
+                const formData = new FormData();
+                formData.append('image',avatar);
+                predict(formData);
+            } else {
+                alert('Image Is Not Valid !');
+            }
         }
     }
-
-
     return (
         <>
+            <Spin spinning={isLoading} size="large" tip="Predicting...">
             <div className={Styles.testDiagno}>
                 {avatar && (
                     <img
@@ -70,10 +71,11 @@ function TestDiagno() {
                     Upload
                 </button>
 
-                <button className={Styles.btn_scan} onClick={handleScanClick}>
+                <button className={Styles.btn_scna} onClick={handleScanClick}>
                     Scan
                 </button>
-            </div>
+            </div>  
+            </Spin>         
         </>
     );
 }

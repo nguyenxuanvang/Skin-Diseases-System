@@ -1,8 +1,19 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+
+}
+.home
+{
+    width: 100%;
+    margin-top: 100px;
+}
 /* Home.jsx */
 .home_Introduction
 {
-    margin-top: 146px;
-    margin-left: 120px;
+    margin-top: 150px;
+    padding-left: 100px;
     width: 100%;
 }
 
@@ -30,11 +41,13 @@
     display: flex;
 }
 
+
 /* HomeNews.jsx */
 .home_news
 {
     width: 100%;
     margin-top: 30px;
+    height: 700px;
 }
 
 .home_newsHeader
@@ -57,7 +70,7 @@
 }
 .home_newsLists
 {
-    margin-left: 20px;
+    margin-left: 100px;
     margin-top: 20px;
 }
 
@@ -72,5 +85,10 @@
 }
 .contact_list
 {
-    margin-left: 17px;
+    margin-left: 100px;
+}
+
+.home_Contact
+{
+    margin-bottom: 300px;
 }

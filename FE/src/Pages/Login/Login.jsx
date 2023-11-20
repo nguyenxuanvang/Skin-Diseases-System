@@ -1,12 +1,13 @@
 import React from 'react'
 import LoginForm from './Loginform'
-import Styles from './Login.module.css'
+import Header from '../../components/Header'
 function Login() {
     return (
         <>
-            <div className={Styles.container}>
+            <Header/>
+            <div className="container">
                 <LoginForm />
-                <div className={Styles.image}>
+                <div className="image">
                     <img src='./images/Login/image.png' alt=''/>
                 </div>
             </div>

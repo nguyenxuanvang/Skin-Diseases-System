@@ -7,7 +7,7 @@
 
 .App
 {
-    width: 100%;
+    width: 100vw;
 }
 
 .header {
@@ -101,4 +101,202 @@
     text-decoration: none;
     color: black;
     font-weight: bold;
+}
+
+@media only screen and (max-width: 575px) {
+    .App{
+        max-width: 99vw;
+    }
+
+    .linkLeftColumn a{
+        font-size: 0.5em !important;
+        margin-left: 3px;
+    }
+
+    .header{
+        max-width: 99vw;
+        height: 1.8rem !important;
+        line-height: 1.5rem !important;
+    }
+
+    .header div ul li a{
+        font-size: 0.3em !important;
+    }
+
+    .header div ul li{
+        margin-left: 2px !important;
+        margin-right: 2px !important;
+    }
+
+    .header div ul li svg{
+        width: 5px;
+        height: 5px;
+        margin-bottom: 6px;
+    }
+
+    .header ul{
+        height: 2.1rem !important;
+        line-height: 2.1rem !important;
+    }
+
+    .formatToMakeappointment a{
+        font-size: 0.4em !important;
+    }
+
+    .formatToMakeappointment{
+        height: 0.8rem !important;
+        line-height: 0.1rem !important;
+        width: 5rem !important;
+        margin-bottom: 10px;
+        padding-bottom: 0px;
+    }
+
+    .formatToLogin{
+        height: 0.8rem !important;
+        line-height: 0.6rem !important;
+        width: 50px !important;
+        font-size: 0.4em !important;
+        margin-bottom: 17px;
+    }
+    .linkToLogin{
+        width: 60px !important;
+    }
+}
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+    .App{
+        max-width: 99vw;
+    }
+
+    .linkLeftColumn a{
+        font-size: 1em !important;
+    }
+
+    .header{
+        max-width: 99vw;
+        height: 3rem !important;
+        line-height: 3rem !important;
+    }
+
+    .header div ul li a{
+        font-size: 0.6em !important;
+    }
+
+    .header div ul li{
+        margin-left: 5px !important;
+        margin-right: 5px !important;
+    }
+
+    .header div ul li svg{
+        width: 12px;
+        height: 12px;
+    }
+
+    .header ul{
+        height: 3rem !important;
+        line-height: 3rem !important;
+    }
+
+    .formatToMakeappointment a{
+        font-size: 1em !important;
+    }
+
+    .formatToMakeappointment{
+        height: 2.5rem !important;
+        line-height: 2.4rem !important;
+    }
+
+    .formatToLogin{
+        height: 2.5rem !important;
+        line-height: 2.4rem !important;
+    }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .App{
+        max-width: 99vw;
+    }
+
+    .linkLeftColumn a{
+        font-size: 1em !important;
+    }
+
+    .header{
+        max-width: 99vw;
+        height: 3rem !important;
+        line-height: 3rem !important;
+    }
+
+    .header div ul li a{
+        font-size: 0.6em !important;
+    }
+
+    .header div ul li{
+        margin-left: 5px !important;
+        margin-right: 5px !important;
+    }
+
+    .header div ul li svg{
+        width: 12px;
+        height: 12px;
+    }
+
+    .header ul{
+        height: 3rem !important;
+        line-height: 3rem !important;
+    }
+
+    .formatToMakeappointment a{
+        font-size: 1em !important;
+    }
+
+    .formatToMakeappointment{
+        height: 2.5rem !important;
+        line-height: 2.4rem !important;
+    }
+
+    .formatToLogin{
+        height: 2.5rem !important;
+        line-height: 2.4rem !important;
+    }
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+    .App{
+        max-width: 99vw;
+    }
+
+    .linkLeftColumn a{
+        font-size: 1.5em !important;
+    }
+
+    .header{
+        max-width: 99vw;
+        height: 5rem !important;
+        line-height: 5rem !important;
+    }
+
+    .header div ul li a{
+        font-size: 1em !important;
+    }
+
+    .header ul{
+        height: 5rem !important;
+        line-height: 5rem !important;
+    }
+}
+@media only screen and (min-width: 1200px) and (max-width: 1999px) {
+    .App{
+        max-width: 99vw;
+    }
+
+    .header{
+        max-width: 99vw;
+    }
+}
+@media only screen and (min-width: 2000px) {
+    .App{
+        max-width: 99vw;
+    }
+
+    .header{
+        max-width: 99vw;
+    }
 }

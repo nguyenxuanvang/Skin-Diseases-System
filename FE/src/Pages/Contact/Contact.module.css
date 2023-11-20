@@ -1,0 +1,33 @@
+.contactBanner_header img
+{
+    height: 300px;
+}
+
+.contactBanner_header
+{
+    position: relative;
+}
+
+.contactBanner_title
+{
+    position: absolute;
+    top: 30%;
+    left: 10%;
+    font-size: 40px;
+    color: aliceblue;
+    font-weight: bold;
+}
+
+.contact_img
+{
+    position: relative;
+}
+
+
+.contact_img img
+{
+    position: absolute;
+    width: 36%;
+    top: 30%;
+    left: 80%;
+}

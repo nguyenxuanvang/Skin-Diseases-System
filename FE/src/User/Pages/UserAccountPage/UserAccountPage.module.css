@@ -1,0 +1,12 @@
+.userAccountPage_sidebar {
+    position: fixed;
+    top: 20;
+    left: 0;
+    height: 100%;
+    width: 350px;
+}
+
+.userAccountPage_ml350 {
+    margin-left: 550px;
+    padding-top: 50px;
+}
