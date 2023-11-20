@@ -30,6 +30,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors(corOptions));
 
+const path = require('path');
+const fs = require("fs");
+
+// Route để trả về ảnh
+// app.get('/getImage', (req, res) => {
+//   const imageName = fs.readdirSync("./src/predictImage")[0];
+//   console.log(imageName);
+//   res.sendFile(path.join(__dirname, 'predictImage',imageName));
+// });
+
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use("/doctor", doctorRouter);
