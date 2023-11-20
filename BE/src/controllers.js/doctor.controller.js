@@ -60,6 +60,7 @@ const getDoctor = async (req, res, next) => {
   }
 };
 
+
 const deleteDoctor = async (req, res, next) => {
   try {
     const { id } = req.params;

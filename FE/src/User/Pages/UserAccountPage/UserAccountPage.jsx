@@ -2,7 +2,7 @@ import React from 'react'
 import Style from './UserAccountPage.module.css'
 import Sidebar from '../../Components/Sidebar/Sidebar'
 import { Modal, message, Button, Form, Input } from 'antd';
-import Header from '../../Components/Header/Header'
+import HeaderL from '../../../components/HeaderL/Header';
 function UserAccountPage() {
 
   const [selectedRecord, setSelectedRecord] = React.useState(null);
@@ -14,9 +14,9 @@ function UserAccountPage() {
   };
   return (
     <>
-    <div style={{ position: 'fixed', width: '100%', backgroundColor: 'white', height: '100px', top: '0', zIndex: '1' }}>
-          <Header />
-        </div>
+      <div style={{ position: 'fixed', width: '100%', backgroundColor: 'white', height: '100px', top: '0', zIndex: '1' }}>
+        <HeaderL />
+      </div>
       <div className={Style.userAccountPage_sidebar}>
         <Sidebar />
       </div>
@@ -55,7 +55,7 @@ function UserAccountPage() {
             okText='Save'
             cancelText='Đóng'
           >
-            <Form form={editForm} name='edit-form' labelCol={{ span: 5 }} wrapperCol={{span: 15 }} initialValues={{ remember: true }} onFinish={onUpdateFinish} autoComplete='on'>
+            <Form form={editForm} name='edit-form' labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} initialValues={{ remember: true }} onFinish={onUpdateFinish} autoComplete='on'>
               <Form.Item label='UserName' name='nameContent'>
                 <Input />
               </Form.Item>

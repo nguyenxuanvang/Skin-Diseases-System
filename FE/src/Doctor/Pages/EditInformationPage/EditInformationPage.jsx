@@ -5,7 +5,7 @@ import Reactquill from '../../Components/Text_Editor'
 import { BsFillInfoCircleFill, BsFillBagPlusFill, BsHospitalFill, BsBookFill } from "react-icons/bs";
 import { Button, Form, Input, Upload, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import Header from '../../../Doctor/Components/Header'
+import HeaderL from '../../../components/HeaderL/Header';
 function EditInformationPage() {
 
     const [messageApi, contextHolder] = message.useMessage();
@@ -23,7 +23,7 @@ function EditInformationPage() {
     return (
         <>
             <div style={{ position: 'fixed', width: '100%', backgroundColor: 'white', height: '100px', top: '0', zIndex: '1' }}>
-                <Header />
+                <HeaderL />
             </div>
             <div className={Style.editInformationPage_sidebar}>
                 <Sidebar />
@@ -49,7 +49,10 @@ function EditInformationPage() {
                         </Form.Item>
 
                         <Form.Item label="Avatar" valuePropName="fileList" >
-                            <Upload action="/upload.do" listType="picture-card" >
+                            <Upload 
+                                action="/upload.do" 
+                                listType="picture-card"
+                                accept="image/*" >
                                 <div>
                                     <PlusOutlined />
                                     <div style={{ marginTop: 8 }}>Upload</div>

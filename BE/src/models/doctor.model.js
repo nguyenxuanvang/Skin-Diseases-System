@@ -38,6 +38,18 @@ const doctorsModel = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true
       },
+      phone: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      address: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
+      introduce: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
       avatar: {
         type: DataTypes.STRING,
         allowNull: false

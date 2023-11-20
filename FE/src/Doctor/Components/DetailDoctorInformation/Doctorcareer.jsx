@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Style from './DetailDoctorInformation.module.css';
 import {BsFillInfoCircleFill, BsFillBagPlusFill, BsHospitalFill, BsBookFill}from "react-icons/bs";
+import doctorApi from '../../../redux/api/doctor.slice';
 function DoctorCareer() {
+  const {data = {}} = doctorApi.useGetDetailDoctorQuery();
+  const [doctor, setDoctor] = useState({});
   const [activeTab, setActiveTab] = useState('pills-home');
+  
+  useEffect(()=>{
+    setDoctor(data.user);
+  },[data]);
 
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
@@ -51,21 +58,21 @@ function DoctorCareer() {
           id="pills-introduction"
           role="tabpanel"
         >
-          Nội dung giới thiệu
+          {(doctor) ? (doctor.introduce) ? doctor.introduce : "Chưa Cập Nhật": ""}
         </div>
         <div
           className={`tab-pane fade ${activeTab === 'pills-role' ? 'show active' : ''}`}
           id="pills-role"
           role="tabpanel"
         >
-          Nội dung chức vụ
+          {(doctor) ? (doctor.position) ? doctor.position : "Chưa Cập Nhật" : ""}
         </div>
         <div
           className={`tab-pane fade ${activeTab === 'pills-address' ? 'show active' : ''}`}
           id="pills-address"
           role="tabpanel"
         >
-          Nội dung địa chỉ
+          {(doctor) ? (doctor.work_address) ? doctor.work_address : "Chưa Cập Nhật" : ""}
         </div>
 
         <div
@@ -73,7 +80,7 @@ function DoctorCareer() {
           id="pills-experience"
           role="tabpanel"
         >
-          Nội dung kinh nghiệm
+          {(doctor) ? (doctor.experience) ? doctor.experience : "Chưa Cập Nhật" : ""}
         </div>
       </div>
     </div>

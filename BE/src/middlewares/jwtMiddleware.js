@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+require('dotenv').config();
 const { User, Doctor, Admin } = require("../database/sequelize");
 const auth = async (req, res, next) => {
   try {

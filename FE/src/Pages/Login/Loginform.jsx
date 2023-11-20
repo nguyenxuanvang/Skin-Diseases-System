@@ -1,50 +1,50 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import authApi from "../../redux/api/auth.slice";
 import "react-toastify/dist/ReactToastify.css";
 import "../Login/Login.css";
 const LoginForm = () => {
-  const [show, setShow] = useState(false);
-
-  const onClickShowPassword = () => {
-    setShow(!show);
-  };
-
-  const handChangeEmailValue = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handChangePasswordValue = (e) => {
-    setPassword(e.target.value);
-  };
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  
-  const handleLogin = () => {
-    if (email === "admin123" && password === "123") {
-      toast.success('Login successful!');
-      
-      navigate('/menu-list'); 
+  const [login] = authApi.useLoginMutation();
+  const [email, setEmail] = useState(JSON.parse(localStorage.getItem('rememberE')) || '');
+  const [password, setPassword] = useState(JSON.parse(localStorage.getItem('rememberP')) || '');
+  const [isRemember, setIsRemember] = useState((localStorage.getItem('rememberE')) ? true : false);
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    if (email === '' || password === '') {
+      const message = 'Not allowed to be empty !';
+      toast.error(message);
     } else {
-      toast.error('Invalid credentials. Please try again.');
-    }
-
-    if (email === "doctor123" && password === "123") {
-      toast.success('Login successful!');
-      
-      navigate('/DoctorInformationPage'); 
-    } else {
-      toast.error('Invalid credentials. Please try again.');
-    }
-
-    if (email === "user123" && password === "123") {
-      toast.success('Login successful!');
-      
-      navigate('/UserInformationPage'); 
-    } else {
-      toast.error('Invalid credentials. Please try again.');
+      const response = await login({
+        email,
+        password
+      });
+      if (response.error) {
+        const message = response.error.data.message;
+        toast.error(message);
+      } else {
+        const message = response.data.message;
+        toast.success(message);
+        if(isRemember) {
+          localStorage.setItem('rememberE',JSON.stringify(email));
+          localStorage.setItem('rememberP',JSON.stringify(password));
+        } else {
+          localStorage.removeItem('rememberE');
+          localStorage.removeItem('rememberP');
+        }
+        localStorage.setItem('token',JSON.stringify(response.data.data.accessToken));
+        if (response.data.data.role === 'admin') {
+          setTimeout(() => {
+            navigate("/menu-list");
+          }, [500]);
+        } else {
+          setTimeout(() => {
+            navigate("/Home");
+          }, [500]);
+        }
+      }
     }
   };
 
@@ -71,37 +71,32 @@ const LoginForm = () => {
                 id="email"
                 placeholder="Enter your email address"
                 name="email"
-                onChange={handChangeEmailValue}
+                value={email}
+                onChange={(e) => { setEmail(e.target.value) }}
               ></input>
               <div className="icon">
-                <img src='/images/login/email.png' alt="" style={{width: "17px", height: "17px", verticalAlign: "top"}}/>
+                <img src='/images/login/email.png' alt="" style={{ width: "17px", height: "17px", verticalAlign: "top" }} />
               </div>
             </div>
             <div className="group">
               <label for="password">Password</label>
               <br></br>
               <input
-                type={show ? "text" : "password"}
+                type="password"
                 id="password"
                 placeholder="Enter your Password"
                 name="password"
                 value={password}
-                onChange={handChangePasswordValue}
+                onChange={(e) => { setPassword(e.target.value) }}
               ></input>
               <div className="icon">
-              <img src='/images/login/lock.png'alt="" style={{width: "17px", height: "17px", verticalAlign: "top"}}/>
-              </div>
-              <div className="showPassword">
-                <i
-                  className={show ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"}
-                  onClick={onClickShowPassword}
-                ></i>
+                <img src='/images/login/lock.png' alt="" style={{ width: "17px", height: "17px", verticalAlign: "top" }} />
               </div>
             </div>
             <div className="flex-row">
               <div className="flex-row">
                 <div className="cbRemember">
-                  <input type="checkbox"></input>
+                  <input type="checkbox" checked={isRemember} onChange={(e) => { setIsRemember(e.target.checked) }}></input>
                 </div>
                 <div className="remember">Remember me</div>
               </div>

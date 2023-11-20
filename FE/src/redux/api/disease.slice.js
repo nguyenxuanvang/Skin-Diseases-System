@@ -1,4 +1,5 @@
 import apiSlice from "./api.slice";
+
 const diseaseApi = apiSlice.injectEndpoints({
     endpoints: builder => ({
         predict: builder.mutation({

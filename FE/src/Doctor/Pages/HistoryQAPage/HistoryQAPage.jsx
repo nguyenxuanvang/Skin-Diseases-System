@@ -2,12 +2,12 @@ import React from 'react'
 import Sidebar from '../../Components/Sidebar/Sidebar'
 import Style from './HistoryQAPage.module.css'
 import QAquestionDoctor from '../../Components/Q&AquestionDoctor/QAquestionDoctor'
-import Header from '../../../Doctor/Components/Header'
+import HeaderL from '../../../components/HeaderL/Header'
 function HistoryQAPage() {
   return (
     <>
       <div style={{ position: 'fixed', width: '100%', backgroundColor: 'white', height: '100px', top: '0', zIndex: '1' }}>
-        <Header />
+        <HeaderL />
       </div>
       <div className={Style.historyQAPage_sidebar}>
         <Sidebar />

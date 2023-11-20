@@ -2,7 +2,7 @@ import React from 'react'
 import Style from './DoctorAccountPage.module.css'
 import Sidebar from '../../Components/Sidebar/Sidebar'
 import { Modal, message, Button, Form, Input } from 'antd';
-import Header from '../../../Doctor/Components/Header';
+import HeaderL from '../../../components/HeaderL/Header';
 function DoctorAccountPage() {
 
   const [selectedRecord, setSelectedRecord] = React.useState(null);
@@ -15,7 +15,7 @@ function DoctorAccountPage() {
   return (
     <>
     <div style={{ position: 'fixed', width: '100%', backgroundColor: 'white', height: '100px', top: '0', zIndex: '1' }}>
-          <Header />
+          <HeaderL />
         </div>
       <div className={Style.doctorAccountPage_sidebar}>
         <Sidebar />

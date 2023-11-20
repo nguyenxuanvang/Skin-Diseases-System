@@ -9,7 +9,7 @@ function Header() {
     setSpinning(true);
     setTimeout(() => {
       setSpinning(false);
-    }, 3000);
+    }, 100);
   };
   return (
     <div className={styles.header}>
