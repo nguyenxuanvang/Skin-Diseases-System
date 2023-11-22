@@ -1,0 +1,12 @@
+.doctorAccountPage_sidebar {
+    position: fixed;
+    top: 20;
+    left: 0;
+    height: 100%;
+    width: 350px;
+}
+
+.doctorAccountPage_ml350 {
+    margin-left: 410px;
+    padding-top: 50px;
+}

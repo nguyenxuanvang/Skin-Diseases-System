@@ -1,53 +1,50 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { signInService } from "../../services/author/auth.service";
+import authApi from "../../redux/api/auth.slice";
 import "react-toastify/dist/ReactToastify.css";
 import "../Login/Login.css";
 const LoginForm = () => {
-  const [show, setShow] = useState(false);
-
-  const onClickShowPassword = () => {
-    setShow(!show);
-  };
-
-  const handChangeEmailValue = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handChangePasswordValue = (e) => {
-    setPassword(e.target.value);
-  };
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handLogin = async () => {
-    try {
-      const response = await signInService(email, password);
-      const message = response.data.message;
-      const accessToken = response.data.accessToken;
-      const avatar = response.data.avatar;
-      localStorage.setItem("token", accessToken);
-      localStorage.setItem("avatar", avatar);
-      toast.success(message);
-      if (response.data.role === "user") {
-        setTimeout(() => {
-          navigate("/");
-        }, [1000]);
-      } else if (response.data.role === "doctor") {
-        setTimeout(() => {
-          navigate("/doctor");
-        }, [1000]);
-      } else {
-        setTimeout(() => {
-          navigate("/admin");
-        });
-      }
-    } catch (error) {
-      const message = error.response.data.message;
+  const [login] = authApi.useLoginMutation();
+  const [email, setEmail] = useState(JSON.parse(localStorage.getItem('rememberE')) || '');
+  const [password, setPassword] = useState(JSON.parse(localStorage.getItem('rememberP')) || '');
+  const [isRemember, setIsRemember] = useState((localStorage.getItem('rememberE')) ? true : false);
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    if (email === '' || password === '') {
+      const message = 'Not allowed to be empty !';
       toast.error(message);
+    } else {
+      const response = await login({
+        email,
+        password
+      });
+      if (response.error) {
+        const message = response.error.data.message;
+        toast.error(message);
+      } else {
+        const message = response.data.message;
+        toast.success(message);
+        if(isRemember) {
+          localStorage.setItem('rememberE',JSON.stringify(email));
+          localStorage.setItem('rememberP',JSON.stringify(password));
+        } else {
+          localStorage.removeItem('rememberE');
+          localStorage.removeItem('rememberP');
+        }
+        localStorage.setItem('token',JSON.stringify(response.data.data.accessToken));
+        if (response.data.data.role === 'admin') {
+          setTimeout(() => {
+            navigate("/menu-list");
+          }, [500]);
+        } else {
+          setTimeout(() => {
+            navigate("/Home");
+          }, [500]);
+        }
+      }
     }
   };
 
@@ -74,57 +71,38 @@ const LoginForm = () => {
                 id="email"
                 placeholder="Enter your email address"
                 name="email"
-                onChange={handChangeEmailValue}
+                value={email}
+                onChange={(e) => { setEmail(e.target.value) }}
               ></input>
               <div className="icon">
-                <img
-                  src="/images/login/email.png"
-                  style={{
-                    width: "17px",
-                    height: "17px",
-                    verticalAlign: "top",
-                  }}
-                />
+                <img src='/images/login/email.png' alt="" style={{ width: "17px", height: "17px", verticalAlign: "top" }} />
               </div>
             </div>
             <div className="group">
               <label for="password">Password</label>
               <br></br>
               <input
-                type={show ? "text" : "password"}
+                type="password"
                 id="password"
                 placeholder="Enter your Password"
                 name="password"
                 value={password}
-                onChange={handChangePasswordValue}
+                onChange={(e) => { setPassword(e.target.value) }}
               ></input>
               <div className="icon">
-                <img
-                  src="/images/login/lock.png"
-                  style={{
-                    width: "17px",
-                    height: "17px",
-                    verticalAlign: "top",
-                  }}
-                />
-              </div>
-              <div className="showPassword">
-                <i
-                  className={show ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"}
-                  onClick={onClickShowPassword}
-                ></i>
+                <img src='/images/login/lock.png' alt="" style={{ width: "17px", height: "17px", verticalAlign: "top" }} />
               </div>
             </div>
             <div className="flex-row">
               <div className="flex-row">
                 <div className="cbRemember">
-                  <input type="checkbox"></input>
+                  <input type="checkbox" checked={isRemember} onChange={(e) => { setIsRemember(e.target.checked) }}></input>
                 </div>
                 <div className="remember">Remember me</div>
               </div>
             </div>
             <div>
-              <button className="button" onClick={handLogin}>
+              <button className="button" onClick={handleLogin} >
                 Login
               </button>
             </div>

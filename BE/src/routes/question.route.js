@@ -26,7 +26,6 @@ questionRoute
     auth,
     createQuestion
   )
-
   .get(
     auth,
     getQuestions

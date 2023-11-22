@@ -2,7 +2,7 @@ const { User, Doctor, Admin } = require("../database/sequelize");
 
 const checkValidate = async (req, res, next) => {
   try {
-    const { email, username, password } = req.body;
+    const { email, name, password } = req.body;
     if (email) {
       const emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
       if (!emailRegex.test(email)) {
@@ -19,18 +19,18 @@ const checkValidate = async (req, res, next) => {
         return res.status(400).json({
           status: 400,
           message:
-            "Password must contain at least one uppercase letter, one lowercase letter, one digit, and be at least 8 characters long",
+            "Password must contain at least one uppercase letter, one lowercase letter, and be at least 8 characters long",
         });
       }
     }
-
-    if (username) {
-      const usernameRegex = /^[a-zA-Z0-9]{8,20}$/;
-      if (!usernameRegex.test(username)) {
+    
+    if (name) {
+      const nameRegex = /^[a-zA-Z\sĐđÀ-ỹẰằẮắẲẳẴẵẶặẤấẦầẨẩẪẫẬậỀềỂểỄễỆệỈỉỊị]{5,20}$/;
+      if (!nameRegex.test(name)) {
         return res.status(400).json({
           status: 400,
           message:
-            "Invalid username format. Usernames must be 8 to 20 characters long and can only contain letters, numbers",
+            "Invalid name format. Name must be 5 to 20 characters long and can only contain letters",
         });
       }
     }

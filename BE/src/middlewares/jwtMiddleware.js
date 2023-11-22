@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+require('dotenv').config();
 const { User, Doctor, Admin } = require("../database/sequelize");
 const auth = async (req, res, next) => {
   try {
@@ -24,6 +25,7 @@ const auth = async (req, res, next) => {
       });
     }
     if (!roles.includes(data.role)) {
+      
       return res.status(403).json({
         status: 403,
         message: "Unauthorized access to this resource !",
@@ -40,6 +42,7 @@ const auth = async (req, res, next) => {
       return next();
     }
     if (data.role === "doctor") {
+      
       let doctor = await Doctor.findOne({
         where: {
           Doctor_id: data.Doctor_id,

@@ -11,6 +11,7 @@ const createQuestion = async (req, res, next) => {
       Content,
       User_id,
       Doctor_id,
+      num_comments: 0
     });
     return res.status(200).json({
       status: 200,

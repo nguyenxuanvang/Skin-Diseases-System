@@ -9,7 +9,7 @@ const userModel = (sequelize, DataTypes) => {
         primaryKey: true,
         allowNull: false,
       },
-      username: {
+      name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -26,6 +26,10 @@ const userModel = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      avatar: {
+        type: DataTypes.STRING,
+        allowNull: false
+      }
     },
     {
       timestamps: true,

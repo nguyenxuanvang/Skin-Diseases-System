@@ -17,6 +17,10 @@ const questionsModel = (sequelize, DataTypes) => {
       Doctor_id: {
         type: DataTypes.STRING,
       },
+      num_comments: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      }
     },
     {
       timestamps: true,

@@ -8,7 +8,7 @@ const saltRounds = 10;
 
 const signUp = async (req, res, next) => {
   try {
-    const { email, username, password, isDoctor } = req.body;
+    const { email, name, password, isDoctor } = req.body;
 
     const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(password, salt);
@@ -20,30 +20,25 @@ const signUp = async (req, res, next) => {
       newMember = await Doctor.create({
         Doctor_id,
         email,
-        username,
+        name,
         password: hash,
         role: "doctor",
+        avatar: 'doctor.png'
       });
     } else {
       const User_id = uuidv4();
       newMember = await User.create({
         User_id,
         email,
-        username,
+        name,
         password: hash,
         role: "user",
+        avatar: 'user.png'
       });
     }
 
-    // const { password: anotherPassword, ...result } = newMember.get({
-    //   plain: true,
-    // });
-
     res.status(200).json({
       status: 200,
-      data: {
-        newMember,
-      },
       message: "Create New Member Successfully !",
     });
   } catch (error) {
@@ -75,7 +70,6 @@ const login = async (req, res, next) => {
     }
 
     let accessToken;
-
     if (user.role === 'user') {
       accessToken = jwt.sign(
         {
@@ -104,12 +98,11 @@ const login = async (req, res, next) => {
         { expiresIn: 3 * 30 * 24 * 60 * 60 }
       );
     }
-
     return res.status(200).json({
       status: 200,
       data: {
         accessToken,
-        user,
+        role: user.role
       },
       message: "Login Successfully",
     });
