@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { BsFillBellFill } from 'react-icons/bs'
 import styles from './Header.module.css'
 import { Spin } from 'antd';
-import personalApi from '../../redux/api/personalApi.slice';
+import personalApi from '../../redux/api/personal.slice';
 function HeaderL() {
   const [user, setUser] = useState({});
   const {data = {}} = personalApi.useGetDetailInforQuery();

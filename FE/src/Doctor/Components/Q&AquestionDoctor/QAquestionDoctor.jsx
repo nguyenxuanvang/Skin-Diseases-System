@@ -4,25 +4,20 @@ import Styles from './QAquestionDoctor.module.css'
 import { FiMessageCircle } from "react-icons/fi";
 import { AiOutlineRight } from "react-icons/ai";
 
-function QAquestionDoctor(
-    {
-    avatar_doctor_QA = 'doctor_img_1.png',
-    title_question = 'Nội dung 1',
-    date_question = '13/11/2023',
-    number_reply = '1'
-}
-) {
+function QAquestionDoctor({item,info}) {
+    const date = new Date(item.createdAt);
+    const newDate = String(date.getFullYear())+ '-' + String(date.getMonth()+1)+ '-' + String(date.getDate());
     return (
         <>
             <div className='d-flex' style={{margin:'50px 0 0 100px'}}>
                 <div className={Styles.avatar_question}>
-                    <img src={`./images/Doctor/${avatar_doctor_QA}`} alt="" />
+                    <img src={`http://localhost:3000/detail/image/${info.user.avatar}`} alt="" />
                 </div>
                 <div className='title_question' style={{padding:'5px 0 0 20px'}}>
-                   <Link to='/DetailForumPage' style={{textDecoration:'none', color:'black'}}><h3>{title_question}</h3></Link>
+                   <Link to='/DetailForumPage' style={{textDecoration:'none', color:'black'}}><h3>{item.Content}</h3></Link>
                     <div className='d-flex'>
-                        <p style={{paddingRight:'30px'}}>{date_question}</p>
-                        <p style={{paddingRight:'30px'}}><FiMessageCircle/>{number_reply}</p>
+                        <p style={{paddingRight:'30px'}}>{newDate}</p>
+                        <p style={{paddingRight:'30px'}}><FiMessageCircle/>{item.num_comments}</p>
                         <Link to='/DetailForumPage' style={{textDecoration:'none', color:'black', fontWeight:'bold'}}>See More<AiOutlineRight /></Link>
                     </div>
                 </div>

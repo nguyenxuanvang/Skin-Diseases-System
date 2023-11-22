@@ -27,6 +27,8 @@ const createComment = async (req, res, next) => {
       Doctor_id,
       Question_id: id
     });
+    question.num_comments += 1;
+    await question.save();
 
     return res.status(200).json({
       status: 200,
@@ -111,8 +113,14 @@ const deleteCommentQuestion = async (req, res, next) => {
         message: "Comment Not Found !",
       });
     }
-
+    const question = await Questions.findOne({
+      where: {
+        Question_id: comment.Question_id,
+      },
+    });
     await comment.destroy();
+    question.num_comments -= 1;
+    await question.save();
 
     return res.status(200).json({
       status: 200,

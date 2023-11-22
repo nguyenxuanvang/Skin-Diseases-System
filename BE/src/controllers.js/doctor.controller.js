@@ -84,6 +84,7 @@ const updateDoctor = async (req, res, next) => {
     const { 
       email,
       password,
+      oldPassword,
       name,
       position,
       work_location,
@@ -125,7 +126,14 @@ const updateDoctor = async (req, res, next) => {
 
       user.email = email;
     }
-    if (password) {
+    if (oldPassword) {
+      const isValidPassword = bcrypt.compareSync(oldPassword, user.password);
+      if(!isValidPassword) {
+        return res.status(400).json({
+          status: 400,
+          message: "Old Password Incorrect !"
+        });
+      }
       const salt = bcrypt.genSaltSync(saltRounds);
       const hash = bcrypt.hashSync(password, salt);
       user.password = hash;

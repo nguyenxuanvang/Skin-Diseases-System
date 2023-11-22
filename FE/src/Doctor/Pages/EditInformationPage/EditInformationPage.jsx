@@ -4,22 +4,34 @@ import Style from './EditInformationPage.module.css';
 import Sidebar from '../../Components/Sidebar/Sidebar';
 import { Avatar, Button, Form, Input, Upload, message } from 'antd';
 import { ToastContainer, toast } from "react-toastify";
-import personalApi from '../../../redux/api/personalApi.slice';
-import { useNavigate } from "react-router-dom";
+import personalApi from '../../../redux/api/personal.slice';
 import HeaderL from '../../../components/HeaderL/Header';
+
 function EditInformationPage() {
     const { data = {} } = personalApi.useGetDetailInforQuery();
     const [updateDoctor] = personalApi.useUpdateDoctorMutation();
-    const [doctor, setDoctor] = useState({});
-    const navigate = useNavigate();
+    const [updateAvatar] = personalApi.useUpdateImageMutation();
     const [form] = Form.useForm();
     const [avatar, setAvatar] = useState();
     const [uploadDescription, setUploadDescription] = useState("Upload Image");
     const fileInputRef = useRef(null);
+    const [name, setName] = useState("");
+    const [phone, setPhone] = useState("");
+    const [address, setAddress] = useState("");
+    const [work_location, setWorkLocation] = useState("");
+    const [position, setPosition] = useState("");
+    const [introduce, setIntroduce] = useState("");
+    const [experience, setExperience] = useState("");
 
     useEffect(() => {
-        setDoctor(data.user);
-    }, [data]);
+        setName(data.user?.name);
+        setPhone(data.user?.phone);
+        setAddress(data.user?.address);
+        setWorkLocation(data.user?.work_location);
+        setPosition(data.user?.position);
+        setIntroduce(data.user?.introduce);
+        setExperience(data.user?.experience);
+    }, [data?.user]);
     useEffect(() => {
         return () => avatar && URL.revokeObjectURL(avatar.preview);
     }, [avatar]);
@@ -37,17 +49,39 @@ function EditInformationPage() {
         fileInputRef.current.click();
     };
 
+
     const handleOnUpdate = async () => {
-        const values = await form.validateFields();
-        const response = await updateDoctor({
-                name: values.name,
-                position: values.position,
-                work_location: values.work_location,
-                experience: values.experience,
-                phone: values.phone,
-                address: values.address,
-                introduce: values.introduce
-             });
+        form.validateFields().then(()=>{
+            updateDoctor({
+                name,
+                position,
+                work_location,
+                experience,
+                phone,
+                address,
+                introduce
+            }).then((response) => {
+                if(avatar) {
+                    if(avatar.type === 'image/jpeg' || avatar.type === 'image/png') {
+                        const formData = new FormData();
+                        formData.append('avatar',avatar);
+                        updateAvatar(formData).then(() => {
+                            toast.success("Upload Successfully !");
+                        })
+                    } else {
+                        toast.error("Image Is Not Valid !");
+                    }
+                } else {
+                    toast.success(response.data.message);
+                }
+                
+            }).catch((error) => {
+                toast.error(error.message);
+            })
+        }).catch(()=>{
+            toast.error('Invalid Form');
+        })
+        
     };
 
     return (
@@ -66,56 +100,72 @@ function EditInformationPage() {
                         fields={[
                             {
                                 name: ["name"],
-                                value: (doctor) ? doctor.name : ""
+                                value: name
                             },
                             {
                                 name: ["phone"],
-                                value: (doctor) ? doctor.phone : ""
+                                value: phone
                             },
                             {
                                 name: ["address"],
-                                value: (doctor) ? doctor.address : ""
+                                value: address
                             },
                             {
                                 name: ["work_location"],
-                                value: (doctor) ? doctor.work_location : ""
+                                value: work_location
                             },
                             {
                                 name: ["position"],
-                                value: (doctor) ? doctor.position : ""
+                                value: position
                             },
                             {
                                 name: ["introduce"],
-                                value: (doctor) ? doctor.introduce : ""
+                                value: introduce
                             },
                             {
                                 name: ["experience"],
-                                value: (doctor) ? doctor.experience : ""
+                                value: experience
                             }
-                        ]} style={{ flex: 5 }} name='form' labelCol={{ span: 5 }} wrapperCol={{ span: 12 }}>
-                        <Form.Item label='Tên bác sĩ' name='name' rules={[{ required: true, message: 'Tên Không Được Phép Bỏ Trống' }]} hasFeedback>
-                            <Input />
+                        ]}
+                        style={{ flex: 5 }} name='form' labelCol={{ span: 5 }} wrapperCol={{ span: 12 }}>
+                        <Form.Item
+                            label='Tên bác sĩ'
+                            name='name'
+                            rules={[
+                                { required: true, message: 'Tên Không Được Phép Bỏ Trống' },
+                                { min: 5, message: 'Độ Dài Tên Phải Từ 5 Đến 20 Kí Tự' },
+                                { pattern: /^[a-zA-Z\sĐđÀ-ỹẰằẮắẲẳẴẵẶặẤấẦầẨẩẪẫẬậỀềỂểỄễỆệỈỉỊị]+$/, message: 'Tên Chỉ Được Phép Chứa Chữ Cái Và Dấu Khoảng Trắng' }
+                            ]}
+                            hasFeedback>
+                            <Input onChange={(e)=>setName(e.target.value)}/>
                         </Form.Item>
 
-                        <Form.Item label='Số điện thoại' name='phone' hasFeedback>
-                            <Input />
+                        <Form.Item 
+                            label='Số điện thoại'
+                            name='phone'
+                            rules={[
+                                {pattern: /^0[0-9]{8,10}$/, message: 'Số Điện Thoại Không Hợp Lệ'}
+                            ]} 
+                            hasFeedback>
+                            <Input onChange={(e)=>setPhone(e.target.value)}/>
                         </Form.Item>
 
                         <Form.Item label='Địa chỉ' name='address' hasFeedback>
-                            <Input />
+                            <Input onChange={(e)=>setAddress(e.target.value)}/>
                         </Form.Item>
 
                         <Form.Item label='Địa chỉ công tác' name='work_location' hasFeedback>
-                            <Input />
+                            <Input onChange={(e)=>setWorkLocation(e.target.value)}/>
                         </Form.Item>
 
                         <Form.Item label='Chức vụ' name='position' hasFeedback>
-                            <Input />
+                            <Input onChange={(e)=>setPosition(e.target.value)}/>
                         </Form.Item>
                         <Form.Item label='Giới thiệu' name='introduce' hasFeedback>
                             <textarea
                                 rows="3"
                                 cols="43"
+                                onChange={(e)=>setIntroduce(e.target.value)}
                                 placeholder="Nhập nội dung giới thiệu..."
                             />
                         </Form.Item>
@@ -124,15 +174,17 @@ function EditInformationPage() {
                             <textarea
                                 rows="2"
                                 cols="43"
+                                onChange={(e)=>setExperience(e.target.value)}
                                 placeholder="Nhập nội dung kinh nghiệm..."
                             />
                         </Form.Item>
                     </Form>
+                            
                     <div style={{ flex: 1 }}>
                         <div className={Style.testDiagno}>
                             <img
                                 style={{ marginTop: 8, height: "100%", width: "100%" }}
-                                src={(avatar) ? avatar.preview : `http://localhost:3000/detail/image/${(doctor) ? doctor.avatar : ""}`}
+                                src={(avatar) ? avatar.preview : `http://localhost:3000/detail/image/${data?.user?.avatar}`}
                                 alt=""
                                 height="500px"
                                 width="80%"

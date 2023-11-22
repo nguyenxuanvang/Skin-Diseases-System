@@ -20,11 +20,11 @@ const Sidebar = () => {
           style={{ width:'300px', height: '100%' }}
       >
         <Menu.SubMenu key="sub1" icon={<AiOutlineSolution />} title="Profile" style={{fontSize:20, color:'black'}}>
-          <Menu.Item key="2">
+          <Menu.Item key="1">
             <Link to="/DetailDoctorInformation" style={{fontSize:15, color:'black'}}>Personal Information</Link>
           </Menu.Item>
 
-          <Menu.Item key="sub2">
+          <Menu.Item key="2">
             <Link to="/EditInformationPage" style={{fontSize:15, color:'black'}}>Edit</Link>
           </Menu.Item>
         </Menu.SubMenu>
