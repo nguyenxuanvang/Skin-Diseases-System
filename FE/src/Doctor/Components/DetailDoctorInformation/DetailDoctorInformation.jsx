@@ -5,9 +5,9 @@ import { FaPhoneAlt, FaAddressCard, FaMailBulk } from "react-icons/fa";
 import { Spin } from 'antd';
 import Doctorcareer from './Doctorcareer';
 import HeaderL from '../../../components/HeaderL/Header';
-import doctorApi from '../../../redux/api/doctor.slice';
+import personalApi from '../../../redux/api/personal.slice';
 function DetailDoctorInformation() {
-  const {data = {}} = doctorApi.useGetDetailDoctorQuery();
+  const {data = {}} = personalApi.useGetDetailInforQuery();
   const [doctor, setDoctor] = useState({});
   useEffect(()=>{
     setDoctor(data.user);

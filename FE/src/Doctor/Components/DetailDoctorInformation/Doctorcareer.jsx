@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Style from './DetailDoctorInformation.module.css';
 import {BsFillInfoCircleFill, BsFillBagPlusFill, BsHospitalFill, BsBookFill}from "react-icons/bs";
-import doctorApi from '../../../redux/api/doctor.slice';
+import personalApi from '../../../redux/api/personal.slice';
 function DoctorCareer() {
-  const {data = {}} = doctorApi.useGetDetailDoctorQuery();
+  const {data = {}} = personalApi.useGetDetailInforQuery();
   const [doctor, setDoctor] = useState({});
   const [activeTab, setActiveTab] = useState('pills-home');
   
@@ -72,7 +72,7 @@ function DoctorCareer() {
           id="pills-address"
           role="tabpanel"
         >
-          {(doctor) ? (doctor.work_address) ? doctor.work_address : "Chưa Cập Nhật" : ""}
+          {(doctor) ? (doctor.work_location) ? doctor.work_location : "Chưa Cập Nhật" : ""}
         </div>
 
         <div

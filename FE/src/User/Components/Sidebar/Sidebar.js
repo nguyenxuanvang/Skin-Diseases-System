@@ -2,10 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import { AiOutlineSolution, AiOutlineBarChart, AiOutlineSnippets  } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 import Styles from './Sidebar.module.css'
 
-const Sidebar = (
-) => {
+const Sidebar = () => {
+  const navigate = useNavigate();
+  const logout = () => {
+    localStorage.removeItem('token');
+    navigate("/login");
+  }
   return (
     <div style={{height:'100vh', position:'fixed'}}>
       <Menu
@@ -20,7 +25,7 @@ const Sidebar = (
           </Menu.Item>
 
           <Menu.Item key="3">
-            <Link to="/EditInformationPage" style={{fontSize:15, color:'black'}}>Edit</Link>
+            <Link to="/UserEditInformationPage" style={{fontSize:15, color:'black'}}>Edit</Link>
           </Menu.Item>
         </Menu.SubMenu>
 
@@ -35,6 +40,9 @@ const Sidebar = (
             <Link to="/HistoryUserQAPage" style={{fontSize:15, color:'black'}}>History</Link>
           </Menu.Item>
         </Menu.SubMenu>
+        <div style={{display:'flex',justifyContent:'center',marginTop: '15px'}}>
+          <button onClick={logout}>Đăng Xuất</button>
+        </div>
       </Menu>
     </div>
   );

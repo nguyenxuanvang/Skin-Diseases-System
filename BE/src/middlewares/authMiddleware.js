@@ -19,13 +19,13 @@ const checkValidate = async (req, res, next) => {
         return res.status(400).json({
           status: 400,
           message:
-            "Password must contain at least one uppercase letter, one lowercase letter, one digit, and be at least 8 characters long",
+            "Password must contain at least one uppercase letter, one lowercase letter, and be at least 8 characters long",
         });
       }
     }
-
+    
     if (name) {
-      const nameRegex = /^[a-zA-Z ]{8,20}$/;
+      const nameRegex = /^[a-zA-Z\sĐđÀ-ỹẰằẮắẲẳẴẵẶặẤấẦầẨẩẪẫẬậỀềỂểỄễỆệỈỉỊị]{5,20}$/;
       if (!nameRegex.test(name)) {
         return res.status(400).json({
           status: 400,

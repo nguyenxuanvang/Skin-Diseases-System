@@ -1,6 +1,6 @@
 import React from 'react'
-import Style from './DoctorInformationPage.module.css'
-import Sidebar from '../../Components/Sidebar/Sidebar'
+import Style from './DoctorInformationPage.module.css';
+import Sidebar from '../../Components/Sidebar/Sidebar';
 import DetailDoctorInformation from '../../Components/DetailDoctorInformation/DetailDoctorInformation'
 import HeaderL from '../../../components/HeaderL/Header'
 function DoctorInformationPage() {

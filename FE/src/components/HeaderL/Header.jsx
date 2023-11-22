@@ -3,13 +3,15 @@ import { Link } from 'react-router-dom';
 import { BsFillBellFill } from 'react-icons/bs'
 import styles from './Header.module.css'
 import { Spin } from 'antd';
-import doctorApi from '../../redux/api/doctor.slice';
+import personalApi from '../../redux/api/personal.slice';
 function HeaderL() {
-  const {data = {}} = doctorApi.useGetDetailDoctorQuery();
-  const [doctor, setDoctor] = useState({});
+  const [user, setUser] = useState({});
+  const {data = {}} = personalApi.useGetDetailInforQuery();
+ 
   useEffect(()=>{
-    setDoctor(data.user);
+    setUser(data.user);
   },[data]);
+
   return (
     <div className={styles.header}>
       <div className={styles.linkLeftColumn}>
@@ -37,8 +39,8 @@ function HeaderL() {
           </li>
           <li className={styles.linkToLogin}>
             <div className={styles.avatar_question}>
-              <Link to={(doctor) ? (doctor.role === 'doctor') ? '/DoctorInformationPage' : '/UserInformationPage' : ''}>
-                {(doctor) ? <img src={`http://localhost:3000/detail/image/${doctor.avatar}`} alt="" /> : ''}
+              <Link to={(user) ? (user.role === 'doctor') ? '/DoctorInformationPage' : '/UserInformationPage' : ''}>
+                {(user) ? <img src={`http://localhost:3000/detail/image/${user.avatar}`} alt="" /> : ''}
               </Link>
             </div>
           </li>
