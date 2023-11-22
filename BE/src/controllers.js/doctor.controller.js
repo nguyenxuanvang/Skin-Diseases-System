@@ -81,7 +81,24 @@ const deleteDoctor = async (req, res, next) => {
 const updateDoctor = async (req, res, next) => {
   try {
     const { user } = req;
-    const { email, password, username } = req.body;
+    const { 
+      email,
+      password,
+      name,
+      position,
+      work_location,
+      experience,
+      phone,
+      address,
+      introduce
+    } = req.body;
+    user.name = name || user.name;
+    user.position = position || user.position;
+    user.work_location = work_location || user.work_location;
+    user.experience = experience || user.experience;
+    user.phone = phone || user.phone;
+    user.address = address || user.address;
+    user.introduce = introduce || user.introduce;
 
     if (email) {
       let findDoctor = await Doctor.findOne({
@@ -108,18 +125,22 @@ const updateDoctor = async (req, res, next) => {
 
       user.email = email;
     }
-    user.email = email || user.email;
     if (password) {
       const salt = bcrypt.genSaltSync(saltRounds);
       const hash = bcrypt.hashSync(password, salt);
       user.password = hash;
     }
-    user.username = username || user.username;
     await Doctor.update(
       {
         email: user.email,
         password: user.password,
-        username: user.username,
+        name: user.name,
+        position: user.position,
+        work_location: user.work_location,
+        experience: user.experience,
+        phone: user.phone,
+        address: user.address,
+        introduce: user.introduce
       },
       {
         where: {
@@ -128,9 +149,7 @@ const updateDoctor = async (req, res, next) => {
       });
     return res.status(200).json({
       status: 200,
-      data: {
-        newDoctor: user
-      },
+      data: user,
       message: "Updated Successfully !",
     });
   } catch (error) {

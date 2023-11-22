@@ -9,13 +9,16 @@ function TestDiagno() {
     const [uploadDescription, setUploadDescription] = useState("Upload the image");
     const [predict, {data: result = '', isLoading}] = diseaseApi.usePredictMutation();
     const fileInputRef = useRef(null);
+
     useEffect(()=>{
         console.log(result);
         updateData(result);
     },[result])
+
     useEffect(() => {
         return () => avatar && URL.revokeObjectURL(avatar.preview);
     }, [avatar]);
+
     const handlePreviewAvatar = (e) => {
         const file = e.target.files[0];
         if(file) {

@@ -5,10 +5,17 @@ import Footer from '../../components/Footer/Footer'
 import Reactquill from '../../components/Text_Editor';
 import { Modal, Spin } from 'antd';
 import Header from '../../components/Header';
+import HeaderL from '../../components/HeaderL/Header';
 function ForumPage() {
-
   const [visibleQuestions, setVisibleQuestions] = useState(8);
   const [showForm, setShowForm] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(()=>{
+    if(localStorage.getItem('token')) {
+      setIsLogin(true);
+    }
+  },[]);
 
   const showMoreQuestions = () => {
     setVisibleQuestions((prev) => prev + 5);
@@ -18,21 +25,13 @@ function ForumPage() {
     setShowForm((prevShowForm) => !prevShowForm);
   };
 
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <>
       <div style={{ position: 'fixed', width: '100%', backgroundColor: 'white', height: '100px', top: '0', zIndex: '1' }}>
-        <Header />
+        {(isLogin) ? <HeaderL/> : <Header/>}
       </div>
-      <Spin spinning={loading} size="large" tip="SkinDiagnoTech..." >
+      {/* <Spin spinning={loading} size="large" tip="SkinDiagnoTech..." > */}
         <div>
           <ForumSlider />
         </div>
@@ -81,7 +80,7 @@ function ForumPage() {
         <div style={{ marginTop: 50 }}>
           <Footer />
         </div>
-      </Spin>
+      {/* </Spin> */}
     </>
   )
 }

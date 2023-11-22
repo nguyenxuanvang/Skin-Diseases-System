@@ -54,7 +54,6 @@ const doctorsModel = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false
       }
-    
     },
     {
       timestamps: true,

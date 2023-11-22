@@ -5,9 +5,9 @@ import Sidebar from '../Sidebar/Sidebar'
 import { FaPhoneAlt, FaAddressCard, FaMailBulk } from "react-icons/fa";
 import { Spin } from 'antd';
 import HeaderL from '../../../components/HeaderL/Header';
-import doctorApi from '../../../redux/api/doctor.slice';
+import personalApi from '../../../redux/api/personalApi.slice';
 function DetailUserInformation() {
-  const {data = {}} = doctorApi.useGetDetailDoctorQuery();
+  const {data = {}} = personalApi.useGetDetailInforQuery();
   const [user, setUser] = useState({});
   useEffect(()=>{
     setUser(data.user);

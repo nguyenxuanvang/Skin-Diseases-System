@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Style from './DetailDoctorInformation.module.css';
 import {BsFillInfoCircleFill, BsFillBagPlusFill, BsHospitalFill, BsBookFill}from "react-icons/bs";
-import doctorApi from '../../../redux/api/doctor.slice';
+import personalApi from '../../../redux/api/personalApi.slice';
 function DoctorCareer() {
-  const {data = {}} = doctorApi.useGetDetailDoctorQuery();
+  const {data = {}} = personalApi.useGetDetailInforQuery();
   const [doctor, setDoctor] = useState({});
   const [activeTab, setActiveTab] = useState('pills-home');
   

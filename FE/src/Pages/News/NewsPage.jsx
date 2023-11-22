@@ -6,22 +6,19 @@ import NewsType from './NewsType'
 import Footer from '../../components/Footer/Footer'
 import { Spin } from 'antd';
 import Header from '../../components/Header';
+import HeaderL from '../../components/HeaderL/Header';
 function NewsPage() {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-    return () => clearTimeout(timer);
-  }, []);
-
+  const [isLogin, setIsLogin] = useState(false);
+  useEffect(()=>{
+    if(localStorage.getItem('token')) {
+      setIsLogin(true);
+    }
+  },[]);
   return (
     <>
       <div style={{ position: 'fixed', width: '100%', backgroundColor: 'white', height: '100px', top: '0', zIndex: '1' }}>
-        <Header />
+        {(isLogin) ? <HeaderL/> : <Header/>}
       </div>
-      <Spin spinning={loading} size="large">
         <div className={Styles.newsPage_banner}>
           <NewsBanner />
         </div>
@@ -38,7 +35,6 @@ function NewsPage() {
         <div className={Styles.newsPage_footer}>
           <Footer />
         </div>
-      </Spin>
     </>
   )
 }

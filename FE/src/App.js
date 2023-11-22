@@ -29,6 +29,7 @@ import UserInformationPage from '../src/User/Pages/UserInformationPage'
 import HistoryUserQAPage from './User/Pages/HistoryQAPage/HistoryQAPage';
 import DetailUserInformation from './User/Components/DetailUserInformation';
 import UserAccountPage from './User/Pages/UserAccountPage/UserAccountPage';
+import UserEditInformationPage from './User/Pages/UserEditInformationPage/UserEditInformationPage';
 
 function App() {
   return (
@@ -78,6 +79,7 @@ function App() {
           <Routes>
             <Route path='/UserInformationPage' element={<UserInformationPage />} />
             <Route path='/DetailUserInformation' element={<DetailUserInformation />} />
+            <Route path='/UserEditInformationPage' element={<UserEditInformationPage />} />
             <Route path='/UserAccountPage' element={<UserAccountPage />} />
             <Route path='/HistoryUserQAPage' element={<HistoryUserQAPage />} />
           </Routes>

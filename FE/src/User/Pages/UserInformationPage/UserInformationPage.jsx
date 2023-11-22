@@ -9,7 +9,7 @@ function UserInformationPage() {
           <HeaderL />
         </div>
         <div>
-            <div><Sidebar /></div>
+            <div><Sidebar/></div>
             <div><DetailUserInformation /></div>
         </div>
         </>
