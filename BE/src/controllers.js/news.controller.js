@@ -1,5 +1,21 @@
 const { News } = require("../database/sequelize");
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
+
+const storage = multer.diskStorage({
+  destination: "./src/Images/News",
+  filename: (req, file, cb) => {
+    const randomStr = uuidv4();
+    const originalExtension = path.extname(file.originalname);
+    const newFileName = randomStr + originalExtension;
+    req.newFile = newFileName;
+    cb(null, newFileName);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 const createNew = async (req, res, next) => {
   try {
@@ -9,18 +25,18 @@ const createNew = async (req, res, next) => {
       News_id,
       Title,
       Content,
+      image: req.newFile
     });
     return res.status(200).json({
       status: 200,
-      data: {
-        newNews,
-      },
+      data: newNews,
       message: "Create News Successfully !",
     });
   } catch (error) {
     return next(error);
   }
 };
+
 
 const getNews = async (req, res, next) => {
   try {
@@ -118,6 +134,7 @@ const deleteNew = async (req, res, next) => {
 
 module.exports = {
   createNew,
+  upload,
   getNews,
   getNew,
   updateNew,

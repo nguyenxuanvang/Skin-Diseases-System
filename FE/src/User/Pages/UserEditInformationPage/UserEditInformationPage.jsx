@@ -56,17 +56,17 @@ function UserEditInformationPage() {
                         const formData = new FormData();
                         formData.append('avatar',avatar);
                         updateAvatar(formData).then(() => {
-                            toast.success("Upload Successfully !");
+                            toast.success("Upload Successfully !",{autoClose: 3000});
                         })
                     } else {
-                        toast.error("Image Is Not Valid !");
+                        toast.error("Image Is Not Valid !",{autoClose: 3000});
                     }
                 } else {
-                    toast.success(response.data.message);
+                    toast.success(response.data.message,{autoClose: 3000});
                 }
             })
         }).catch(()=>{
-            toast.error("Invalid Form!");
+            toast.error("Invalid Form!",{autoClose: 3000});
         })
     }
     return (
@@ -131,7 +131,7 @@ function UserEditInformationPage() {
                     <div style={{ flex: 1 }}>
                         <div className={Style.testDiagno}>
                             <img
-                                style={{ marginTop: 8, height: "100%", width: "100%" }}
+                                style={{ borderRadius: '10px', height: "100%", width: "100%" }}
                                 src={(avatar) ? avatar.preview : `http://localhost:3000/detail/image/${data?.user?.avatar}`}
                                 alt=""
                                 height="500px"
