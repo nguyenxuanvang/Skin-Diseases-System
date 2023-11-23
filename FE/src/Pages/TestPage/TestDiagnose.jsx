@@ -11,7 +11,6 @@ function TestDiagno() {
     const fileInputRef = useRef(null);
 
     useEffect(() => {
-        console.log(result);
         updateData(result);
     }, [result])
 
