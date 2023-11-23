@@ -1,16 +1,74 @@
 import React from 'react'
+import { useState, useEffect,useRef } from 'react';
 import Style from './UserEditInformationPage.module.css'
 import Sidebar from '../../Components/Sidebar/Sidebar';
 import Reactquill from '../../../components/Text_Editor';
 import { BsFillInfoCircleFill, BsFillBagPlusFill, BsHospitalFill, BsBookFill } from "react-icons/bs";
 import { Button, Form, Input, Upload, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import personalApi from '../../../redux/api/personal.slice';
+import { ToastContainer, toast } from "react-toastify";
 import HeaderL from '../../../components/HeaderL/Header';
 function UserEditInformationPage() {
+    const { data = {} } = personalApi.useGetDetailInforQuery();
+    const [updateUser] = personalApi.useUpdateUserMutation();
+    const [updateAvatar] = personalApi.useUpdateImageMutation();
+    const [form] = Form.useForm();
+    const [avatar, setAvatar] = useState();
+    const [uploadDescription, setUploadDescription] = useState("Upload Image");
+    const fileInputRef = useRef(null);
+    const [name, setName] = useState("");
+    const [phone, setPhone] = useState("");
+    const [address, setAddress] = useState("");
 
-    const [messageApi, contextHolder] = message.useMessage();
-    const [createForm] = Form.useForm();
+    useEffect(() => {
+        setName(data.user?.name);
+        setPhone(data.user?.phone);
+        setAddress(data.user?.address);
+    }, [data?.user]);
 
+    useEffect(() => {
+        return () => avatar && URL.revokeObjectURL(avatar.preview);
+    }, [avatar]);
+
+    const handlePreviewAvatar = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            file.preview = URL.createObjectURL(file);
+            setAvatar(file);
+        }
+    };
+
+    const handleUploadClick = () => {
+        setUploadDescription("Upload the image");
+        fileInputRef.current.click();
+    };
+
+    const onHandleUpdate = () => {
+        form.validateFields().then(()=>{
+            updateUser({
+                name,
+                phone,
+                address
+            }).then((response) => {
+                if(avatar) {
+                    if(avatar.type === 'image/jpeg' || avatar.type === 'image/png') {
+                        const formData = new FormData();
+                        formData.append('avatar',avatar);
+                        updateAvatar(formData).then(() => {
+                            toast.success("Upload Successfully !");
+                        })
+                    } else {
+                        toast.error("Image Is Not Valid !");
+                    }
+                } else {
+                    toast.success(response.data.message);
+                }
+            })
+        }).catch(()=>{
+            toast.error("Invalid Form!");
+        })
+    }
     return (
         <>
             <div style={{ position: 'fixed', width: '100%', backgroundColor: 'white', height: '100px', top: '0', zIndex: '1' }}>
@@ -21,39 +79,87 @@ function UserEditInformationPage() {
             </div>
             <div className={Style.editInformationPage_carrer}>
 
-                <div className={Style.editInformationPage_list} style={{ paddingTop: '50px' }} >
-                    <Form form={createForm} name='create-form' labelCol={{ span: 5 }} wrapperCol={{ span: 12 }} initialValues={{ remember: true }}>
-                        <Form.Item label='Tên người dùng' name='nameContent' rules={[{ required: true, message: 'Chưa nhập Tiêu đề' }]} hasFeedback>
-                            <Input />
+                <div className={Style.editInformationPage_list} style={{ paddingTop: '50px', display: 'flex' }} >
+                    <Form 
+                        form={form} 
+                        name='create-form' 
+                        labelCol={{ span: 5 }} 
+                        wrapperCol={{ span: 12 }} 
+                        initialValues={{ remember: true }}
+                        style={{flex: 5}}
+                        fields={[
+                            {
+                                name: ["name"],
+                                value: name
+                            },
+                            {
+                                name: ["phone"],
+                                value: phone
+                            },
+                            {
+                                name: ["address"],
+                                value: address
+                            }
+                        ]}
+                        >
+                        <Form.Item 
+                            label='Tên người dùng' 
+                            name='name' 
+                            rules={[
+                                { required: true, message: 'Tên Không Được Phép Bỏ Trống' },
+                                { min: 5, message: 'Độ Dài Tên Phải Từ 5 Đến 20 Kí Tự' },
+                                { pattern: /^[a-zA-Z\sĐđÀ-ỹẰằẮắẲẳẴẵẶặẤấẦầẨẩẪẫẬậỀềỂểỄễỆệỈỉỊị]+$/, message: 'Tên Chỉ Được Phép Chứa Chữ Cái Và Dấu Khoảng Trắng' }
+                            ]}
+                            hasFeedback>
+                            <Input onChange={(e)=>setName(e.target.value)}/>
                         </Form.Item>
 
-                        <Form.Item label='Số điện thoại' name='context' hasFeedback>
-                            <Input />
+                        <Form.Item 
+                            label='Số điện thoại' 
+                            name='phone' 
+                            rules={[
+                                {pattern: /^0[0-9]{8,10}$/, message: 'Số Điện Thoại Không Hợp Lệ'}
+                            ]} 
+                            hasFeedback>
+                            <Input onChange={(e)=>setPhone(e.target.value)}/>
                         </Form.Item>
 
-                        <Form.Item label='Địa chỉ' name='context' hasFeedback>
-                            <Input />
-                        </Form.Item>
-
-                        <Form.Item label="Avatar" valuePropName="fileList" >
-                            <Upload 
-                                action="/upload.do" 
-                                listType="picture-card"
-                                accept="image/*" >
-                                <div>
-                                    <PlusOutlined />
-                                    <div style={{ marginTop: 8 }}>Upload</div>
-                                </div>
-                            </Upload>
+                        <Form.Item label='Địa chỉ' name='address' hasFeedback>
+                            <Input onChange={(e)=>setAddress(e.target.value)}/>
                         </Form.Item>
                     </Form>
+                    <div style={{ flex: 1 }}>
+                        <div className={Style.testDiagno}>
+                            <img
+                                style={{ marginTop: 8, height: "100%", width: "100%" }}
+                                src={(avatar) ? avatar.preview : `http://localhost:3000/detail/image/${data?.user?.avatar}`}
+                                alt=""
+                                height="500px"
+                                width="80%"
+                            />
+                            <input
+                                ref={fileInputRef}
+                                type="file"
+                                accept="image/*"
+                                onChange={handlePreviewAvatar}
+                                style={{ display: "none" }}
+                                aria-label={uploadDescription}
+                            />
+                        </div>
+                        <div className={Style.btn}>
+                            <button className={Style.btn_upload} onClick={handleUploadClick}>
+                                Upload
+                            </button>
+                        </div>
+                    </div>
                 </div>
+                
 
-                <div className='text-center' style={{ marginBottom: '20px', display: 'flex', marginLeft: '280px' }}>
-                    {contextHolder}
-                    <button className={Style.btn_update}>Update</button>
+                <div className='text-center' style={{ marginBottom: '20px', display: 'flex', marginLeft: '230px' }}>
+                    <button className={Style.btn_update} onClick={onHandleUpdate}>Update</button>
                 </div>
             </div>
+            <ToastContainer />
         </>
     )
 }
