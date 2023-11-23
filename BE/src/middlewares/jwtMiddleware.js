@@ -1,17 +1,16 @@
 const jwt = require("jsonwebtoken");
 require('dotenv').config();
 const { User, Doctor, Admin } = require("../database/sequelize");
+const { compare } = require("bcrypt");
 const auth = async (req, res, next) => {
   try {
     const bearerToken = req.headers.authorization;
-    
     if (!bearerToken) {
       return res.status(401).json({
         status: 401,
         message: "Unauthorized - User Not Logged In !",
       });
     }
-    
     let { roles } = req;
     if (!roles) roles = ["admin", "user", "doctor"];
     const accessToken = bearerToken.split(" ")[1];
@@ -25,7 +24,6 @@ const auth = async (req, res, next) => {
       });
     }
     if (!roles.includes(data.role)) {
-      
       return res.status(403).json({
         status: 403,
         message: "Unauthorized access to this resource !",

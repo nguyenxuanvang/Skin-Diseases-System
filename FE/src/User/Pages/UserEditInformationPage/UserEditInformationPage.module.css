@@ -1,17 +1,19 @@
-.editInformationPage_carrer
-{
+.editInformationPage_carrer {
     margin-left: 350px;
 }
 
-.editInformationPage_list
-{
-    width:800px;
-    height: 350px;
+.editInformationPage_list {
+    width: 800px;
+    height: 250px;
+    margin-top: 50px;
 }
 
+.editInformationPage_list:first-child {
+    width: 1000px;
+    height: 250px;
+}
 
-.editInformationPage_sidebar
-{
+.editInformationPage_sidebar {
     position: fixed;
     top: 20;
     left: 0;
@@ -19,20 +21,45 @@
     width: 350px;
 }
 
-.list_edit
-{
+.list_edit {
     width: 50%;
     margin-bottom: 10px;
     border-bottom: 2px solid red;
 }
 
-.btn_update
-{
+.btn_update {
     height: 50px;
     width: 200px;
     border-radius: 20px;
+    margin-top: 30px;
     background-color: rgb(54, 54, 214);
     color: white;
     font-weight: bold;
 }
 
+.testDiagno
+{
+    border: 5px solid yellowgreen;
+    padding: 20px;
+    width: 350px;
+    height: 300px;
+    border-radius: 10px;
+    position: relative;
+}
+.uploadDescription {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    color: #999999;
+}
+.btn
+{
+    margin-top: 20px;
+    margin-left: 120px;
+}
+.btn_upload
+{
+    margin-right: 60px;
+}

@@ -2,16 +2,30 @@ import React from 'react'
 import Style from './UserAccountPage.module.css'
 import Sidebar from '../../Components/Sidebar/Sidebar'
 import { Modal, message, Button, Form, Input } from 'antd';
+import { ToastContainer, toast } from "react-toastify";
+import personalApi from '../../../redux/api/personal.slice';
 import HeaderL from '../../../components/HeaderL/Header';
 function UserAccountPage() {
-
-  const [selectedRecord, setSelectedRecord] = React.useState(null);
-  const [editFormVisible, setEditFormVisible] = React.useState(false);
-
+  const [updateAccount] = personalApi.useUpdateUserMutation();
   const [editForm] = Form.useForm();
-  const onUpdateFinish = (values) => {
-    message.success('Cập nhật thành công!');
-  };
+  
+  const onHandleSave = () => {
+    editForm.validateFields().then((values)=>{
+      updateAccount({
+        email: values.email,
+        oldPassword: values.oldPassword,
+        password: values.password
+      }).then((response) => {
+        if(response.data) {
+          toast.success(response.data.message);
+        } else {
+          toast.error(response.error.data.message);
+        }
+      })
+    }).catch(()=>{
+      toast.error('Invalid Form!');
+    })
+  }
   return (
     <>
       <div style={{ position: 'fixed', width: '100%', backgroundColor: 'white', height: '100px', top: '0', zIndex: '1' }}>
@@ -21,76 +35,85 @@ function UserAccountPage() {
         <Sidebar />
       </div>
       <div className={Style.userAccountPage_ml350} >
-        <Form
-          name="basic"
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 16 }}
-          style={{ maxWidth: 600 }}
-        >
-          <Form.Item label="Username" name="username" >
-            <Input defaultValue="12345@gmail.com" disabled />
-          </Form.Item>
-
-          <Form.Item label="Password" name="password" >
-            <Input.Password defaultValue="1234567" disabled />
-          </Form.Item>
-
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" onClick={() => {
-              setEditFormVisible(true);
-            }}>
-              Edit
-            </Button>
-          </Form.Item>
-        </Form>
 
         <div>
-          <Modal width={1000} centered open={editFormVisible} title='Cập nhật bài viết'
-            onOk={() => {
-              editForm.submit();
-            }}
-            onCancel={() => {
-              setEditFormVisible(false);
-            }}
-            okText='Save'
-            cancelText='Đóng'
-          >
-            <Form form={editForm} name='edit-form' labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} initialValues={{ remember: true }} onFinish={onUpdateFinish} autoComplete='on'>
-              <Form.Item label='UserName' name='nameContent'>
+            <Form form={editForm} name='edit-form' labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} initialValues={{ remember: true }} autoComplete='on'>
+              <Form.Item 
+                label='Email' 
+                name='email'
+                rules={[
+                  {
+                    required: true,
+                    message: '',
+                  },
+                  {
+                    pattern: /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
+                    message: 'Email Không Hợp Lệ !',
+                  },
+                ]}
+                hasFeedback
+                >
                 <Input />
               </Form.Item>
+              <Form.Item 
+                label='Mật Khẩu Cũ' 
+                name='oldPassword'
+                rules={[
+                  {
+                    required: true,
+                    message: '',
+                  },
+                ]}
+                hasFeedback
+                >
+                <Input.Password />
+              </Form.Item>
               <Form.Item
-                label="New Password"
+                label="Mật Khẩu Mới"
                 name="password"
+                rules={[
+                  {
+                    required: true,
+                    message: '',
+                  },
+                  {
+                    pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
+                    message: 'Mật Khẩu Phải Chứa Ít Nhất 1 Ký Tự In Hoa, 1 Ký Tự Thường Và Phải Có Độ Dài Tối Thiểu 8 Ký Tự',
+                  },
+                ]}
+                hasFeedback
               >
-                <Input />
+                <Input.Password />
               </Form.Item>
               <Form.Item
-                label="Confirm Password"
+                label="Xác Nhận Lại Mật Khẩu"
                 name="password2"
                 dependencies={['password']}
                 rules={[
                   {
                     required: true,
-                    message: 'Please confirm your password!',
+                    message: '',
                   },
                   ({ getFieldValue }) => ({
                     validator(_, value) {
                       if (!value || getFieldValue('password') === value) {
                         return Promise.resolve();
                       }
-                      return Promise.reject(new Error('Mật khẩu không chính xác'));
+                      return Promise.reject(new Error('Mật khẩu xác nhận không chính xác'));
                     },
                   }),
                 ]}
+                hasFeedback
               >
-                <Input />
+                <Input.Password />
               </Form.Item>
-
             </Form>
-          </Modal>
+            <div style={{paddingLeft: '410px', marginTop: '50px'}}>
+              <button onClick={onHandleSave}>Cập Nhật</button>
+            </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   )
 }

@@ -88,50 +88,64 @@ const deleteUser = async (req, res, next) => {
 const updateUser = async (req, res, next) => {
   try {
     const { user } = req;
-    
     const {
       email,
       password,
-      username
+      oldPassword,
+      name,
+      phone,
+      address
     } = req.body;
-
+    user.name = name || user.name;
+    user.phone = phone || user.phone;
+    user.address = address || user.address;
     if (email) {
       let findUser = await User.findOne({
         where: {
           email: email,
         }
       });
-      findUser = await Admin.findOne({
-        where: {
-          email: email,
+      if(!findUser) {
+        findUser = await Admin.findOne({
+          where: {
+            email: email,
+          }
+        });
+        if(!findUser) {
+          findUser = await Doctor.findOne({
+            where: {
+              email: email,
+            }
+          });
         }
-      });
-      findUser = await Doctor.findOne({
-        where: {
-          email: email,
-        }
-      });
+      }
       if (findUser) {
         return res.status(400).json({
           status: 400,
           message: 'Email already exists !'
         })
       }
-      
       user.email = email;
     }
-    user.email = email || user.email;
-    if (password) {
+    if (oldPassword) {
+      const isValidPassword = bcrypt.compareSync(oldPassword, user.password);
+      if(!isValidPassword) {
+        return res.status(400).json({
+          status: 400,
+          message: "Old Password Incorrect !"
+        });
+      }
       const salt = bcrypt.genSaltSync(saltRounds);
       const hash = bcrypt.hashSync(password, salt);
       user.password = hash;
     }
-    user.username = username || user.username;
     await User.update(
       {
         email: user.email,
         password: user.password,
-        username: user.username
+        name: user.name,
+        phone: user.phone,
+        address: user.address
       },
       {
         where: {
@@ -140,9 +154,7 @@ const updateUser = async (req, res, next) => {
       });
     return res.status(200).json({
       status: 200,
-      data: {
-        newUser: user
-      },
+      data: user,
       message: 'Updated Successfully !'
     })
   } catch (error) {

@@ -107,23 +107,26 @@ const updateDoctor = async (req, res, next) => {
           email: email,
         },
       });
-      findDoctor = await Admin.findOne({
-        where: {
-          email: email,
-        },
-      });
-      findDoctor = await User.findOne({
-        where: {
-          email: email,
-        },
-      });
+      if(!findDoctor) {
+        findDoctor = await Admin.findOne({
+          where: {
+            email: email,
+          },
+        });
+        if(!findDoctor) {
+          findDoctor = await User.findOne({
+            where: {
+              email: email,
+            },
+          });
+        }
+      }
       if (findDoctor) {
         return res.status(400).json({
           status: 400,
           message: "Email already exists !",
         });
       }
-
       user.email = email;
     }
     if (oldPassword) {

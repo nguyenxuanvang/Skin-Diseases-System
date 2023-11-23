@@ -36,6 +36,29 @@ const personalApi = apiSlice.injectEndpoints({
         }
       }
     }),
+    updateUser: builder.mutation({
+      query: arg => ({
+        url: '/user',
+        method: 'PATCH',
+        body: arg
+      }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          
+          const response = await queryFulfilled;
+          if (response.data) {
+            const action = apiSlice.util.updateQueryData('getDetailInfor', undefined, draft => {
+              draft.user.name = arg.name;
+              draft.user.phone = arg.phone;
+              draft.user.address = arg.address;
+            });
+            await dispatch(action);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }),
     updateImage: builder.mutation({
       query: arg => ({
         url: '/detail/',
