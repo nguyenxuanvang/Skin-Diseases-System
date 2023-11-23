@@ -5,11 +5,11 @@ const { spawn } = require("child_process");
 const { Diseases } = require("../database/sequelize");
 
 const storage = multer.diskStorage({
-  destination: "./src/predictImage",
+  destination: "./src/Images/predictImage",
   filename: (req, file, cb) => {
-    const oldImage = fs.readdirSync("./src/predictImage")[0];
+    const oldImage = fs.readdirSync("./src/Images/predictImage")[0];
     if (oldImage) {
-      fs.unlinkSync(`./src/predictImage/${oldImage}`);
+      fs.unlinkSync(`./src/Images/predictImage/${oldImage}`);
     }
     const originalExtension = path.extname(file.originalname);
 

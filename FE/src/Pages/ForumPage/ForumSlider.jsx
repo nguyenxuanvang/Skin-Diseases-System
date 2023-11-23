@@ -9,7 +9,7 @@ function ForumSlider() {
   ];
 
   return (
-    <div className="App">
+    <div style={{marginTop: '100px'}} className="App">
       <ImageSlider images={images}/>
     </div>
   );

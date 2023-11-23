@@ -38,14 +38,14 @@ const getDetail = async (req, res, next) => {
 
 
 const storage = multer.diskStorage({
-  destination: "./src/Avatars",
+  destination: "./src/Images/Avatars",
   filename: (req, file, cb) => {
     const { Doctor_id, User_id } = req.user;
     const id = Doctor_id || User_id;
-    const listAvatar = fs.readdirSync("./src/Avatars");
+    const listAvatar = fs.readdirSync("./src/Images/Avatars");
     const findAvatar = listAvatar.find(item => item.startsWith(id));
     if (findAvatar) {
-      fs.unlinkSync(`./src/Avatars/${findAvatar}`);
+      fs.unlinkSync(`./src/Images/Avatars/${findAvatar}`);
     }
     const randomStr = uuidv4();
     const originalExtension = path.extname(file.originalname);
@@ -122,7 +122,7 @@ const getImage = async (req, res, next) => {
         message: 'File Not Found !'
       })
     }
-    return res.sendFile(path.join(__dirname, "../Avatars", id));
+    return res.sendFile(path.join(__dirname, "../Images/Avatars", id));
   } catch (error) {
     return next(error);
   }

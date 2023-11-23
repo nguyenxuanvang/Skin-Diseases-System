@@ -15,7 +15,7 @@ const LoginForm = () => {
     e.preventDefault();
     if (email === '' || password === '') {
       const message = 'Not allowed to be empty !';
-      toast.error(message);
+      toast.error(message,{autoClose: 3000});
     } else {
       const response = await login({
         email,
@@ -23,10 +23,10 @@ const LoginForm = () => {
       });
       if (response.error) {
         const message = response.error.data.message;
-        toast.error(message);
+        toast.error(message,{autoClose: 3000});
       } else {
         const message = response.data.message;
-        toast.success(message);
+        toast.success(message,{autoClose: 3000});
         if(isRemember) {
           localStorage.setItem('rememberE',JSON.stringify(email));
           localStorage.setItem('rememberP',JSON.stringify(password));

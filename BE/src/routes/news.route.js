@@ -2,6 +2,7 @@ const express = require("express");
 
 const {
   createNew,
+  upload,
   getNews,
   getNew,
   updateNew,
@@ -20,6 +21,7 @@ newsRouter
       return next();
     },
     auth,
+    upload.single("news"),
     createNew
   )
   .get(

@@ -6,7 +6,7 @@ import os
 
 keras.utils.disable_interactive_logging()
 
-image_path = './src/predictImage/' + os.listdir('./src/predictImage')[0]
+image_path = './src/Images/predictImage/' + os.listdir('./src/Images/predictImage')[0]
 img = Image.open(image_path)
 img = img.convert('RGB')
 img = img.resize((180, 180)) 

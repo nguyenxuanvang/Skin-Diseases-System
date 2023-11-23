@@ -1,6 +1,7 @@
 /*-----------NewsBanner----------*/
 .news_header {
     position: relative;
+    margin-top: 100px;
 }
 
 .news_Title {
