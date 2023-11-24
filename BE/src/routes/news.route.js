@@ -2,10 +2,12 @@ const express = require("express");
 
 const {
   createNew,
+  upload,
   getNews,
   getNew,
   updateNew,
   deleteNew,
+  getImageNews,
 } = require("../controllers.js/news.controller");
 
 const { auth } = require("../middlewares/jwtMiddleware");
@@ -20,6 +22,11 @@ newsRouter
       return next();
     },
     auth,
+    (req, res, next) => {
+      req.action = 'create';
+      return next();
+    },
+    upload.single("news"),
     createNew
   )
   .get(
@@ -55,8 +62,19 @@ newsRouter
       return next();
     },
     auth,
+    (req, res, next) => {
+      req.action = 'update';
+      return next();
+    },
+    upload.single("news"),
     updateNew
   );
+
+newsRouter
+    .route("/image/:id")
+    .get(
+      getImageNews
+    )
 
 module.exports = {
   newsRouter,

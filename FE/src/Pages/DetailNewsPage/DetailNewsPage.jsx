@@ -7,21 +7,20 @@ import Footer from '../../components/Footer/Footer'
 import LatestNews from '../../components/LatestNews/LatestNews'
 import { Spin } from 'antd';
 import Header from '../../components/Header';
+import HeaderL from '../../components/HeaderL/Header';
 function DetailNewsPage() {
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 3000);
-        return () => clearTimeout(timer);
-    }, []);
+    const [isLogin, setIsLogin] = useState(false);
+    useEffect(()=>{
+        if(localStorage.getItem('token')) {
+            setIsLogin(true);
+        }
+    },[]);
     return (
         <>
             <div style={{ position: 'fixed', width: '100%', backgroundColor: 'white', height: '100px', top: '0', zIndex: '1' }}>
-                <Header />
+                {(isLogin) ? <HeaderL/> : <Header/>}
             </div>
-            <Spin spinning={loading} size="large" tip="SkinDiagnoTech..." >
+            
                 <div><NewsBanner /></div>
                 <div className={Styles.DetailNewsPage_content}>
                     <div className={Styles.DetailNewsPage_post}>
@@ -45,7 +44,7 @@ function DetailNewsPage() {
                 <div className={Styles.DetailNewsPage_footer}>
                     <Footer />
                 </div>
-            </Spin>
+            
         </>
     )
 }

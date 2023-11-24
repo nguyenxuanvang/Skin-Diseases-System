@@ -17,7 +17,7 @@ function RegisterForm() {
     e.preventDefault();
     if (email === '' || name === '' || password === '' || confirmPassword === '') {
       const message = 'Not allowed to be empty !';
-      toast.error(message);
+      toast.error(message,{autoClose: 3000});
     } else {
       if (password === confirmPassword) {
         const response = await signUp({
@@ -29,17 +29,17 @@ function RegisterForm() {
         })
         if (response.error) {
           const message = response.error.data.message;
-          toast.error(message);
+          toast.error(message,{autoClose: 3000});
         } else {
           const message = response.data.message;
-          toast.success(message);
+          toast.success(message,{autoClose: 3000});
           setTimeout(() => {
             navigate("/Login");
           }, [500]);
         }
       } else {
         const message = "Password Confirmation does not match !";
-        toast.error(message);
+        toast.error(message,{autoClose: 3000});
       }
     }
   };

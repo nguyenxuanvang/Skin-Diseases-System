@@ -1,44 +1,115 @@
 import React from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Table, Button, Form, Input, Modal, Select, Space, Popconfirm, Upload, message } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import React_Quill from '../Text-Editor';
+import { ToastContainer, toast } from "react-toastify";
+import Styles from './AddNews.module.css';
+import newsApi from '../../../redux/api/news.slice';
 function NewsManagement() {
-  const { TextArea } = Input;
-  const onFinish = (values) => {
-    message.success('Thêm mới thành công!');
-  };
+  const [createNews] = newsApi.useCreateNewsMutation();
+  const [avatar, setAvatar] = useState();
+  const [uploadDescription, setUploadDescription] = useState("Upload the image");
+  const fileInputRef = useRef(null);
   const [createForm] = Form.useForm();
+
+  useEffect(() => {
+    return () => avatar && URL.revokeObjectURL(avatar.preview);
+  }, [avatar]);
+
+  const handlePreviewAvatar = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      file.preview = URL.createObjectURL(file);
+      setAvatar(file);
+    }
+  };
+
+  const handleUploadClick = () => {
+    setUploadDescription("Upload the image");
+    fileInputRef.current.click();
+  };
+
+  const handleCreateNews = () => {
+    createForm.validateFields().then(values => {
+      if(avatar) {
+        const formData = new FormData();
+        formData.append('news',avatar);
+        formData.append('Title',values.Title);
+        formData.append('Content',values.Content);
+        createNews(formData).then((response)=>{
+          if(response.data) {
+            toast.success(response.data.message,{autoClose: 3000});
+            createForm.resetFields();
+            setAvatar("");
+          } else {
+            toast.error(response.error.data.message,{autoClose: 3000});
+          }
+        });
+      } else {
+        toast.error('Vui Lòng Upload Thêm Ảnh !',{autoClose: 3000});
+      }
+    }).catch((error)=>{
+      toast.error("Vui Lòng Nhập Đầy Đủ Tiêu Đề Và Nội Dung !",{autoClose: 3000});
+    })
+  }
+
   return (
     <div>
-      <Form form={createForm} name='create-form' labelCol={{ span: 3 }} initialValues={{ remember: true }} onFinish={onFinish} autoComplete='on'>
-        <Form.Item label='Tên bài viết' name='nameContent' rules={[{ required: true, message: 'Chưa nhập Tiêu đề' }]} hasFeedback>
+      <div style={{ textAlign: '-webkit-center' }}>
+        <div className={Styles.testDiagno}>
+          {avatar && (
+            <img
+              src={avatar.preview}
+              alt=""
+              height="500px"
+              width="80%"
+            />
+          )}
+          {!avatar && <div className={Styles.uploadDescription}>{uploadDescription}</div>}
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handlePreviewAvatar}
+            style={{ display: "none" }}
+            aria-label={uploadDescription}
+          />
+        </div>
+        <div className={Styles.btn}>
+          <button className={Styles.btn_upload} onClick={handleUploadClick}>
+            Upload
+          </button>
+        </div>
+      </div>
+      <Form form={createForm} name='create-form' labelCol={{ span: 3 }} initialValues={{ remember: true }} autoComplete='on'>
+        <Form.Item
+          label='Tiêu Đề'
+          name='Title'
+          rules={[{ required: true, message: 'Chưa nhập Tiêu đề' }]}
+          hasFeedback
+        >
           <Input />
         </Form.Item>
 
-        <Form.Item label='Ngày viết bài' name='date' rules={[{ required: true, message: 'Chưa nhập Thời gian' }]} hasFeedback>
-          <Input />
-        </Form.Item>
-
-        <Form.Item label='Nội dung' name='context' hasFeedback>
-          <div>
-          <React_Quill/>
-          </div>  
-        </Form.Item>
-
-        <Form.Item label="Upload" valuePropName="fileList">
-          <Upload action="/upload.do" listType="picture-card">
-            <div>
-              <PlusOutlined />
-              <div style={{ marginTop: 8 }}>Upload</div>
-            </div>
-          </Upload>
-        </Form.Item>
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type='primary' htmlType='submit'>
-            Lưu thông tin
-          </Button>
+        <Form.Item
+          label='Nội dung'
+          name='Content'
+          rules={[{ required: true, message: 'Chưa nhập Nội Dung' }]}
+          hasFeedback
+        >
+          <textarea
+            rows="10"
+            cols="151"
+            placeholder="Nhập nội dung tin tức..."
+          />
         </Form.Item>
       </Form>
+
+      <div style={{ textAlign: 'center' }}>
+        <button onClick={handleCreateNews}>Tạo Bài Viết</button>
+      </div>
+      <ToastContainer />
     </div>
   )
 }

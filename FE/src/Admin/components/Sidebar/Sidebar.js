@@ -4,8 +4,10 @@ import { Layout, Menu } from 'antd';
 import { AiOutlineSolution, AiOutlineBarChart, AiOutlineSnippets  } from "react-icons/ai";
 import Styles from './Sidebar.module.css'
 
-const Sidebar = (
-) => {
+const Sidebar = () => {
+  const logOut = () => {
+    localStorage.removeItem('token');
+  }
   return (
     <div style={{height:'100vh', position:'fixed'}}>
       <Menu
@@ -45,7 +47,7 @@ const Sidebar = (
 
       <div className={Styles.user_info}>
         <p style={{color:'white', padding:'0 20px'}}>Welcome, Tuan</p>
-        <button className={Styles.btn_logout}><Link to="/Login" style={{textDecoration:'none'}}>Logout</Link></button>
+        <button onClick={logOut} className={Styles.btn_logout}><Link to="/Login" style={{textDecoration:'none'}}>Logout</Link></button>
       </div>
     </div>
   );
