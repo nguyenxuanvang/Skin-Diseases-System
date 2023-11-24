@@ -16,11 +16,6 @@ const doctorRouter = express.Router();
 doctorRouter
   .route("/")
   .get(
-    (req, res, next) => {
-      req.roles = ["admin"];
-      return next();
-    },
-    auth,
     getDoctors
   )
   .patch(

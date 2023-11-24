@@ -38,9 +38,13 @@ function NewsManagement() {
         formData.append('Title',values.Title);
         formData.append('Content',values.Content);
         createNews(formData).then((response)=>{
-          toast.success(response.data.message,{autoClose: 3000});
-          createForm.resetFields();
-          setAvatar("");
+          if(response.data) {
+            toast.success(response.data.message,{autoClose: 3000});
+            createForm.resetFields();
+            setAvatar("");
+          } else {
+            toast.error(response.error.data.message,{autoClose: 3000});
+          }
         });
       } else {
         toast.error('Vui Lòng Upload Thêm Ảnh !',{autoClose: 3000});

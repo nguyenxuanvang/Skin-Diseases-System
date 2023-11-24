@@ -4,13 +4,19 @@ import { BsFillBellFill } from 'react-icons/bs'
 import styles from './Header.module.css'
 import { Spin } from 'antd';
 import personalApi from '../../redux/api/personal.slice';
+import { useNavigate } from "react-router-dom";
 function HeaderL() {
   const [user, setUser] = useState({});
   const {data = {}} = personalApi.useGetDetailInforQuery();
+  const navigate = useNavigate();
  
   useEffect(()=>{
     setUser(data.user);
   },[data]);
+
+  if(user?.role === 'admin') {
+    navigate("/menu-list");
+  }
 
   return (
     <div className={styles.header}>

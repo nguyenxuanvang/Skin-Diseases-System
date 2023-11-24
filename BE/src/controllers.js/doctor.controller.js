@@ -5,14 +5,12 @@ const saltRounds = 10;
 const getDoctors = async (req, res, next) => {
   try {
     const doctors = await Doctor.findAll({
+      attributes: ['Doctor_id', 'name', 'position','work_location','experience','phone','address','introduce','avatar'],
       order: [["createdAt", /*"DESC"*/ "ASC"]],
     });
-
     return res.status(200).json({
       status: 200,
-      data: {
-        doctors,
-      },
+      data: doctors
     });
   } catch (error) {
     return next(error);
