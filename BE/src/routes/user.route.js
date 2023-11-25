@@ -2,6 +2,7 @@ const express = require("express");
 const {
   getUsers,
   getUser,
+  getImage,
   deleteUser,
   updateUser,
   forgotPassword,
@@ -53,6 +54,11 @@ userRouter
     deleteUser
   );
 
+userRouter
+  .route("/image/:id")
+  .get(
+    getImage
+  )
 userRouter.route("/forgot-password").post(forgotPassword);
 userRouter.route("/reset-password").post(resetPassword);
 

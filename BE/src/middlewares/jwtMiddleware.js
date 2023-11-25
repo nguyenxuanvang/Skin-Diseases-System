@@ -36,6 +36,12 @@ const auth = async (req, res, next) => {
         },
         raw: true,
       });
+      if(!user) {
+        return res.status(403).json({
+          status: 403,
+          message: "Unauthorized access to this resource !",
+        });
+      }
       req.user = user;
       return next();
     }
@@ -47,6 +53,12 @@ const auth = async (req, res, next) => {
         },
         raw: true,
       });
+      if(!doctor) {
+        return res.status(403).json({
+          status: 403,
+          message: "Unauthorized access to this resource !",
+        });
+      }
       req.user = doctor;
       return next();
     }
@@ -56,6 +68,12 @@ const auth = async (req, res, next) => {
       },
       raw: true,
     });
+    if(!admin) {
+      return res.status(403).json({
+        status: 403,
+        message: "Unauthorized access to this resource !",
+      });
+    }
     req.user = admin;
     return next();
   } catch (error) {

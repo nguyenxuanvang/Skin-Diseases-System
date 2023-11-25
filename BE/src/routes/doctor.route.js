@@ -3,6 +3,7 @@ const express = require("express");
 const {
   getDoctors,
   getDoctor,
+  getImage,
   deleteDoctor,
   updateDoctor,
 } = require("../controllers.js/doctor.controller");
@@ -47,6 +48,11 @@ doctorRouter
     deleteDoctor
   );
 
+doctorRouter
+    .route("/image/:id")
+    .get(
+      getImage
+    )
 
 module.exports = {
   doctorRouter,

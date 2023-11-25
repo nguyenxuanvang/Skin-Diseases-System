@@ -15,7 +15,7 @@ function HomeDoctorList({info}) {
             </div>
 
             <div className={Styles.doctorExperience}>
-                <p>{(info?.introduce) ? info.introduce : 'Bác Sĩ'}</p>
+                <p>{(info?.introduce) ? info.introduce : 'Chưa Có Giới Thiệu'}</p>
             </div>
 
             <div className={Styles.doctorBtn}>

@@ -1,5 +1,7 @@
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+const fs = require("fs");
+const path = require('path');
 const jwt = require("jsonwebtoken");
 const { User, Doctor, Admin, Tutorial, Otp } = require("../database/sequelize");
 const { faker } = require("@faker-js/faker");
@@ -81,6 +83,26 @@ const deleteUser = async (req, res, next) => {
       message: 'Deleted successfully !'
     })
   } catch (error) {
+    return next(error);
+  }
+}
+
+const getImage = async (req,res,next) => {
+  try{
+    const { id } = req.params;
+    const findUser = await User.findOne({
+      where: {
+        User_id: id,
+      },
+    });
+    if (!findUser) {
+      return res.status(404).json({
+        status: 404,
+        message: 'File Not Found !'
+      });
+    }
+    return res.sendFile(path.join(__dirname, "../Images/Avatars", findUser.avatar));
+  } catch(error) {
     return next(error);
   }
 }
@@ -275,6 +297,7 @@ const resetPassword = async (req, res, next) => {
 module.exports = {
   getUsers,
   getUser,
+  getImage,
   deleteUser,
   updateUser,
   forgotPassword,
