@@ -15,9 +15,7 @@ const createQuestion = async (req, res, next) => {
     });
     return res.status(200).json({
       status: 200,
-      data: {
-        newQuestion,
-      },
+      data: newQuestion,
       message: "Create Questions Successfully !",
     });
   } catch (error) {
@@ -150,13 +148,11 @@ const getQuestions = async (req, res, next) => {
 const getPublicQuestions = async (req, res, next) => {
   try {
     const questions = await Questions.findAll({
-
+      order: [["createdAt", "DESC" /*"ASC"*/]],
     });
     return res.status(200).json({
       status: 200,
-      data: {
-        questions,
-      },
+      data: questions,
       message: "Get Questions Successfully",
     });
   } catch (error) {
