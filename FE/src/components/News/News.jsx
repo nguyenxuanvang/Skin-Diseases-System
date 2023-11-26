@@ -2,33 +2,30 @@ import React from 'react'
 import Styles from './News.module.css'
 import { FaAngleRight } from "react-icons/fa";
 import {Link} from 'react-router-dom'
-function News(
-    {
-        newsList_imgs = 'newsImage_1.jpg',
-        news_date = '09/11/2023',
-        news_name = 'Nội dung 1',
-        news_des = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti ullam incidunt voluptatibus totam maxime odit explicabo consequatur, vel consequuntur culpa fuga adipisci dolor dicta id doloribus saepe rerum fugit quod.'
-    }) {
+function News({news}) {
+    const date = new Date(news?.updatedAt);
+    const time = date.getDate() + '-' + (date.getMonth()+1) + '-' + date.getFullYear() 
+    + ' ' + date.getHours() + ":" + date.getMinutes() + ' ' + ((date.getHours() > 11) ? 'PM' : 'AM');
     return (
         <>
             <div className={Styles.newsList_posts}>
                 <div className={Styles.newsList_postsList}>
                     <div className={Styles.newsList_img}>
-                        <img src={`./images/News/${newsList_imgs}`} alt="" style={{ height: '300px', width: '330px', borderRadius: '20px 0 0 20px' }} />
+                        <img src={`http://localhost:3000/news/image/${news.image}`} alt="" style={{ height: '300px', width: '330px', borderRadius: '20px 0 0 20px' }} />
                     </div>
 
                     <div className={Styles.newsList_inf}>
                         <div className={Styles.newsList_date}>
-                            {news_date}
+                            {time}
                         </div>
                         <div className={Styles.newsList_name}>
-                            {news_name}
+                            {news.Title}
                         </div>
                         <div className={Styles.newsList_des}>
-                            <p>{news_des}</p>
+                            <p>{news.Content}</p>
                         </div>
                         <div className={Styles.newsList_btn}>
-                            <button className={Styles.btn_seeMore}><Link to="/DetailNewsPage">See more <FaAngleRight /></Link></button>
+                            <button className={Styles.btn_seeMore}><Link to={`/DetailNewsPage/${news.News_id}`}>See more <FaAngleRight /></Link></button>
                         </div>
                     </div>
                 </div>

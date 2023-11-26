@@ -1,24 +1,16 @@
 import apiSlice from "./api.slice";
 import { current } from "@reduxjs/toolkit";
-const doctorApi = apiSlice.injectEndpoints({
+const userApi = apiSlice.injectEndpoints({
   endpoints: builder => ({
-    getListDoctor: builder.query({
+    getListUser: builder.query({
       serializeQueryArgs: () => {
         return undefined;
       },
-      query: () => '/doctor'
+      query: () => '/user'
     }),
-    getDoctor: builder.query({
-      serializeQueryArgs: () => {
-        return undefined;
-      },
+    deleteUser: builder.mutation({
       query: (id) => ({
-        url: `doctor/${id}`,
-      })
-    }),
-    deleteDoctor: builder.mutation({
-      query: (id) => ({
-        url: `/doctor/${id}`,
+        url: `/user/${id}`,
         method: 'DELETE',
       }),
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
@@ -26,8 +18,8 @@ const doctorApi = apiSlice.injectEndpoints({
           
           const response = await queryFulfilled;
           if (response.data) {
-            const action = apiSlice.util.updateQueryData('getListDoctor', undefined, draft => {
-              const findIndex = draft.data.findIndex(item => item.Doctor_id === id);
+            const action = apiSlice.util.updateQueryData('getListUser', undefined, draft => {
+              const findIndex = draft.data.findIndex(item => item.User_id === id);
               draft.data.splice(findIndex,1);                
             });
             await dispatch(action);
@@ -40,4 +32,4 @@ const doctorApi = apiSlice.injectEndpoints({
   })
 });
 
-export default doctorApi;
+export default userApi;

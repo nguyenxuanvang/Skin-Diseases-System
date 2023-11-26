@@ -1,19 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Styles from './DoctorInformation.module.css';
 import { AiTwotoneHome } from "react-icons/ai";
 import { FaAngleRight } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import DoctorInformationDetail from './DoctorInformationDetail';
+import doctorApi from '../../redux/api/doctor.slice';
 function DoctorInformation(
   {
     doctor_img = 'doctor_img_1.png'
   }
 ) {
+  const [getDoctor,{data = {}}] = doctorApi.useLazyGetDoctorQuery();
+  const { id } = useParams();
+  useState(()=>{
+    getDoctor(id);
+  },[id]);
   return (
     <div className={Styles.doctorInformation}>
       <div className={Styles.doctorInformation_img}>
 
-        <img src="./images/DoctorBanner/detailDoctorBanner.jpg" alt="" />
+        <img src="/images/DoctorBanner/detailDoctorBanner.jpg" alt="" />
 
         <div className={Styles.doctorInformation_add}>
           <p style={{ textAlign: 'right', marginRight: '50px', height: '50px', lineHeight: '50px', fontWeight: 'bold' }}>Thông tin chi tiết</p>
@@ -21,24 +28,24 @@ function DoctorInformation(
 
         <div className={Styles.doctorInformation_doctor_img}>
 
-          <img src={`./images/Doctor/${doctor_img}`} alt="" style={{ height: '200px', width: '200px' }} />
+          <img src={`http://localhost:3000/doctor/image/${data.data?.Doctor_id}`} alt="" style={{ height: '200px', width: '200px' }} />
 
           <div className={Styles.doctorInformation_detail}>
 
             <div className={Styles.doctorInformation_link}>
               <Link to='/Home'><AiTwotoneHome /></Link>
               <Link to='/Doctor'><FaAngleRight />Doctor</Link>
-              <span><FaAngleRight />Doctor Steve Quin</span>
+              <span><FaAngleRight />{data.data?.name}</span>
             </div>
 
-            <p>Doctor Steve Quin</p>
+            <p>{data.data?.name}</p>
           </div>
         </div>
 
       </div>
       <div className={Styles.doctorInformation_des}>
         <div>
-          <DoctorInformationDetail />
+          <DoctorInformationDetail iconName = 'BsFillInfoCircleFill' introduction='Giới thiệu' content={data.data?.introduce}/>
 
           <DoctorInformationDetail iconName='BsFillBagPlusFill' introduction='Chức vụ'/>
 

@@ -11,7 +11,7 @@ function LatestNews(
         <>
             <div className={Styles.latestNews}>
                 <div className={Styles.latestNews_img}>
-                    <img src={`./images/News/${latest_img}`} alt="" style={{ height: '50px', width: '50px' }} />
+                    <img src={`/images/News/${latest_img}`} alt="" style={{ height: '50px', width: '50px' }} />
                 </div>
                 <div className={Styles.latestNews_des} style={{padding:'10px 0 0 10px'}}>
                     <Link to='/DetailNewsPage' style={{textDecoration:'none', color:'black', fontWeight:'bold'}}> {latest_des} </Link>

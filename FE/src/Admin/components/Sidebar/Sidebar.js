@@ -38,18 +38,24 @@ const Sidebar = () => {
           </Menu.Item>
         </Menu.SubMenu>
 
-        <Menu.SubMenu key="sub2" icon={<AiOutlineSnippets style={{fontSize:20, color:'white'}}/>} title="News" style={{fontSize:20}}>
+        <Menu.SubMenu key="sub2" icon={<AiOutlineSolution style={{fontSize:20, color:'white'}}/>} title="User" style={{fontSize:20, color:'white'}}>         
           <Menu.Item key="3">
+            <Link to="/user-management" style={{fontSize:15, color:'white'}}>List User</Link>
+          </Menu.Item>
+        </Menu.SubMenu>
+
+        <Menu.SubMenu key="sub3" icon={<AiOutlineSnippets style={{fontSize:20, color:'white'}}/>} title="News" style={{fontSize:20}}>
+          <Menu.Item key="4">
             <Link to="/news-management" style={{fontSize:15, color:'white'}}>List News</Link>
           </Menu.Item>
 
-          <Menu.Item key="4">
+          <Menu.Item key="5">
             <Link to="/add-news" style={{fontSize:15, color:'white'}}>Add News</Link>
           </Menu.Item>
         </Menu.SubMenu>
 
-        <Menu.SubMenu key="sub3" icon={<AiOutlineSolution style={{fontSize:20, color:'white'}}/>} title="Q&A" style={{fontSize:20, color:'white'}}>
-          <Menu.Item key="5">
+        <Menu.SubMenu key="sub4" icon={<AiOutlineSolution style={{fontSize:20, color:'white'}}/>} title="Q&A" style={{fontSize:20, color:'white'}}>
+          <Menu.Item key="6">
             <Link to="/QAManagementPage" style={{fontSize:15, color:'white'}}>List Q&A</Link>
           </Menu.Item>
 

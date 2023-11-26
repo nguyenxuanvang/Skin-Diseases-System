@@ -32,11 +32,6 @@ doctorRouter
 doctorRouter
   .route("/:id")
   .get(
-    (req, res, next) => {
-      req.roles = ["admin", "doctor"];
-      return next();
-    },
-    auth,
     getDoctor
   )
   .delete(
