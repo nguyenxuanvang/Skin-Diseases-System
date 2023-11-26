@@ -17,6 +17,7 @@ import Contact from './Pages/Contact';
 import DetailForumPage from './Pages/DetailForumPage';
 import OverviewPage from './Admin/Pages/OverviewPage';
 import DoctorManagementPage from './Admin/Pages/DoctorManagementPage';
+import UserManagementPage from './Admin/Pages/UserManagementPage/UserManagementPage';
 import NewsManagementPage from './Admin/Pages/NewsManagementPage';
 import AddNewsPage from './Admin/Pages/AddNewsPage'
 import QAManagementPage from './Admin/Pages/QAManagementPage/QAManagementPage';
@@ -59,6 +60,7 @@ function App() {
           <Routes>
             <Route path='/menu-list' element={<OverviewPage />} />
             <Route path='/doctor-management' element={<DoctorManagementPage />} />
+            <Route path='/user-management' element={<UserManagementPage />} />
             <Route path='/news-management' element={<NewsManagementPage />} />
             <Route path='/add-news' element={<AddNewsPage />} />
             <Route path='/QAManagementPage' element={<QAManagementPage />} />

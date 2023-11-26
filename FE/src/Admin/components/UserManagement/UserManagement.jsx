@@ -1,12 +1,13 @@
 import React from 'react';
 import { Table, Button, Form, Input, Modal, Select, Space, Popconfirm, Upload, message } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import doctorApi from '../../../redux/api/doctor.slice';
+import userApi from '../../../redux/api/user.slice';
 import { ToastContainer, toast } from "react-toastify";
-import Styles from './DoctorManagement.module.css';
-function DoctorManagement() {
-  const {data = {}} = doctorApi.useGetListDoctorQuery();
-  const [deleteDoctor] = doctorApi.useDeleteDoctorMutation();
+import Styles from './UserManagement.module.css';
+function UserManagement() {
+  const { data = {} } = userApi.useGetListUserQuery();
+  const [deleteUser] = userApi.useDeleteUserMutation();
+  
   const columns = [
     {
       title: 'ID',
@@ -15,7 +16,7 @@ function DoctorManagement() {
       align: 'center',
       width: 100,
       render: (id) => {
-        return <p style={{fontWeight: 700}}>{id}</p>
+        return <p style={{ fontWeight: 700 }}>{id}</p>
       }
     },
     {
@@ -25,7 +26,7 @@ function DoctorManagement() {
       align: 'center',
       width: 100,
       render: (url) => {
-        return <img style={{width: '100px',height: '100px'}} src={url}/>
+        return <img style={{ width: '100px', height: '100px' }} src={url} />
       }
     },
     {
@@ -35,7 +36,7 @@ function DoctorManagement() {
       align: 'center',
       width: 200,
       render: (name) => {
-        return <p style={{fontWeight: 700, fontSize: '17px'}}>{name}</p>
+        return <p style={{ fontWeight: 700, fontSize: '17px' }}>{name}</p>
       }
     },
 
@@ -46,7 +47,7 @@ function DoctorManagement() {
       align: 'center',
       width: 200,
       render: (email) => {
-        return <p style={{fontWeight: 700, fontSize: '17px'}}>{email}</p>
+        return <p style={{ fontWeight: 700, fontSize: '17px' }}>{email}</p>
       }
     },
     {
@@ -56,17 +57,17 @@ function DoctorManagement() {
       align: 'center',
       width: 200,
       render: (phone) => {
-        return <p style={{fontWeight: 700, fontSize: '17px'}}>{phone}</p>
+        return <p style={{ fontWeight: 700, fontSize: '17px' }}>{phone}</p>
       }
     },
     {
-      title: 'Địa Chỉ Công Tác',
-      dataIndex: 'work_location',
-      key: 'work_location',
+      title: 'Địa Chỉ',
+      dataIndex: 'address',
+      key: 'address',
       align: 'center',
       width: 200,
-      render: (work_location) => {
-        return <p style={{fontWeight: 700, fontSize: '17px'}}>{work_location}</p>
+      render: (address) => {
+        return <p style={{ fontWeight: 700, fontSize: '17px' }}>{address}</p>
       }
     },
 
@@ -81,11 +82,11 @@ function DoctorManagement() {
               style={{ width: 800 }}
               title='Are you sure delete?'
               onConfirm={async () => {
-                const response = await deleteDoctor(record.ID);
-                if(response.data) {
-                  toast.success(response.data.message,{autoClose: 3000});
+                const response = await deleteUser(record.ID);
+                if (response.data) {
+                  toast.success(response.data.message, { autoClose: 3000 });
                 } else {
-                  toast.error(response.error.data.message,{autoClose: 3000});
+                  toast.error(response.error.data.message, { autoClose: 3000 });
                 }
               }}
               onCancel={() => { }}
@@ -101,21 +102,21 @@ function DoctorManagement() {
   ];
   const dataSource = data.data?.map(item => {
     return {
-      ID: item.Doctor_id,
+      ID: item.User_id,
       image: `http://localhost:3000/detail/image/${item.avatar}`,
       name: item.name,
       email: item.email,
       phone: (item.phone) ? item.phone : 'Chưa Cập Nhật',
-      work_location: (item.work_location) ? item.work_location : 'Chưa Cập Nhật'
+      address: (item.address) ? item.address : 'Chưa Cập Nhật'
     }
   })
-  
+
   return (
     <div>
-      <Table columns={columns} dataSource={dataSource} bordered pagination={{pageSize: 10}}/>;
+      <Table columns={columns} dataSource={dataSource} bordered pagination={{ pageSize: 10 }} />;
       <ToastContainer />
     </div>
   )
 }
 
-export default DoctorManagement
+export default UserManagement

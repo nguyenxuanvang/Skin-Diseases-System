@@ -1,11 +1,13 @@
 const bcrypt = require("bcrypt");
+const fs = require("fs");
+const path = require('path');
 const jwt = require("jsonwebtoken");
 const { Doctor, Admin, User } = require("../database/sequelize");
 const saltRounds = 10;
 const getDoctors = async (req, res, next) => {
   try {
+    
     const doctors = await Doctor.findAll({
-      attributes: ['Doctor_id', 'name', 'position','work_location','experience','phone','address','introduce','avatar'],
       order: [["createdAt", /*"DESC"*/ "ASC"]],
     });
     return res.status(200).json({
@@ -26,47 +28,61 @@ const getDoctor = async (req, res, next) => {
         Doctor_id: id,
       },
     });
-    if (user.role === "admin") {
-      if (!findDoctor) {
-        return res.status(400).json({
-          status: 400,
-          message: "Doctor Is Not Exist !",
-        });
-      }
-      return res.status(200).json({
-        status: 200,
-        data: {
-          findDoctor,
-        },
-      });
-    }
-
-    if (user.Doctor_id !== id) {
-      return res.status(403).json({
-        status: 403,
-        message: "Unauthorized access to this resource !",
+    if(!findDoctor) {
+      return res.status(404).json({
+        status: 404,
+        message: 'Doctor Not Found !'
       });
     }
     return res.status(200).json({
       status: 200,
-      data: {
-        findDoctor,
-      },
+      data: findDoctor
     });
   } catch (error) {
     return next(error);
   }
 };
 
-
-const deleteDoctor = async (req, res, next) => {
-  try {
+const getImage = async (req,res,next) => {
+  try{
     const { id } = req.params;
-    await Doctor.destroy({
+    const findDoctor = await Doctor.findOne({
       where: {
         Doctor_id: id,
       },
     });
+    if (!findDoctor) {
+      return res.status(404).json({
+        status: 404,
+        message: 'File Not Found !'
+      });
+    }
+    return res.sendFile(path.join(__dirname, "../Images/Avatars", findDoctor.avatar));
+  } catch(error) {
+    return next(error);
+  }
+}
+
+
+const deleteDoctor = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const doctorDelete = await Doctor.destroy({
+      where: {
+        Doctor_id: id,
+      },
+    });
+    if(doctorDelete === 0) {
+      return res.status(400).json({
+        status: 400,
+        message: 'Deleted Fail'
+      })
+    }
+    const listAvatar = fs.readdirSync("./src/Images/Avatars");
+    const findAvatar = listAvatar.find(item => item.startsWith(id));
+    if (findAvatar) {
+      fs.unlinkSync(`./src/Images/Avatars/${findAvatar}`);
+    }
     return res.status(200).json({
       status: 200,
       message: "Deleted successfully !",
@@ -169,6 +185,7 @@ const updateDoctor = async (req, res, next) => {
 module.exports = {
   getDoctors,
   getDoctor,
+  getImage,
   deleteDoctor,
   updateDoctor,
 };

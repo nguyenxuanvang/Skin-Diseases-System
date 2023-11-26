@@ -1,5 +1,7 @@
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+const fs = require("fs");
+const path = require('path');
 const jwt = require("jsonwebtoken");
 const { User, Doctor, Admin, Tutorial, Otp } = require("../database/sequelize");
 const { faker } = require("@faker-js/faker");
@@ -15,9 +17,7 @@ const getUsers = async (req, res, next) => {
 
     return res.status(200).json({
       status: 200,
-      data: {
-        users,
-      }
+      data: users
     });
 
   } catch (error) {
@@ -71,16 +71,47 @@ const getUser = async (req, res, next) => {
 const deleteUser = async (req, res, next) => {
   try {
     const { id } = req.params;
-    await User.destroy({
+    const userDelete = await User.destroy({
       where: {
         User_id: id,
-      }
+      },
     });
+    if(userDelete === 0) {
+      return res.status(400).json({
+        status: 400,
+        message: 'Deleted Fail'
+      })
+    }
+    const listAvatar = fs.readdirSync("./src/Images/Avatars");
+    const findAvatar = listAvatar.find(item => item.startsWith(id));
+    if (findAvatar) {
+      fs.unlinkSync(`./src/Images/Avatars/${findAvatar}`);
+    }
     return res.status(200).json({
       status: 200,
       message: 'Deleted successfully !'
     })
   } catch (error) {
+    return next(error);
+  }
+}
+
+const getImage = async (req,res,next) => {
+  try{
+    const { id } = req.params;
+    const findUser = await User.findOne({
+      where: {
+        User_id: id,
+      },
+    });
+    if (!findUser) {
+      return res.status(404).json({
+        status: 404,
+        message: 'File Not Found !'
+      });
+    }
+    return res.sendFile(path.join(__dirname, "../Images/Avatars", findUser.avatar));
+  } catch(error) {
     return next(error);
   }
 }
@@ -275,6 +306,7 @@ const resetPassword = async (req, res, next) => {
 module.exports = {
   getUsers,
   getUser,
+  getImage,
   deleteUser,
   updateUser,
   forgotPassword,

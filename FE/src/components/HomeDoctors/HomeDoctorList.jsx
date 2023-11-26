@@ -15,11 +15,11 @@ function HomeDoctorList({info}) {
             </div>
 
             <div className={Styles.doctorExperience}>
-                <p>{(info?.introduce) ? info.introduce : 'Bác Sĩ'}</p>
+                <p>{(info?.introduce) ? info.introduce : 'Chưa Có Giới Thiệu'}</p>
             </div>
 
             <div className={Styles.doctorBtn}>
-            <button className={Styles.btn_seeMore}><Link to='/DetailDoctorPage' style={{textDecoration:'none', color:'black', fontWeight:'bold'}}>Xem Thêm</Link><FaAngleRight /></button>
+            <button className={Styles.btn_seeMore}><Link to={`/DetailDoctorPage/${info?.Doctor_id}`} style={{textDecoration:'none', color:'black', fontWeight:'bold'}}>Xem Thêm</Link><FaAngleRight /></button>
 
             </div>
         </div>

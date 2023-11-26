@@ -1,14 +1,9 @@
 import React from 'react'
 import Styles from './DoctorInformation.module.css'
 import * as ReactIcons from "react-icons/bs";
-function DoctorInformationDetail(
-    {
-        iconName = 'BsFillInfoCircleFill',
-        introduction='Giới thiệu',
-        description = 'Nội dung 1'
-    }
-) {
+function DoctorInformationDetail({iconName,introduction,content}) {
     const Icon = ReactIcons[iconName];
+    
     return (
         <div className={Styles.doctorInformationDetail}>
             <div className={Styles.doctorInformationDetail_header}>
@@ -19,7 +14,7 @@ function DoctorInformationDetail(
             </div>
 
             <div className={Styles.doctorInformationDetail_content}>
-                <p>{description}</p>
+                <p>{(content) ? content : 'Chưa Cập Nhật'}</p>
             </div>
         </div>
     )

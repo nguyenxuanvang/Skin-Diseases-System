@@ -3,6 +3,7 @@ const express = require("express");
 const {
   getDoctors,
   getDoctor,
+  getImage,
   deleteDoctor,
   updateDoctor,
 } = require("../controllers.js/doctor.controller");
@@ -31,11 +32,6 @@ doctorRouter
 doctorRouter
   .route("/:id")
   .get(
-    (req, res, next) => {
-      req.roles = ["admin", "doctor"];
-      return next();
-    },
-    auth,
     getDoctor
   )
   .delete(
@@ -47,6 +43,11 @@ doctorRouter
     deleteDoctor
   );
 
+doctorRouter
+    .route("/image/:id")
+    .get(
+      getImage
+    )
 
 module.exports = {
   doctorRouter,

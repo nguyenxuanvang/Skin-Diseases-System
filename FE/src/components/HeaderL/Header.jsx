@@ -6,15 +6,13 @@ import { Spin } from 'antd';
 import personalApi from '../../redux/api/personal.slice';
 import { useNavigate } from "react-router-dom";
 function HeaderL() {
-  const [user, setUser] = useState({});
-  const {data = {}} = personalApi.useGetDetailInforQuery();
+  const {data = {}, isError} = personalApi.useGetDetailInforQuery();
   const navigate = useNavigate();
- 
-  useEffect(()=>{
-    setUser(data.user);
-  },[data]);
-
-  if(user?.role === 'admin') {
+  if(isError) {
+    localStorage.removeItem('token');
+    navigate("/login");
+  }
+  if(data.user?.role === 'admin') {
     navigate("/menu-list");
   }
 
@@ -45,8 +43,8 @@ function HeaderL() {
           </li>
           <li className={styles.linkToLogin}>
             <div className={styles.avatar_question}>
-              <Link to={(user) ? (user.role === 'doctor') ? '/DoctorInformationPage' : '/UserInformationPage' : ''}>
-                {(user) ? <img src={`http://localhost:3000/detail/image/${user.avatar}`} alt="" /> : ''}
+              <Link to={(data.user?.role === 'doctor') ? '/DoctorInformationPage' : '/UserInformationPage' }>
+                {<img src={`http://localhost:3000/detail/image/${data.user?.avatar}`} alt="" />}
               </Link>
             </div>
           </li>
