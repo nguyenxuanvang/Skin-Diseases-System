@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import { AiOutlineSolution, AiOutlineBarChart, AiOutlineSnippets  } from "react-icons/ai";
-import Styles from './Sidebar.module.css'
-
-const Sidebar = (
-) => {
+import personalApi from '../../../redux/api/personal.slice';
+import Styles from './Sidebar.module.css';
+import { useNavigate } from "react-router-dom";
+const Sidebar = () => {
+  const {data = {}} = personalApi.useGetDetailInforQuery();
+  const navigate = useNavigate();
+  if(data.user?.role === 'doctor' || data.user?.role === 'user') {
+    navigate("/home");
+  }
+  useEffect(()=>{
+    if(!localStorage.getItem('token')) {
+      navigate("/home");
+    }
+  },[]);
+  const logOut = () => {
+    localStorage.removeItem('token');
+  }
   return (
     <div style={{height:'100vh', position:'fixed'}}>
       <Menu
@@ -37,7 +50,7 @@ const Sidebar = (
 
         <Menu.SubMenu key="sub3" icon={<AiOutlineSolution style={{fontSize:20, color:'white'}}/>} title="Q&A" style={{fontSize:20, color:'white'}}>
           <Menu.Item key="5">
-            <Link to="/doctor-management" style={{fontSize:15, color:'white'}}>List Q&A</Link>
+            <Link to="/QAManagementPage" style={{fontSize:15, color:'white'}}>List Q&A</Link>
           </Menu.Item>
 
         </Menu.SubMenu>
@@ -45,7 +58,7 @@ const Sidebar = (
 
       <div className={Styles.user_info}>
         <p style={{color:'white', padding:'0 20px'}}>Welcome, Tuan</p>
-        <button className={Styles.btn_logout}><Link to="/Login" style={{textDecoration:'none'}}>Logout</Link></button>
+        <button onClick={logOut} className={Styles.btn_logout}><Link to="/Login" style={{textDecoration:'none'}}>Logout</Link></button>
       </div>
     </div>
   );

@@ -65,7 +65,7 @@ function DoctorAccountPage() {
                 ]}
                 hasFeedback
                 >
-                <Input />
+                <Input.Password />
               </Form.Item>
               <Form.Item
                 label="Mật Khẩu Mới"
@@ -82,7 +82,7 @@ function DoctorAccountPage() {
                 ]}
                 hasFeedback
               >
-                <Input />
+                <Input.Password />
               </Form.Item>
               <Form.Item
                 label="Xác Nhận Lại Mật Khẩu"
@@ -104,7 +104,7 @@ function DoctorAccountPage() {
                 ]}
                 hasFeedback
               >
-                <Input />
+                <Input.Password />
               </Form.Item>
             </Form>
             <div style={{paddingLeft: '410px', marginTop: '50px'}}>

@@ -1,5 +1,7 @@
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+const fs = require("fs");
+const path = require('path');
 const jwt = require("jsonwebtoken");
 const { User, Doctor, Admin, Tutorial, Otp } = require("../database/sequelize");
 const { faker } = require("@faker-js/faker");
@@ -85,53 +87,87 @@ const deleteUser = async (req, res, next) => {
   }
 }
 
+const getImage = async (req,res,next) => {
+  try{
+    const { id } = req.params;
+    const findUser = await User.findOne({
+      where: {
+        User_id: id,
+      },
+    });
+    if (!findUser) {
+      return res.status(404).json({
+        status: 404,
+        message: 'File Not Found !'
+      });
+    }
+    return res.sendFile(path.join(__dirname, "../Images/Avatars", findUser.avatar));
+  } catch(error) {
+    return next(error);
+  }
+}
+
 const updateUser = async (req, res, next) => {
   try {
     const { user } = req;
-    
     const {
       email,
       password,
-      username
+      oldPassword,
+      name,
+      phone,
+      address
     } = req.body;
-
+    user.name = name || user.name;
+    user.phone = phone || user.phone;
+    user.address = address || user.address;
     if (email) {
       let findUser = await User.findOne({
         where: {
           email: email,
         }
       });
-      findUser = await Admin.findOne({
-        where: {
-          email: email,
+      if(!findUser) {
+        findUser = await Admin.findOne({
+          where: {
+            email: email,
+          }
+        });
+        if(!findUser) {
+          findUser = await Doctor.findOne({
+            where: {
+              email: email,
+            }
+          });
         }
-      });
-      findUser = await Doctor.findOne({
-        where: {
-          email: email,
-        }
-      });
+      }
       if (findUser) {
         return res.status(400).json({
           status: 400,
           message: 'Email already exists !'
         })
       }
-      
       user.email = email;
     }
-    user.email = email || user.email;
-    if (password) {
+    if (oldPassword) {
+      const isValidPassword = bcrypt.compareSync(oldPassword, user.password);
+      if(!isValidPassword) {
+        return res.status(400).json({
+          status: 400,
+          message: "Old Password Incorrect !"
+        });
+      }
       const salt = bcrypt.genSaltSync(saltRounds);
       const hash = bcrypt.hashSync(password, salt);
       user.password = hash;
     }
-    user.username = username || user.username;
     await User.update(
       {
         email: user.email,
         password: user.password,
-        username: user.username
+        name: user.name,
+        phone: user.phone,
+        address: user.address
       },
       {
         where: {
@@ -140,9 +176,7 @@ const updateUser = async (req, res, next) => {
       });
     return res.status(200).json({
       status: 200,
-      data: {
-        newUser: user
-      },
+      data: user,
       message: 'Updated Successfully !'
     })
   } catch (error) {
@@ -263,6 +297,7 @@ const resetPassword = async (req, res, next) => {
 module.exports = {
   getUsers,
   getUser,
+  getImage,
   deleteUser,
   updateUser,
   forgotPassword,

@@ -14,7 +14,6 @@ const signUp = async (req, res, next) => {
     const hash = bcrypt.hashSync(password, salt);
 
     let newMember;
-
     if (isDoctor) {
       const Doctor_id = uuidv4();
       newMember = await Doctor.create({

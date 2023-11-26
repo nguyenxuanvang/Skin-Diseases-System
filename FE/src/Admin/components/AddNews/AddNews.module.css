@@ -1,0 +1,61 @@
+.testPage_Diagno
+{
+    margin-top: 50px;
+    text-align: -webkit-center;
+}
+.testDiagno
+{
+    border: 5px solid yellowgreen;
+    width: 400px;
+    height: 350px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.testDiagno img
+{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.testDiagno input
+{
+    display: none;
+    width: 450px;   
+    height: 400px;
+}
+
+.btn
+{
+    margin-top: 20px;
+}
+
+.btn_upload
+{
+    margin: 10px 0px 25px 25px;
+}
+
+button
+{
+    width: 150px;
+    height: 40px;
+    border-radius: 30px;
+    background-color: rgb(107, 180, 240);
+    font-weight: bold;
+}
+
+button:hover
+{
+    background-color: rgb(34, 143, 233);
+    color: white;
+}
+
+.uploadDescription {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    color: #999999;
+}

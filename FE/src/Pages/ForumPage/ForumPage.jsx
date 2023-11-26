@@ -6,50 +6,88 @@ import Reactquill from '../../components/Text_Editor';
 import { Modal, Spin } from 'antd';
 import Header from '../../components/Header';
 import HeaderL from '../../components/HeaderL/Header';
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import questionApi from '../../redux/api/question.slice';
 function ForumPage() {
-  const [visibleQuestions, setVisibleQuestions] = useState(8);
+  const navigate = useNavigate();
+  const { data = {} } = questionApi.useGetQuestionListQuery();
+  const [createQuestion] = questionApi.useCreateQuestionMutation();
+  const [content, setContent] = useState('');
+  let [numberQuestion, setNumberQuestion] = useState(5);
   const [showForm, setShowForm] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
 
-  useEffect(()=>{
-    if(localStorage.getItem('token')) {
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
       setIsLogin(true);
     }
-  },[]);
+  }, []);
 
   const showMoreQuestions = () => {
-    setVisibleQuestions((prev) => prev + 5);
+    if((numberQuestion + 5) > data.data.length) {
+      if(numberQuestion === data.data.length) {
+      } else {
+        setNumberQuestion(data.data.length);
+      }
+    } else {
+      setNumberQuestion((nb) => nb + 5);
+    }
   };
 
-  const handleCreateQuestion = () => {
-    setShowForm((prevShowForm) => !prevShowForm);
-  };
+  const onOk = () => {
+    navigate("/login");
+  }
+  const onHandleCreate = async () => {
+   if(content.trim() === '') {
+    toast.error('Vui Lòng Nhập Nội Dung Câu Hỏi',{autoClose: 3000});
+   } else {
+    const response = await createQuestion({Content: content});
+    if(response.data) {
+      toast.success(response.data.message,{autoClose: 3000});
+      setShowForm(false);
+    } else {
+      toast.error(response.error.data.message,{autoClose: 3000});
+    }
+   }
+  }
 
 
   return (
     <>
       <div style={{ position: 'fixed', width: '100%', backgroundColor: 'white', height: '100px', top: '0', zIndex: '1' }}>
-        {(isLogin) ? <HeaderL/> : <Header/>}
+        {(isLogin) ? <HeaderL /> : <Header />}
       </div>
       {/* <Spin spinning={loading} size="large" tip="SkinDiagnoTech..." > */}
-        <div>
-          <ForumSlider />
+      <div>
+        <ForumSlider />
+      </div>
+      <h1 className='text-center mt-3 bg-primary text-white'>Question And Answer</h1>
+      <div className='create_question' style={{ width: '60%' }}>
+        <div className='create_question' >
+          <button style={{ width: 200, borderRadius: 10, margin: '50px 0 0 100px' }} onClick={()=>setShowForm(true)/*createQuestion*/} >Create question</button>
         </div>
-        <h1 className='text-center mt-3 bg-primary text-white'>Question And Answer</h1>
-        <div className='create_question' style={{ width: '60%' }}>
-          <div className='create_question' >
-            <button style={{ width: 200, borderRadius: 10, margin: '50px 0 0 100px' }} onClick={handleCreateQuestion} >Create question</button>
-          </div>
 
-          {showForm && (
-            <div className='form-container' style={{ width: '800px', margin: '30px 0 0 100px' }}>
-              <Reactquill />
+        {showForm && (
+          <div className='form-container' style={{ width: '800px', margin: '30px 0 0 100px' }}>
+            <textarea
+            onChange={(e)=>setContent(e.target.value)}
+            rows="5"
+            cols="151"
+            style={{padding: '10px', border: '5px solid #0876cc', borderRadius: '10px'}}
+            placeholder="Nhập Nội Dung Câu Hỏi"
+            />
 
-              <div className='text-end' >
-                <button type="primary"
-                  onClick={() => {
+            <div className='text-end' style={{display: 'flex',paddingLeft: '290px'}} >
+              <button style={{ width: 100, borderRadius: 10, margin: '50px 0 0 100px' }} onClick={()=>{setShowForm(false)}}>Cancel</button>
+              <button type="primary"
+                onClick={() => {
+                  if(localStorage.getItem('token')) {
+                    onHandleCreate();
+                  } else {
                     Modal.confirm({
                       title: 'Alert',
+                      onOk: onOk,
                       content: 'Please LOGIN before post your question!',
                       footer: (_, { OkBtn, CancelBtn }) => (
                         <>
@@ -58,29 +96,31 @@ function ForumPage() {
                         </>
                       ),
                     });
-                  }} style={{ width: 100, borderRadius: 10, margin: '50px 0 0 100px' }}
-                >Post</button>
-              </div>
+                  }
+                }} style={{ width: 100, borderRadius: 10, margin: '50px 0 0 100px' }}
+              >Post</button>
             </div>
-          )}
+          </div>
+        )}
 
+      </div>
+      <div className='list_question'>
+        {data.data?.slice(0,numberQuestion).map(item => (
+          <QaQuestion key={item.Question_id} question={item}/>
+        ))}
+        {
+          (data.data?.length > numberQuestion) && <div className='text-center mt-5' >
+          <button style={{ width: 300, borderRadius: 10 }} onClick={showMoreQuestions}>Hiển thêm</button>
         </div>
-        <div className='list_question'>
-          {[...Array(visibleQuestions)].map((_, index) => (
-            <QaQuestion key={index} />
-          ))}
+        }
+          
+      </div>
 
-          {visibleQuestions < 100 && (
-            <div className='text-center mt-5' >
-              <button style={{ width: 300, borderRadius: 10 }} onClick={showMoreQuestions}>Hiển thêm</button>
-            </div>
-          )}
-        </div>
-
-        <div style={{ marginTop: 50 }}>
-          <Footer />
-        </div>
+      <div style={{ marginTop: 50 }}>
+        <Footer />
+      </div>
       {/* </Spin> */}
+      <ToastContainer />
     </>
   )
 }

@@ -10,8 +10,8 @@ function DetailUserInformation() {
   const {data = {}} = personalApi.useGetDetailInforQuery();
   const [user, setUser] = useState({});
   useEffect(()=>{
-    setUser(data.user);
-  },[data])
+    setUser(data?.user);
+  },[data?.user])
   return (
     <>
       <div style={{ position: 'fixed', width: '100%', backgroundColor: 'white', height: '100px', top: '0', zIndex: '1' }}>
