@@ -17,9 +17,7 @@ const getUsers = async (req, res, next) => {
 
     return res.status(200).json({
       status: 200,
-      data: {
-        users,
-      }
+      data: users
     });
 
   } catch (error) {
@@ -73,11 +71,22 @@ const getUser = async (req, res, next) => {
 const deleteUser = async (req, res, next) => {
   try {
     const { id } = req.params;
-    await User.destroy({
+    const userDelete = await User.destroy({
       where: {
         User_id: id,
-      }
+      },
     });
+    if(userDelete === 0) {
+      return res.status(400).json({
+        status: 400,
+        message: 'Deleted Fail'
+      })
+    }
+    const listAvatar = fs.readdirSync("./src/Images/Avatars");
+    const findAvatar = listAvatar.find(item => item.startsWith(id));
+    if (findAvatar) {
+      fs.unlinkSync(`./src/Images/Avatars/${findAvatar}`);
+    }
     return res.status(200).json({
       status: 200,
       message: 'Deleted successfully !'

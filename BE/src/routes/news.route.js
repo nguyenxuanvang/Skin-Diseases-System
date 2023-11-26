@@ -30,22 +30,12 @@ newsRouter
     createNew
   )
   .get(
-    (req, res, next) => {
-      req.roles = ["admin"];
-      return next();
-    },
-    auth,
     getNews
   );
 
 newsRouter
   .route("/:id")
   .get(
-    (req, res, next) => {
-      req.roles = ["admin"];
-      return next();
-    },
-    auth,
     getNew
   )
   .delete(

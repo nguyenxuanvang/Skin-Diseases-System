@@ -65,7 +65,6 @@ const createNew = async (req, res, next) => {
 
 const getNews = async (req, res, next) => {
   try {
-    
     const news = await News.findAll({
       order: [["createdAt", /*"DESC"*/ "ASC"]],
     });
@@ -95,9 +94,7 @@ const getNew = async (req, res, next) => {
     }
     return res.status(200).json({
       status: 200,
-      data: {
-        news: findNew,
-      },
+      data: findNew
     });
   } catch (error) {
     return next(error);

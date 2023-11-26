@@ -25,7 +25,6 @@ function TestDiagno() {
             setAvatar(file);
         }
     };
-
     const handleUploadClick = () => {
         setUploadDescription("Upload the image");
         fileInputRef.current.click();

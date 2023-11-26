@@ -6,9 +6,16 @@ import NewsType from '../News/NewsType'
 import Footer from '../../components/Footer/Footer'
 import LatestNews from '../../components/LatestNews/LatestNews'
 import { Spin } from 'antd';
+import { useParams } from 'react-router-dom';
 import Header from '../../components/Header';
 import HeaderL from '../../components/HeaderL/Header';
+import newsApi from '../../redux/api/news.slice';
 function DetailNewsPage() {
+    const { id } = useParams();
+    const [getNews,{data = {}}] = newsApi.useLazyGetNewsQuery();
+    useEffect(()=>{
+        getNews(id);
+    },[id]);
     const [isLogin, setIsLogin] = useState(false);
     useEffect(()=>{
         if(localStorage.getItem('token')) {
@@ -24,7 +31,7 @@ function DetailNewsPage() {
                 <div><NewsBanner /></div>
                 <div className={Styles.DetailNewsPage_content}>
                     <div className={Styles.DetailNewsPage_post}>
-                        <DetailNews />
+                        <DetailNews news={data.data} />
                     </div>
 
                     <div className={Styles.DetailNewsPage_type}>

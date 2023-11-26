@@ -28,31 +28,15 @@ const getDoctor = async (req, res, next) => {
         Doctor_id: id,
       },
     });
-    if (user.role === "admin") {
-      if (!findDoctor) {
-        return res.status(400).json({
-          status: 400,
-          message: "Doctor Is Not Exist !",
-        });
-      }
-      return res.status(200).json({
-        status: 200,
-        data: findDoctor,
-        message: 'Successfully'
-      });
-    }
-
-    if (user.Doctor_id !== id) {
-      return res.status(403).json({
-        status: 403,
-        message: "Unauthorized access to this resource !",
+    if(!findDoctor) {
+      return res.status(404).json({
+        status: 404,
+        message: 'Doctor Not Found !'
       });
     }
     return res.status(200).json({
       status: 200,
-      data: {
-        findDoctor,
-      },
+      data: findDoctor
     });
   } catch (error) {
     return next(error);
