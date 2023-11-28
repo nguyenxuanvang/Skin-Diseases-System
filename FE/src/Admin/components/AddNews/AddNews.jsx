@@ -39,7 +39,7 @@ function NewsManagement() {
         formData.append('Content',values.Content);
         createNews(formData).then((response)=>{
           if(response.data) {
-            toast.success(response.data.message,{autoClose: 3000});
+            toast.success(response.data.message,{autoClose: 1000});
             createForm.resetFields();
             setAvatar("");
           } else {

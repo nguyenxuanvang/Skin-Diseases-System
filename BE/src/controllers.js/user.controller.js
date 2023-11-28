@@ -28,39 +28,20 @@ const getUsers = async (req, res, next) => {
 const getUser = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { user } = req;
     const findUser = await User.findOne({
       where: {
         User_id: id,
       }
     });
-    if (user.role === 'admin') {
-
-      if (!findUser) {
-        return res.status(400).json({
-          status: 400,
-          message: 'User Is Not Exist !'
-        });
-      }
-      return res.status(200).json({
-        status: 200,
-        data: {
-          findUser,
-        }
+    if (!findUser) {
+      return res.status(404).json({
+        status: 404,
+        message: 'User Not Found !'
       });
-    }
-
-    if (user.User_id !== id) {
-      return res.status(403).json({
-        status: 403,
-        message: 'Unauthorized access to this resource !'
-      })
     }
     return res.status(200).json({
       status: 200,
-      data: {
-        findUser
-      }
+      data: findUser
     })
 
   } catch (error) {

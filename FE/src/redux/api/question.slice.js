@@ -8,6 +8,22 @@ const questionApi = apiSlice.injectEndpoints({
       },
       query: () => '/question/public'
     }),
+    getQuestion: builder.query({
+      serializeQueryArgs: () => {
+        return undefined;
+      },
+      query: (id) => ({
+        url: `/question/${id}`
+      })
+    }),
+    getOwnerQuestion: builder.query({
+      serializeQueryArgs: () => {
+        return undefined;
+      },
+      query: (id) => ({
+        url: `/question/owner/${id}`
+      })
+    }),
     createQuestion: builder.mutation({
       query: arg => ({
         url: '/question',
@@ -20,7 +36,7 @@ const questionApi = apiSlice.injectEndpoints({
           const response = await queryFulfilled;
           if (response.data) {
             const action = apiSlice.util.updateQueryData('getQuestionList', undefined, draft => {
-              draft.data.push(response.data.data);
+              draft.data.unshift(response.data.data);
             });
             await dispatch(action);
           }

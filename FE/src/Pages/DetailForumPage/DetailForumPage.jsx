@@ -19,7 +19,7 @@ function DetailForumPage() {
             </div>
             
                 <div className={Styles.detailForumPage_header}>
-                    <img src="./images/NewsBanner/NewsBanner.png" alt="" style={{ height: '300px' }} />
+                    <img src="/images/NewsBanner/NewsBanner.png" alt="" style={{ height: '300px' }} />
 
                     <div className={Styles.detailForumPage_Title}>
                         Câu hỏi thường gặp

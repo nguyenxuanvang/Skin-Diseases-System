@@ -4,7 +4,8 @@ const {
   updateCommentQuestion,
   deleteCommentQuestion,
   createComment,
-  getComments
+  getComments,
+  getOwnComment
 } = require("../controllers.js/comment.controller");
 
 const commentRoute = express.Router();
@@ -34,6 +35,12 @@ commentRoute
     auth,
     deleteCommentQuestion
   );
+
+commentRoute
+    .route("/owner/:id")
+    .get(
+      getOwnComment
+    )
 
 module.exports = {
   commentRoute,

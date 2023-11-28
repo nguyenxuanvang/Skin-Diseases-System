@@ -6,11 +6,7 @@ import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import DoctorInformationDetail from './DoctorInformationDetail';
 import doctorApi from '../../redux/api/doctor.slice';
-function DoctorInformation(
-  {
-    doctor_img = 'doctor_img_1.png'
-  }
-) {
+function DoctorInformation() {
   const [getDoctor,{data = {}}] = doctorApi.useLazyGetDoctorQuery();
   const { id } = useParams();
   useState(()=>{

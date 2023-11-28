@@ -1,0 +1,16 @@
+.avatar_answer img {
+  width: 75px;
+  height: 75px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid #4070F4;
+}
+.reply_btn {
+  font-weight: 700;
+}
+.reply_btn:hover {
+  cursor: pointer;
+}
+.btn_more:hover {
+  color: red;
+}

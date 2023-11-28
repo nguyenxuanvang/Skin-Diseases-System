@@ -5,3 +5,9 @@
     border-radius: 50%;
     border: 4px solid #4070F4;
 }
+.title {
+    width: 770px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

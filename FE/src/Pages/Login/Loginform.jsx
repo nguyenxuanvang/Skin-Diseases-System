@@ -26,7 +26,7 @@ const LoginForm = () => {
         toast.error(message,{autoClose: 3000});
       } else {
         const message = response.data.message;
-        toast.success(message,{autoClose: 3000});
+        toast.success(message,{autoClose: 1000});
         if(isRemember) {
           localStorage.setItem('rememberE',JSON.stringify(email));
           localStorage.setItem('rememberP',JSON.stringify(password));

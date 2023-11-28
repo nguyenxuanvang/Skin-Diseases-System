@@ -16,7 +16,7 @@ function DoctorAccountPage() {
         password: values.password
       }).then((response) => {
         if(response.data) {
-          toast.success(response.data.message);
+          toast.success(response.data.message,{autoClose: 1000});
         } else {
           toast.error(response.error.data.message);
         }

@@ -5,8 +5,9 @@ import HomeNewsList from '../../components/HomeNews/HomeNewsList';
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-
+import newsApi from '../../redux/api/news.slice';
 function HomeNews() {
+  const {data = {}} = newsApi.useGetListNewsQuery();
   return (
     <div className={Styles.home_news}>
       <div className={Styles.home_newsHeader}>
@@ -14,16 +15,9 @@ function HomeNews() {
         <div className={Styles.home_newsLatest}>Tin mới nhất</div>
       </div>
       <div className={Styles.home_newsLists}>
-            <HomeNewsList
-              img_newsImage="newsImage_2.jpg"
-              title="Những căn bệnh da liễu thường gặp"
-            />
-            <HomeNewsList date="05/10/2023" />
-            <HomeNewsList
-              img_newsImage="newsImage_3.jpg"
-              title="Cách phòng chống căn bệnh mẩn đỏ thường gặp ở Việt Nam"
-            />
-            <HomeNewsList />
+        {data.data?.map(item => (
+          <HomeNewsList key={item.News_id} news={item}/>
+        ))}
       </div>
     </div>
   );
