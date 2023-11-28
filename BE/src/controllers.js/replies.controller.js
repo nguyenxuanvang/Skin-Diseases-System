@@ -1,4 +1,4 @@
-const { Replies, Comment } = require("../database/sequelize");
+const { Replies, Comment, Questions } = require("../database/sequelize");
 const { v4: uuidv4 } = require("uuid");
 
 const createReplies = async (req, res, next) => {
@@ -22,20 +22,31 @@ const createReplies = async (req, res, next) => {
         message: "Comment Not Found !",
       });
     }
-
+    
     const Replies_id = uuidv4();
-    const newReplies = await Replies.create({
+    let newReplies = await Replies.create({
       Replies_id,
       Content,
       User_id,
       Doctor_id,
       Comment_id: id,
     });
+
+    const question = await Questions.findOne({
+      where: {
+        Question_id: comment.Question_id,
+      },
+    });
+
+    question.num_comments += 1;
+    await question.save();
+
+    newReplies = newReplies.get({plain: true});
+    newReplies = {...newReplies, name: req.user.name, avatar: req.user.avatar};
+
     return res.status(200).json({
       status: 200,
-      data: {
-        newReplies,
-      },
+      data: newReplies,
       message: "Replies added successfully!",
     });
   } catch (error) {

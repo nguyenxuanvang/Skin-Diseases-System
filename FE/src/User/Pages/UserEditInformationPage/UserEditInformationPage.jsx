@@ -56,13 +56,13 @@ function UserEditInformationPage() {
                         const formData = new FormData();
                         formData.append('avatar',avatar);
                         updateAvatar(formData).then(() => {
-                            toast.success("Upload Successfully !",{autoClose: 3000});
+                            toast.success("Upload Successfully !",{autoClose: 1000});
                         })
                     } else {
                         toast.error("Image Is Not Valid !",{autoClose: 3000});
                     }
                 } else {
-                    toast.success(response.data.message,{autoClose: 3000});
+                    toast.success(response.data.message,{autoClose: 1000});
                 }
             })
         }).catch(()=>{

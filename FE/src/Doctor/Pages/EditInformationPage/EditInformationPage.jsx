@@ -66,13 +66,13 @@ function EditInformationPage() {
                         const formData = new FormData();
                         formData.append('avatar',avatar);
                         updateAvatar(formData).then(() => {
-                            toast.success("Upload Successfully !",{autoClose: 3000});
+                            toast.success("Upload Successfully !",{autoClose: 1000});
                         })
                     } else {
                         toast.error("Image Is Not Valid !",{autoClose: 3000});
                     }
                 } else {
-                    toast.success(response.data.message,{autoClose: 3000});
+                    toast.success(response.data.message,{autoClose: 1000});
                 }
                 
             }).catch((error) => {
@@ -134,6 +134,7 @@ function EditInformationPage() {
                             rules={[
                                 { required: true, message: 'Tên Không Được Phép Bỏ Trống' },
                                 { min: 5, message: 'Độ Dài Tên Phải Từ 5 Đến 20 Kí Tự' },
+                                { max: 20, message: 'Độ Dài Tên Phải Từ 5 Đến 20 Kí Tự' },
                                 { pattern: /^[a-zA-Z\sĐđÀ-ỹẰằẮắẲẳẴẵẶặẤấẦầẨẩẪẫẬậỀềỂểỄễỆệỈỉỊị]+$/, message: 'Tên Chỉ Được Phép Chứa Chữ Cái Và Dấu Khoảng Trắng' }
                             ]}
                             hasFeedback>

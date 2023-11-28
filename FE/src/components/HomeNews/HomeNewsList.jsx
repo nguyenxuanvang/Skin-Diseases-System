@@ -1,36 +1,33 @@
 import React from 'react'
 import Styles from './HomeNewsList.module.css'
 import { FaAngleRight } from "react-icons/fa";
-function HomeNewsList(
-    {
-        img_newsImage = 'newsImage_1.jpg', 
-        date = '08/10/2023',
-        title = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum magnam suscipit labore accusantium nulla animi, consequuntur, eveniet eos voluptates aspernatur, dicta at blanditiis natus saepe sunt ipsam tenetur harum eius.',
-        description = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum magnam suscipit labore accusantium nulla animi, consequuntur, eveniet eos voluptates aspernatur, dicta at blanditiis natus saepe sunt ipsam tenetur harum eius.',
-        btn_seeMore = 'See more'
-    }
-) {
+import { useNavigate } from 'react-router-dom';
+function HomeNewsList({news}) {
+    const navigate = useNavigate();
+    const date = new Date(news.updatedAt);
+    const time = date.getDate() + '-' + (date.getMonth()+1) + '-' + date.getFullYear() 
+    + ' ' + ((date.getHours() > 9) ? date.getHours() : `0${date.getHours()}`) + ":" + ((date.getMinutes() > 9) ? date.getMinutes() : `0${date.getMinutes()}`) + ' ' + ((date.getHours() > 11) ? 'PM' : 'AM');
   return (
     <>
     <div className={Styles.container}>
         <div className={Styles.newsImage}>
-            <img src={`./images/News/${img_newsImage}`}  alt=""/>
+            <img src={`http://localhost:3000/news/image/${news.image}`}  alt=""/>
         </div>
         <div className={Styles.newsContext}>
             <div className={Styles.newsDate}>
-                <p>{date}</p>
+                <p>{time}</p>
             </div>
 
             <div className={Styles.newsTitle}>
-                <p>{title}</p>
+                <p>{news.Title}</p>
             </div>
 
             <div className={Styles.newsDes}>
-                <p>{description}</p>
+                <p>{news.Content}</p>
             </div>
 
             <div className={Styles.newsBtn}>
-                <button className={Styles.btn_seeMore}>See more <FaAngleRight/></button>
+                <button className={Styles.btn_seeMore} onClick={()=>{navigate(`/DetailNewsPage/${news.News_id}`)}}>See more <FaAngleRight/></button>
             </div>
         </div>
     </div>

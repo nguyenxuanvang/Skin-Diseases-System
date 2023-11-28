@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import diseaseApi from "../../redux/api/disease.slice";
 import { useMyContext } from "../../MyContext/context";
 import { Spin } from 'antd';
+import { ToastContainer, toast } from "react-toastify";
 import Styles from "./TestPage.module.css";
 function TestDiagno() {
     const { data, updateData } = useMyContext();
@@ -32,7 +33,7 @@ function TestDiagno() {
 
     const handleScanClick = async () => {
         if (!avatar) {
-            alert('Please Upload Image !');
+            toast.error('Please Upload Image !',{autoClose: 3000});
         }
         else {
             if (avatar.type === 'image/jpeg' || avatar.type === 'image/png') {
@@ -40,7 +41,7 @@ function TestDiagno() {
                 formData.append('image', avatar);
                 predict(formData);
             } else {
-                alert('Image Is Not Valid !');
+                toast.error('Image Is Not Valid !',{autoClose: 3000});
             }
         }
     }
@@ -79,6 +80,7 @@ function TestDiagno() {
                     </div>
                 </div>
             </Spin>
+            <ToastContainer />
         </>
     );
 }

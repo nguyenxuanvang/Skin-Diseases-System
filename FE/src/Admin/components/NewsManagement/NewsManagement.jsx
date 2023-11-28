@@ -93,7 +93,7 @@ function NewsManagement() {
               title='Are you sure delete?'
               onConfirm={async () => {
                 const response = await deleteNews(record.id);
-                toast.success(response.data.message,{autoClose: 3000});
+                toast.success(response.data.message,{autoClose: 1000});
               }}
               onCancel={() => { }}
               okText='Đồng ý'
@@ -127,7 +127,7 @@ function NewsManagement() {
         arg: formData
     }).then((response) => {
         if(response.data) {
-          toast.success(response.data.message,{autoClose: 3000});
+          toast.success(response.data.message,{autoClose: 1000});
           setEditFormVisible(false);
         } else {
           toast.error(response.error.data.message,{autoClose: 3000});

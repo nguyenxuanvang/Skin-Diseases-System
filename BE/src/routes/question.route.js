@@ -6,7 +6,8 @@ const {
   updateQuestion,
   getQuestions,
   getPublicQuestions,
-  getQuestion
+  getQuestion,
+  getOwnQuetion
 } = require("../controllers.js/question.controller");
 
 const questionRoute = express.Router();
@@ -15,6 +16,12 @@ questionRoute
   .get(
     getPublicQuestions
   );
+
+questionRoute
+    .route("/owner/:id")
+    .get(
+      getOwnQuetion
+    )
   
 questionRoute
   .route("/")

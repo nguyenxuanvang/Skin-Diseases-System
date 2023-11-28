@@ -38,11 +38,6 @@ userRouter
 userRouter
   .route("/:id")
   .get(
-    (req, res, next) => {
-      req.roles = ["admin", "user"];
-      return next();
-    },
-    auth,
     getUser
   )
   .delete(
