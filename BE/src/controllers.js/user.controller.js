@@ -3,7 +3,7 @@ const saltRounds = 10;
 const fs = require("fs");
 const path = require('path');
 const jwt = require("jsonwebtoken");
-const { User, Doctor, Admin, Tutorial, Otp } = require("../database/sequelize");
+const { User, Doctor, Admin, Questions, Comment, Replies, Tutorial, Otp } = require("../database/sequelize");
 const { faker } = require("@faker-js/faker");
 const { transport } = require("../config/mail");
 require("dotenv").config();
@@ -28,39 +28,20 @@ const getUsers = async (req, res, next) => {
 const getUser = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { user } = req;
     const findUser = await User.findOne({
       where: {
         User_id: id,
       }
     });
-    if (user.role === 'admin') {
-
-      if (!findUser) {
-        return res.status(400).json({
-          status: 400,
-          message: 'User Is Not Exist !'
-        });
-      }
-      return res.status(200).json({
-        status: 200,
-        data: {
-          findUser,
-        }
+    if (!findUser) {
+      return res.status(404).json({
+        status: 404,
+        message: 'User Not Found !'
       });
-    }
-
-    if (user.User_id !== id) {
-      return res.status(403).json({
-        status: 403,
-        message: 'Unauthorized access to this resource !'
-      })
     }
     return res.status(200).json({
       status: 200,
-      data: {
-        findUser
-      }
+      data: findUser
     })
 
   } catch (error) {
@@ -71,17 +52,26 @@ const getUser = async (req, res, next) => {
 const deleteUser = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const userDelete = await User.destroy({
+    await Replies.destroy({
       where: {
         User_id: id,
       },
     });
-    if(userDelete === 0) {
-      return res.status(400).json({
-        status: 400,
-        message: 'Deleted Fail'
-      })
-    }
+    await Comment.destroy({
+      where: {
+        User_id: id,
+      },
+    });
+    await Questions.destroy({
+      where: {
+        User_id: id,
+      },
+    });
+    await User.destroy({
+      where: {
+        User_id: id,
+      },
+    });
     const listAvatar = fs.readdirSync("./src/Images/Avatars");
     const findAvatar = listAvatar.find(item => item.startsWith(id));
     if (findAvatar) {

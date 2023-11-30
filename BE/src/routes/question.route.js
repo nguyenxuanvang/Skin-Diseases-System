@@ -4,9 +4,10 @@ const {
   createQuestion,
   deleteQuestion,
   updateQuestion,
-  getQuestions,
+  getSearchQuestions,
   getPublicQuestions,
-  getQuestion
+  getQuestion,
+  getOwnQuetion
 } = require("../controllers.js/question.controller");
 
 const questionRoute = express.Router();
@@ -15,6 +16,13 @@ questionRoute
   .get(
     getPublicQuestions
   );
+
+questionRoute
+    .route("/owner")
+    .get(
+      auth,
+      getOwnQuetion
+    )
   
 questionRoute
   .route("/")
@@ -26,15 +34,15 @@ questionRoute
     auth,
     createQuestion
   )
-  .get(
-    auth,
-    getQuestions
-  );
-
-questionRoute.route("/public").get(getPublicQuestions);
 
 questionRoute
-  .route("/:id")
+    .route("/search")
+    .get(
+      getSearchQuestions
+    );
+
+questionRoute
+  .route("/detail/:id")
   .get(
     getQuestion
   )

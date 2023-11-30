@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const fs = require("fs");
 const path = require('path');
 const jwt = require("jsonwebtoken");
-const { Doctor, Admin, User } = require("../database/sequelize");
+const { Doctor, Admin, User, Questions, Comment, Replies } = require("../database/sequelize");
 const saltRounds = 10;
 const getDoctors = async (req, res, next) => {
   try {
@@ -67,17 +67,26 @@ const getImage = async (req,res,next) => {
 const deleteDoctor = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const doctorDelete = await Doctor.destroy({
+    await Replies.destroy({
       where: {
         Doctor_id: id,
       },
     });
-    if(doctorDelete === 0) {
-      return res.status(400).json({
-        status: 400,
-        message: 'Deleted Fail'
-      })
-    }
+    await Comment.destroy({
+      where: {
+        Doctor_id: id,
+      },
+    });
+    await Questions.destroy({
+      where: {
+        Doctor_id: id,
+      },
+    });
+    await Doctor.destroy({
+      where: {
+        Doctor_id: id,
+      },
+    });
     const listAvatar = fs.readdirSync("./src/Images/Avatars");
     const findAvatar = listAvatar.find(item => item.startsWith(id));
     if (findAvatar) {

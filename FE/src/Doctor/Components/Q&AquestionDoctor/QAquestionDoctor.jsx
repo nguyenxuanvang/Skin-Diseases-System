@@ -5,6 +5,7 @@ import { FiMessageCircle } from "react-icons/fi";
 import { AiOutlineRight } from "react-icons/ai";
 
 function QAquestionDoctor({item,info}) {
+    console.log(item);
     const date = new Date(item.createdAt);
     const newDate = String(date.getFullYear())+ '-' + String(date.getMonth()+1)+ '-' + String(date.getDate());
     return (
@@ -14,11 +15,11 @@ function QAquestionDoctor({item,info}) {
                     <img src={`http://localhost:3000/detail/image/${info.user.avatar}`} alt="" />
                 </div>
                 <div className='title_question' style={{padding:'5px 0 0 20px'}}>
-                   <Link to='/DetailForumPage' style={{textDecoration:'none', color:'black'}}><h3>{item.Content}</h3></Link>
+                   <Link to={`/DetailForumPage/${item.Question_id}`} style={{textDecoration:'none', color:'black'}}><h3>{item.Content}</h3></Link>
                     <div className='d-flex'>
                         <p style={{paddingRight:'30px'}}>{newDate}</p>
                         <p style={{paddingRight:'30px'}}><FiMessageCircle/>{item.num_comments}</p>
-                        <Link to='/DetailForumPage' style={{textDecoration:'none', color:'black', fontWeight:'bold'}}>See More<AiOutlineRight /></Link>
+                        <Link to={`/DetailForumPage/${item.Question_id}`} style={{textDecoration:'none', color:'black', fontWeight:'bold'}}>See More<AiOutlineRight /></Link>
                     </div>
                 </div>
 

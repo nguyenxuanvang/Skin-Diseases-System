@@ -32,7 +32,7 @@ function RegisterForm() {
           toast.error(message,{autoClose: 3000});
         } else {
           const message = response.data.message;
-          toast.success(message,{autoClose: 3000});
+          toast.success(message,{autoClose: 1000});
           setTimeout(() => {
             navigate("/Login");
           }, [500]);

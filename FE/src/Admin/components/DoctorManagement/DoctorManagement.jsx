@@ -83,7 +83,7 @@ function DoctorManagement() {
               onConfirm={async () => {
                 const response = await deleteDoctor(record.ID);
                 if(response.data) {
-                  toast.success(response.data.message,{autoClose: 3000});
+                  toast.success(response.data.message,{autoClose: 1000});
                 } else {
                   toast.error(response.error.data.message,{autoClose: 3000});
                 }

@@ -84,7 +84,7 @@ const personalApi = apiSlice.injectEndpoints({
       serializeQueryArgs: () => {
         return undefined;
       },
-      query: () => '/question'
+      query: () => '/question/owner'
     }),
   })
 });

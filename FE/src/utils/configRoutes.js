@@ -7,7 +7,7 @@ const configRoutes = {
   NewsPage:"/NewsPage",
   DetailNewsPage:"/DetailNewsPage/:id",
   ForumPage:"/ForumPage",
-  DetailForumPage: "/DetailForumPage",
+  DetailForumPage: "/DetailForumPage/:id",
   Contact:"/Contact",
   Login: "/Login",
   Register: "/Register",

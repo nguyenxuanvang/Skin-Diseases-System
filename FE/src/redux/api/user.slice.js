@@ -8,6 +8,14 @@ const userApi = apiSlice.injectEndpoints({
       },
       query: () => '/user'
     }),
+    getUser: builder.query({
+      serializeQueryArgs: () => {
+        return undefined;
+      },
+      query: (id) => ({
+        url: `/user/${id}`
+      })
+    }),
     deleteUser: builder.mutation({
       query: (id) => ({
         url: `/user/${id}`,

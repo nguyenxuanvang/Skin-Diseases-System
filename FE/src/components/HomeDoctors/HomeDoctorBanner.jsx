@@ -2,34 +2,30 @@ import React from 'react'
 import HomeDoctorList from './HomeDoctorList'
 import Styles from './HomeDoctorList.module.css'
 import { FaAngleRight } from "react-icons/fa";
-function HomeDoctorBanner({
-    doctorTeam = 'Đội ngũ',
-    doctorTitle = 'Đội ngũ Bác sĩ chuyên môn',
-    doctorDes = 'Đội ngũ Bác Sĩ đến từ SkinDiagnoTech',
-    doctorTeamBtn = 'See More',
-    img_doctorTeamImage = 'image_banner_doctor_2.png'
-}) {
+import doctorApi from '../../redux/api/doctor.slice';
+import { useNavigate } from "react-router-dom";
+function HomeDoctorBanner() {
+    const {data = {}} = doctorApi.useGetListDoctorQuery();
+    const navigate = useNavigate();
     return (
         <div className={Styles.home_DoctorHeader}>
             <div className={Styles.home_DoctorContainer}>
                 <div className={Styles.home_DoctorTeamImg}>
-                    <img src={`./images/Doctor/${img_doctorTeamImage}`} alt="" />
+                    <img src={`/images/Doctor/image_banner_doctor_2.png`} alt="" />
                 </div>
                 <div className={Styles.home_DoctorTeamIntro}>
-                    <div className={Styles.home_DoctorTeam}>{doctorTeam}</div>
-                    <div className={Styles.home_DoctorTitle}>{doctorTitle}</div>
-                    <div className={Styles.home_DoctorDes}>{doctorDes}</div>
+                    <div className={Styles.home_DoctorTeam}>Đội ngũ</div>
+                    <div className={Styles.home_DoctorTitle}>Đội ngũ Bác sĩ chuyên môn</div>
+                    <div className={Styles.home_DoctorDes}>Đội ngũ Bác Sĩ đến từ SkinDiagnoTech</div>
                     <div className={Styles.home_DoctorTeamBtn}>
-                        <button className={Styles.btn_TeamseeMore}>{doctorTeamBtn}<FaAngleRight /></button>
+                        <button className={Styles.btn_TeamseeMore} onClick={()=>{navigate("/Doctor")}}>See More<FaAngleRight /></button>
                     </div>
                 </div>
             </div>
             <div className={Styles.home_DoctorTeamList}>
-                <HomeDoctorList />
-                <HomeDoctorList img_doctorImage='doctor_img_2.png' />
-                <HomeDoctorList img_doctorImage='doctor_img_5.png' />
-                <HomeDoctorList img_doctorImage='doctor_img_4.png' />
-                <HomeDoctorList img_doctorImage='doctor_img_6.png' />
+                {data.data?.map(item => (
+                    <HomeDoctorList key={item.Doctor_id} info={item}/>
+                ))}
             </div>
         </div>
     )

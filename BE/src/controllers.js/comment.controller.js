@@ -1,4 +1,4 @@
-const { Comment,Questions } = require("../database/sequelize");
+const { Comment,Questions,Doctor,User } = require("../database/sequelize");
 const { v4: uuidv4 } = require("uuid");
 
 const createComment = async (req, res, next) => {
@@ -6,7 +6,6 @@ const createComment = async (req, res, next) => {
     const { Content } = req.body;
     const { id } = req.params;
     const {User_id, Doctor_id} = req.user;
-
     const question = await Questions.findOne({
       where: {
         Question_id: id,
@@ -20,21 +19,21 @@ const createComment = async (req, res, next) => {
       });
     }
     const Comment_id = uuidv4();
-    const newComment = await Comment.create({
+    let newComment = await Comment.create({
       Comment_id,
       Content,
       User_id,
       Doctor_id,
       Question_id: id
     });
+    newComment = newComment.get({plain: true});
+    newComment = {...newComment, name: req.user.name, avatar: req.user.avatar, replies: []};
     question.num_comments += 1;
     await question.save();
 
     return res.status(200).json({
       status: 200,
-      data: {
-        newComment,
-      },
+      data: newComment,
       message: "Comment added successfully!",
     });
   } catch (error) {
@@ -135,6 +134,7 @@ const getComments = async(req,res) => {
     const { id } = req.params;
 
     const comments = await Comment.findAll({
+      order: [["createdAt", "DESC" /*"ASC"*/]],
       where: {
         Question_id: id,
       },
@@ -147,10 +147,47 @@ const getComments = async(req,res) => {
     return next(error);
   }
 }
-
+const getOwnComment = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const comment = await Comment.findOne({
+      where: {
+        Comment_id: id
+      },
+    });
+    if(!comment) {
+      return res.status(404).json({
+        status: 404,
+        message: "Question Is Not Found !"
+      })
+    }
+    let owner;
+    if(comment.Doctor_id) {
+      owner = await Doctor.findOne({
+      where: {
+        Doctor_id: comment.Doctor_id
+      },
+    });
+    }else {
+      owner = await User.findOne({
+        where: {
+          User_id: comment.User_id
+        },
+      });
+    }
+    return res.status(200).json({
+      status: 200,
+      data: owner,
+      message: "Get Comment Owner Successfully",
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
 module.exports = {
   createComment,
   updateCommentQuestion,
   deleteCommentQuestion,
-  getComments
+  getComments,
+  getOwnComment
 };

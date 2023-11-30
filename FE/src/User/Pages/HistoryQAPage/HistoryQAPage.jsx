@@ -6,13 +6,12 @@ import QAquestionUser from '../../Components/Q&AquestionUser/QAquestionUser'
 import personalApi from '../../../redux/api/personal.slice'
 import HeaderL from '../../../components/HeaderL/Header'
 function HistoryUserQAPage() {
-  const {data = []} = personalApi.useGetOwnQuestionsQuery();
+  const {data = {}} = personalApi.useGetOwnQuestionsQuery();
   const {data: info = {}} = personalApi.useGetDetailInforQuery();
   const [list, setList] = useState([]);
-
   useEffect(()=>{
-    setList(data?.data?.listAllQuestions);
-  },[data?.data?.listAllQuestions]);
+    setList(data.data);
+  },[data.data]);
   return (
     <>
       <div style={{ position: 'fixed', width: '100%', backgroundColor: 'white', height: '100px', top: '0', zIndex: '1' }}>

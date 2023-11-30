@@ -6,12 +6,24 @@ import { Spin } from 'antd';
 import personalApi from '../../redux/api/personal.slice';
 import { useNavigate } from "react-router-dom";
 function HeaderL() {
-  const {data = {}, isError} = personalApi.useGetDetailInforQuery();
+  const {data = {}, isError, isFetching} = personalApi.useGetDetailInforQuery();
+  const [check, setCheck] = useState(false);
   const navigate = useNavigate();
-  if(isError) {
-    localStorage.removeItem('token');
-    navigate("/login");
-  }
+  useEffect(()=>{
+    if(isFetching) {
+      setCheck(true);
+    }
+  },[isFetching]);
+  
+  useEffect(()=>{
+    if(check) {
+      if(isError) {
+        localStorage.removeItem('token');
+        navigate("/login");
+      }
+    }
+  },[isError]);
+
   if(data.user?.role === 'admin') {
     navigate("/menu-list");
   }
