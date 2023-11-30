@@ -13,7 +13,7 @@ const questionApi = apiSlice.injectEndpoints({
         return undefined;
       },
       query: (id) => ({
-        url: `/question/${id}`
+        url: `/question/detail/${id}`
       })
     }),
     getOwnerQuestion: builder.query({
@@ -22,6 +22,15 @@ const questionApi = apiSlice.injectEndpoints({
       },
       query: (id) => ({
         url: `/question/owner/${id}`
+      })
+    }),
+    getSearchQuestions: builder.query({
+      serializeQueryArgs: () => {
+        return undefined;
+      },
+      query: (content) => ({
+        url: `/question/search`,
+        params: content
       })
     }),
     createQuestion: builder.mutation({
@@ -37,6 +46,27 @@ const questionApi = apiSlice.injectEndpoints({
           if (response.data) {
             const action = apiSlice.util.updateQueryData('getQuestionList', undefined, draft => {
               draft.data.unshift(response.data.data);
+            });
+            await dispatch(action);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }),
+    deleteQuestion: builder.mutation({
+      query: id => ({
+        url: `/question/detail/${id}`,
+        method: 'DELETE'
+      }),
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        try {
+          
+          const response = await queryFulfilled;
+          if (response.data) {
+            const action = apiSlice.util.updateQueryData('getSearchQuestions', undefined, draft => {
+              const findIndex = draft.data.findIndex(item => item.Question_id === id);
+              draft.data.splice(findIndex,1);  
             });
             await dispatch(action);
           }

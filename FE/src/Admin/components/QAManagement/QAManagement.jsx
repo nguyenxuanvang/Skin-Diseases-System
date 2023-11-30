@@ -1,35 +1,73 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Table, Button, Space, Popconfirm, message, Input } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
+import questionApi from '../../../redux/api/question.slice';
+import Styles from './QAManagement.module.css';
+import { ToastContainer, toast } from "react-toastify";
 function QAManagement() {
+  const [searchQuestions, {data = {}}] = questionApi.useLazyGetSearchQuestionsQuery();
+  const [deleteQuestion] = questionApi.useDeleteQuestionMutation();
   const [searchText, setSearchText] = useState('');
-
-  const onSearch = (value) => {
-    setSearchText(value);
-  };
   const { Search } = Input;
+  useEffect(()=>{
+    searchQuestions({content: ""});
+  },[]);
+  const formatDate = (str) => {
+    const date = new Date(str);
+    const time = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear()
+        + ' ' + ((date.getHours() > 9) ? date.getHours() : `0${date.getHours()}`)
+        + ":" + ((date.getMinutes() > 9) ? date.getMinutes() : `0${date.getMinutes()}`)
+        + ' ' + ((date.getHours() > 11) ? 'PM' : 'AM');
+    return time;
+  }
+  const onSearch = async () => {
+    const response = await searchQuestions({content: searchText});
+    if(response.error) {
+      toast.error(response.error.data.message,{autoClose: 3000});
+    }
+  };
+  
   const columns = [
     {
       title: 'ID',
       dataIndex: 'ID',
       key: 'ID',
+      width: 200,
+      align: 'center',
+      render: (id) => {
+        return <p style={{ fontWeight: 700 }}>{id}</p>
+      }
     },
     {
-      title: 'Nội dung bài đăng',
-      dataIndex: 'description',
+      title: 'Content',
+      dataIndex: 'Content',
       key: 'description',
+      align: 'center',
+      width: 500,
+      render: (content) => {
+        return <p className={Styles.Content}>{content}</p>
+      },
     },
     {
-      title: 'Ngày đăng',
+      title: 'Date',
       dataIndex: 'date',
       key: 'date',
+      align: 'center',
+      width: 200,
+      render: (date) => {
+        return <p style={{ fontWeight: 700 }}>{date}</p>
+      }
     },
 
     {
-      title: 'Người đăng',
-      dataIndex: 'member',
+      title: 'Author',
+      dataIndex: 'author',
       key: 'member',
-
+      align: 'center',
+      width: 200,
+      render: (name) => {
+        return <p style={{ fontWeight: 700 }}>{name}</p>
+      }
     },
 
     {
@@ -42,8 +80,13 @@ function QAManagement() {
             <Popconfirm
               style={{ width: 800 }}
               title='Are you sure delete?'
-              onConfirm={() => {
-                message.success('Xóa thành công!');
+              onConfirm={async () => {
+                const response = await deleteQuestion(record.ID);
+                if(response.data) {
+                  toast.success(response.data.message,{autoClose: 1000});
+                } else {
+                  toast.error(response.error.data.message,{autoClose: 3000});
+                }
               }}
               onCancel={() => { }}
               okText='Đồng ý'
@@ -56,50 +99,30 @@ function QAManagement() {
       },
     },
   ];
-  const dataSource = [
-    {
-      ID: '1',
-      description: 'Nội dung 1',
-      date: '17/11/2023',
-      member: 'User',
-    },
-    {
-      ID: '2',
-      description: 'Nội dung 2',
-      date: '17/11/2023',
-      member: 'Doctor',
-    },
-    {
-      ID: '1',
-      description: 'Nội dung 3',
-      date: '17/11/2023',
-      member: 'User',
-    },
-    {
-      ID: '1',
-      description: 'Nội dung 4',
-      date: '17/11/2023',
-      member: 'Doctor',
-    },
-  ];
+  const dataSource = data.data?.map(item => {
+    return {
+      ID: item.Question_id,
+      Content: item.Content,
+      date: formatDate(item.createdAt),
+      author: item.name
+    }
+  })
 
-  const filteredDataSource = dataSource.filter(item => {
-    const memberText = item.member.toLowerCase();
-    return memberText.includes(searchText.toLowerCase());
-  });
+  
 
   return (
     <>
       <Search
-        placeholder="input search text"
-        allowClear
+        placeholder="Search By Content"
         enterButton="Search"
         size="large"
+        onChange={(e)=>{setSearchText(e.target.value)}}
         onSearch={onSearch}
       />
       <div>
-        <Table columns={columns} dataSource={filteredDataSource} />;
+        <Table columns={columns} dataSource={dataSource} bordered />;
       </div>
+      <ToastContainer />
     </>
   )
 }
