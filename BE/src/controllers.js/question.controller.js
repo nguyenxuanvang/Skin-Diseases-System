@@ -13,8 +13,8 @@ const createQuestion = async (req, res, next) => {
       Doctor_id,
       num_comments: 0
     });
-    newQuestion = newQuestion.get({plain: true});
-    newQuestion = {...newQuestion, avatar: req.user.avatar};
+    newQuestion = newQuestion.get({ plain: true });
+    newQuestion = { ...newQuestion, avatar: req.user.avatar };
     return res.status(200).json({
       status: 200,
       data: newQuestion,
@@ -81,33 +81,31 @@ const updateQuestion = async (req, res, next) => {
 const deleteQuestion = async (req, res, next) => {
   try {
     const { id } = req.params;
-    let { User_id, Doctor_id, Admin_id } = req.user;
-
-    User_id = User_id || null;
-    Doctor_id = Doctor_id || null;
-
-    let deleteItemquestion;
-    if (Admin_id) {
-      deleteItemquestion = await Questions.destroy({
+    const comments = Comment.findAll({
+      where: {
+        Question_id: id
+      },
+      raw: true
+    });
+    for(let i = 0; i < comments.length; i += 1) {
+      await Replies.destroy({
         where: {
-          Question_id: id
-        },
-      });
-    } else {
-      deleteItemquestion = await Questions.destroy({
-        where: {
-          Question_id: id,
-          User_id,
-          Doctor_id
-        },
-      });
+          Comment_id: comments[i].Comment_id
+        }
+      })
     }
-    if (!deleteItemquestion) {
-      return res.status(404).json({
-        status: 404,
-        message: "Question Not Found !",
-      });
-    }
+    await Comment.destroy({
+      where: {
+        Question_id: id
+      },
+    });
+
+    await Questions.destroy({
+      where: {
+        Question_id: id,
+      },
+    });
+
     return res.status(200).json({
       status: 200,
       message: "Deleted Question Successfully",
@@ -117,29 +115,44 @@ const deleteQuestion = async (req, res, next) => {
   }
 };
 
-const getQuestions = async (req, res, next) => {
+const getSearchQuestions = async (req, res, next) => {
   try {
-    let { User_id, Doctor_id, Admin_id } = req.user;
-    User_id = User_id || null;
-    Doctor_id = Doctor_id || null;
-
-    let listAllQuestions;
-    if (Admin_id) {
-      listAllQuestions = await Questions.findAll({});
-    } else {
-      listAllQuestions = await Questions.findAll({
-        where: {
-          User_id,
-          Doctor_id
-        },
-      });
+    const { content } = req.query;
+    const searchQuestions = await Questions.findAll({
+      raw: true
+    });
+    const list = searchQuestions.filter(item => item.Content.toLowerCase().includes(content.toLowerCase()));
+    let newList = [];
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].User_id) {
+        const user = await User.findOne({
+          where: {
+            User_id: list[i].User_id,
+          },
+          raw: true
+        });
+        const obj = {
+          ...list[i],
+          name: user.name
+        }
+        newList.push(obj);
+      } else {
+        const doctor = await Doctor.findOne({
+          where: {
+            Doctor_id: list[i].Doctor_id,
+          },
+          raw: true
+        });
+        const obj = {
+          ...list[i],
+          name: doctor.name
+        }
+        newList.push(obj);
+      }
     }
-
     return res.status(200).json({
       status: 200,
-      data: {
-        listAllQuestions,
-      },
+      data: newList,
       message: "Get Questions Successfully",
     });
   } catch (error) {
@@ -165,6 +178,7 @@ const getPublicQuestions = async (req, res, next) => {
         const newUser = {
           ...questions[i],
           avatar: user.avatar,
+          name: user.name
         }
         questionList.push(newUser);
       } else {
@@ -287,7 +301,7 @@ const getQuestion = async (req, res, next) => {
       }
       comments[i] = { ...comments[i], replies }
     }
-    const detailQuestion = {...question,comments}
+    const detailQuestion = { ...question, comments }
     return res.status(200).json({
       status: 200,
       data: detailQuestion,
@@ -300,35 +314,21 @@ const getQuestion = async (req, res, next) => {
 
 const getOwnQuetion = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const question = await Questions.findOne({
+    let {Doctor_id, User_id} = req.user;
+    Doctor_id = Doctor_id || null;
+    User_id = User_id || null;
+
+    const questions = await Questions.findAll({
       where: {
-        Question_id: id
+        Doctor_id,
+        User_id
       },
+      raw: true
     });
-    if (!question) {
-      return res.status(404).json({
-        status: 404,
-        message: "Question Is Not Found !"
-      })
-    }
-    let owner;
-    if (question.Doctor_id) {
-      owner = await Doctor.findOne({
-        where: {
-          Doctor_id: question.Doctor_id
-        },
-      });
-    } else {
-      owner = await User.findOne({
-        where: {
-          User_id: question.User_id
-        },
-      });
-    }
+   
     return res.status(200).json({
       status: 200,
-      data: owner,
+      data: questions,
       message: "Get Question Owner Successfully",
     });
   } catch (error) {
@@ -340,9 +340,8 @@ module.exports = {
   createQuestion,
   updateQuestion,
   deleteQuestion,
-  getQuestions,
+  getSearchQuestions,
   getPublicQuestions,
   getQuestion,
   getOwnQuetion,
-  getPublicQuestions,
 };

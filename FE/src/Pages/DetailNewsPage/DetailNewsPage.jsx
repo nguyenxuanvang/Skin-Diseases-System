@@ -10,8 +10,10 @@ import { useParams } from 'react-router-dom';
 import Header from '../../components/Header';
 import HeaderL from '../../components/HeaderL/Header';
 import newsApi from '../../redux/api/news.slice';
+import questionApi from '../../redux/api/question.slice';
 function DetailNewsPage() {
     const { id } = useParams();
+    const {data: objQ = {}} = questionApi.useGetQuestionListQuery();
     const [getNews,{data = {}}] = newsApi.useLazyGetNewsQuery();
     useEffect(()=>{
         getNews(id);
@@ -40,9 +42,10 @@ function DetailNewsPage() {
                         <div className={Styles.DetailNewsPage_latest}>
                             <div className={Styles.DetailNewsPage_latest_title}>Bài viết mới nhất</div>
                             <div className={Styles.DetailNewsPage_latest_list} style={{ margin: '10px 0 20px 20px' }}>
-                                <LatestNews />
-                                <LatestNews />
-                                <LatestNews />
+                                {objQ.data?.map(item => (
+                                    <LatestNews question={item}/>
+                                ))}
+                                
                             </div>
                         </div>
                     </div>

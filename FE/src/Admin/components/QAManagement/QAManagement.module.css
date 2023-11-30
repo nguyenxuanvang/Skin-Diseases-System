@@ -1,0 +1,8 @@
+.Content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 500px;
+  font-size: 17px;
+  font-weight: 700;
+}

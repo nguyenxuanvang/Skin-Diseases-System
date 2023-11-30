@@ -18,6 +18,7 @@ const auth = async (req, res, next) => {
     try {
       data = jwt.verify(accessToken, process.env.SECRET_KEY);
     } catch (error) {
+      
       return res.status(401).json({
         status: 401,
         message: "Unauthorized - Invalid Access Token !",
