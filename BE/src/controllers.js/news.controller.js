@@ -78,6 +78,23 @@ const getNews = async (req, res, next) => {
   }
 };
 
+const getNewsRelated = async (req,res,next) => {
+  try{
+    const { name } = req.params;
+    const listNews = await News.findAll({
+      order: [["createdAt", "DESC" /*"ASC"*/]],
+      raw: true
+    });
+    const newsRelated = listNews.filter(item => item.Title.toLowerCase().includes(name.toLowerCase()));
+    return res.status(200).json({
+      status: 200,
+      data: newsRelated
+    })
+  } catch(error) {
+    return next(error);
+  }
+}
+
 const getNew = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -189,6 +206,7 @@ module.exports = {
   createNew,
   upload,
   getNews,
+  getNewsRelated,
   getNew,
   getImageNews,
   updateNew,

@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useMyContext } from '../../MyContext/context';
 import News from '../../components/News';
+import diseaseApi from '../../redux/api/disease.slice';
+import newsApi from '../../redux/api/news.slice';
 import Styles from "./TestPage.module.css";
 function TestDiagno_Result() {
+  const [getDisease, {data:objD = {}}] = diseaseApi.useLazyGetDiseaseQuery();
+  const [getNewsRelated, {data: objN = {}}] = newsApi.useLazyGetNewsRelatedQuery();
   const { data, updateData } = useMyContext();
   const [isSuccess, setIsSuccess] = useState(false);
   useEffect(() => {
-    if (data.status === 200) setIsSuccess(true);
+    if (data.status === 200) {setIsSuccess(true);getDisease(data.result);getNewsRelated(data.result)}
     else setIsSuccess(false);
   }, [data])
   return (
@@ -20,11 +24,11 @@ function TestDiagno_Result() {
             Hình ảnh bệnh liên quan
           </p>
           <div className={Styles.disease_imglist}>
-            <img src="/images/ImgExample/mau_1.png" alt="" />
-            <img src="/images/ImgExample/mau_2.png" alt="" />
-            <img src="/images/ImgExample/mau_3.png" alt="" />
-            <img src="/images/ImgExample/mau_3.png" alt="" />
-            <img src="/images/ImgExample/mau_3.png" alt="" />
+            <img src={`http://localhost:3000/disease/image/${data.result}1`} alt={`Image ${data.result}`} />
+            <img src={`http://localhost:3000/disease/image/${data.result}2`} alt={`Image ${data.result}`} />
+            <img src={`http://localhost:3000/disease/image/${data.result}3`} alt={`Image ${data.result}`} />
+            <img src={`http://localhost:3000/disease/image/${data.result}4`} alt={`Image ${data.result}`} />
+            <img src={`http://localhost:3000/disease/image/${data.result}5`} alt={`Image ${data.result}`} />
           </div>
         </div> : ""
       }
@@ -39,53 +43,7 @@ function TestDiagno_Result() {
             
             <div>
             <p style={{fontSize: '17px', fontWeight: '600'}}>Giải pháp:</p>
-            <p>
-              Trứng cá trở thành bệnh phổ biến nhất thế giới khi có 650 triệu người bị bệnh, 
-              trong đó lứa tuổi thanh thiếu niên chiếm 85%. Riêng tại Mỹ, mỗi năm dân số nước này 
-              chi hơn 1 tỷ USD để điều trị mụn trứng cá và hàng trăm triệu USD để sử dụng các sản 
-              phẩm hỗ trợ trị mụn.
-              Trứng cá trở thành bệnh phổ biến nhất thế giới khi có 650 triệu người bị bệnh, 
-              trong đó lứa tuổi thanh thiếu niên chiếm 85%. Riêng tại Mỹ, mỗi năm dân số nước này 
-              chi hơn 1 tỷ USD để điều trị mụn trứng cá và hàng trăm triệu USD để sử dụng các sản 
-              phẩm hỗ trợ trị mụn.
-              Trứng cá trở thành bệnh phổ biến nhất thế giới khi có 650 triệu người bị bệnh, 
-              trong đó lứa tuổi thanh thiếu niên chiếm 85%. Riêng tại Mỹ, mỗi năm dân số nước này 
-              chi hơn 1 tỷ USD để điều trị mụn trứng cá và hàng trăm triệu USD để sử dụng các sản 
-              phẩm hỗ trợ trị mụn.
-              Trứng cá trở thành bệnh phổ biến nhất thế giới khi có 650 triệu người bị bệnh, 
-              trong đó lứa tuổi thanh thiếu niên chiếm 85%. Riêng tại Mỹ, mỗi năm dân số nước này 
-              chi hơn 1 tỷ USD để điều trị mụn trứng cá và hàng trăm triệu USD để sử dụng các sản 
-              phẩm hỗ trợ trị mụn.
-              Trứng cá trở thành bệnh phổ biến nhất thế giới khi có 650 triệu người bị bệnh, 
-              trong đó lứa tuổi thanh thiếu niên chiếm 85%. Riêng tại Mỹ, mỗi năm dân số nước này 
-              chi hơn 1 tỷ USD để điều trị mụn trứng cá và hàng trăm triệu USD để sử dụng các sản 
-              phẩm hỗ trợ trị mụn.
-              Trứng cá trở thành bệnh phổ biến nhất thế giới khi có 650 triệu người bị bệnh, 
-              trong đó lứa tuổi thanh thiếu niên chiếm 85%. Riêng tại Mỹ, mỗi năm dân số nước này 
-              chi hơn 1 tỷ USD để điều trị mụn trứng cá và hàng trăm triệu USD để sử dụng các sản 
-              phẩm hỗ trợ trị mụn.
-              Trứng cá trở thành bệnh phổ biến nhất thế giới khi có 650 triệu người bị bệnh, 
-              trong đó lứa tuổi thanh thiếu niên chiếm 85%. Riêng tại Mỹ, mỗi năm dân số nước này 
-              chi hơn 1 tỷ USD để điều trị mụn trứng cá và hàng trăm triệu USD để sử dụng các sản 
-              phẩm hỗ trợ trị mụn.
-              Trứng cá trở thành bệnh phổ biến nhất thế giới khi có 650 triệu người bị bệnh, 
-              trong đó lứa tuổi thanh thiếu niên chiếm 85%. Riêng tại Mỹ, mỗi năm dân số nước này 
-              chi hơn 1 tỷ USD để điều trị mụn trứng cá và hàng trăm triệu USD để sử dụng các sản 
-              phẩm hỗ trợ trị mụn.
-              Trứng cá trở thành bệnh phổ biến nhất thế giới khi có 650 triệu người bị bệnh, 
-              trong đó lứa tuổi thanh thiếu niên chiếm 85%. Riêng tại Mỹ, mỗi năm dân số nước này 
-              chi hơn 1 tỷ USD để điều trị mụn trứng cá và hàng trăm triệu USD để sử dụng các sản 
-              phẩm hỗ trợ trị mụn.
-              Trứng cá trở thành bệnh phổ biến nhất thế giới khi có 650 triệu người bị bệnh, 
-              trong đó lứa tuổi thanh thiếu niên chiếm 85%. Riêng tại Mỹ, mỗi năm dân số nước này 
-              chi hơn 1 tỷ USD để điều trị mụn trứng cá và hàng trăm triệu USD để sử dụng các sản 
-              phẩm hỗ trợ trị mụn.
-              Trứng cá trở thành bệnh phổ biến nhất thế giới khi có 650 triệu người bị bệnh, 
-              trong đó lứa tuổi thanh thiếu niên chiếm 85%. Riêng tại Mỹ, mỗi năm dân số nước này 
-              chi hơn 1 tỷ USD để điều trị mụn trứng cá và hàng trăm triệu USD để sử dụng các sản 
-              phẩm hỗ trợ trị mụn.
-              
-            </p>
+            <p>{objD.data?.Solutions}</p>
             </div>
             
 
@@ -108,14 +66,19 @@ function TestDiagno_Result() {
       {
         (isSuccess) ?
           <div className={Styles.result_news}>
+            {(objN.data?.length > 0) ?
+            <>
             <div style={{ margin: '50px 0 0 0', textAlign: 'center' }} >
-              <h3>Những bài viết liên quan </h3>
-            </div>
-            <div style={{ margin: '50px 0 0 320px' }}>
-              <News />
-              <News />
-              <News />
-            </div>
+            <h3>Những bài viết liên quan </h3>
+          </div>
+          <div style={{ margin: '50px 0 0 320px' }}>
+            {objN.data?.map(item => (
+              <News key={item.News_id} news={item} />
+            ))}
+          </div>
+          </> : <div style={{textAlign: 'center',fontSize: '17px', fontWeight: 700, color: 'red'}}>Không Tìm Thấy Bài Viết Liên Quan</div>
+            }
+            
           </div>
           : ""
       }
