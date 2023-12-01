@@ -1,12 +1,6 @@
 import React from 'react'
 import Styles from './Overview.module.css'
-function Overview({
-    img_icon = 'news_logo.png',
-    total_quantity ='11',
-    des_quantity = 'News'
-}
-
-) {
+function Overview({img_icon,total_quantity,des_quantity}) {
   return (
     <div className={Styles.overview}>
         <div className={Styles.des_left}>

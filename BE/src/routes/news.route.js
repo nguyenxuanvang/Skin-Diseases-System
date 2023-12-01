@@ -4,6 +4,7 @@ const {
   createNew,
   upload,
   getNews,
+  getNewsRelated,
   getNew,
   updateNew,
   deleteNew,
@@ -59,6 +60,10 @@ newsRouter
     upload.single("news"),
     updateNew
   );
+
+newsRouter
+    .route("/related/:name")
+    .get(getNewsRelated)
 
 newsRouter
     .route("/image/:id")
