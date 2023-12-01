@@ -1,6 +1,7 @@
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+const { v4: uuidv4 } = require("uuid");
 const { spawn } = require("child_process");
 const { Diseases } = require("../database/sequelize");
 
@@ -52,9 +53,7 @@ const getDisease = async (req, res, next) => {
     });
     return res.status(200).json({
       status: 200,
-      data: {
-        disease: finddDisease,
-      }
+      data: finddDisease
     });
 
   } catch (error) {
@@ -62,8 +61,44 @@ const getDisease = async (req, res, next) => {
   }
 }
 
+const uploadDisease = async (req,res,next) => {
+  try{
+    const {Title, Content} = req.body;
+    const Diseases_id = uuidv4();
+    const disease = await Diseases.create({
+      Diseases_id,
+      Name: Title,
+      Solutions: Content,
+    });
+    return res.status(200).json({
+      status: 200,
+      data: disease,
+      message: "Create Solution Of Disease Successfully !",
+    });
+  } catch(error) {
+    return next(error);
+  }
+}
+const getImage = async (req,res,next) => {
+  try {
+    const { name } = req.params;
+    const listImage = fs.readdirSync("./src/Images/Diseases");
+    const findImage = listImage.find(item => item.startsWith(name));
+    if(!findImage) {
+      return res.status(404).json({
+        status: 404,
+        message: 'File Not Found'
+      })
+    }
+    return res.sendFile(path.join(__dirname, "../Images/Diseases", findImage));
+  } catch(error) {
+    return next(error);
+  }
+}
 module.exports = {
   predict,
   upload,
-  getDisease
+  getDisease,
+  uploadDisease,
+  getImage
 }
