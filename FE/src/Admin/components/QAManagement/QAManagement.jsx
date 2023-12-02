@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 function QAManagement() {
   const [searchQuestions, {data = {}}] = questionApi.useLazyGetSearchQuestionsQuery();
   const [deleteQuestion] = questionApi.useDeleteQuestionMutation();
-  const [searchText, setSearchText] = useState('');
+  // const [searchText, setSearchText] = useState('');
   const { Search } = Input;
   useEffect(()=>{
     searchQuestions({content: ""});
@@ -20,12 +20,12 @@ function QAManagement() {
         + ' ' + ((date.getHours() > 11) ? 'PM' : 'AM');
     return time;
   }
-  const onSearch = async () => {
-    const response = await searchQuestions({content: searchText});
-    if(response.error) {
-      toast.error(response.error.data.message,{autoClose: 3000});
-    }
-  };
+  // const onSearch = async () => {
+  //   const response = await searchQuestions({content: searchText});
+  //   if(response.error) {
+  //     toast.error(response.error.data.message,{autoClose: 3000});
+  //   }
+  // };
   
   const columns = [
     {
@@ -116,8 +116,8 @@ function QAManagement() {
         placeholder="Search By Content"
         enterButton="Search"
         size="large"
-        onChange={(e)=>{setSearchText(e.target.value)}}
-        onSearch={onSearch}
+        onChange={(e)=>{searchQuestions({content: e.target.value});}}
+        /*onSearch={onSearch}*/
       />
       <div>
         <Table columns={columns} dataSource={dataSource} bordered />;

@@ -4,6 +4,7 @@ const {
   createNew,
   upload,
   getNews,
+  getSearchNews,
   getNewsRelated,
   getNew,
   updateNew,
@@ -33,6 +34,10 @@ newsRouter
   .get(
     getNews
   );
+
+newsRouter
+    .route("/search")
+    .get(getSearchNews)
 
 newsRouter
   .route("/:id")

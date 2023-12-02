@@ -31,20 +31,20 @@ const Sidebar = () => {
         <Menu.Item key="1" icon={<AiOutlineBarChart style={{fontSize:20, color:'white'}}/>}>
           <Link to="/menu-list" style={{fontSize:20, color:'white'}}>Dashboard</Link>
         </Menu.Item>
-
-        <Menu.SubMenu key="sub1" icon={<AiOutlineSolution style={{fontSize:20, color:'white'}}/>} title="Doctor" style={{fontSize:20, color:'white'}}>         
+        
+        <Menu.SubMenu key="sub1" icon={<AiOutlineSolution style={{fontSize:20, color:'white'}}/>} title={<span style={{color: 'white'}}>Doctor</span>} style={{fontSize:20, color:'white'}}>         
           <Menu.Item key="2">
             <Link to="/doctor-management" style={{fontSize:15, color:'white'}}>List Doctor</Link>
           </Menu.Item>
         </Menu.SubMenu>
 
-        <Menu.SubMenu key="sub2" icon={<AiOutlineSolution style={{fontSize:20, color:'white'}}/>} title="User" style={{fontSize:20, color:'white'}}>         
+        <Menu.SubMenu key="sub2" icon={<AiOutlineSolution style={{fontSize:20, color:'white'}}/>} title={<span style={{color: 'white'}}>User</span>} style={{fontSize:20, color:'white'}}>         
           <Menu.Item key="3">
             <Link to="/user-management" style={{fontSize:15, color:'white'}}>List User</Link>
           </Menu.Item>
         </Menu.SubMenu>
 
-        <Menu.SubMenu key="sub3" icon={<AiOutlineSnippets style={{fontSize:20, color:'white'}}/>} title="News" style={{fontSize:20}}>
+        <Menu.SubMenu key="sub3" icon={<AiOutlineSnippets style={{fontSize:20, color:'white'}}/>} title={<span style={{color: 'white'}}>News</span>} style={{fontSize:20}}>
           <Menu.Item key="4">
             <Link to="/news-management" style={{fontSize:15, color:'white'}}>List News</Link>
           </Menu.Item>
@@ -54,7 +54,7 @@ const Sidebar = () => {
           </Menu.Item>
         </Menu.SubMenu>
 
-        <Menu.SubMenu key="sub4" icon={<AiOutlineSolution style={{fontSize:20, color:'white'}}/>} title="Q&A" style={{fontSize:20, color:'white'}}>
+        <Menu.SubMenu key="sub4" icon={<AiOutlineSolution style={{fontSize:20, color:'white'}}/>} title={<span style={{color: 'white'}}>Q&A</span>} style={{fontSize:20, color:'white'}}>
           <Menu.Item key="6">
             <Link to="/QAManagementPage" style={{fontSize:15, color:'white'}}>List Q&A</Link>
           </Menu.Item>

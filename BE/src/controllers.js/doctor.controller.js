@@ -43,6 +43,23 @@ const getDoctor = async (req, res, next) => {
   }
 };
 
+const getSearchDoctors = async (req, res, next) => {
+  try {
+    const { name } = req.query;
+    const listDoctor = await Doctor.findAll({
+      raw: true
+    });
+    const list = listDoctor.filter(item => item.name.toLowerCase().includes(name.toLowerCase()));
+    return res.status(200).json({
+      status: 200,
+      data: list,
+      message: "Get Search Doctors Successfully",
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
 const getImage = async (req,res,next) => {
   try{
     const { id } = req.params;
@@ -194,6 +211,7 @@ const updateDoctor = async (req, res, next) => {
 module.exports = {
   getDoctors,
   getDoctor,
+  getSearchDoctors,
   getImage,
   deleteDoctor,
   updateDoctor,
