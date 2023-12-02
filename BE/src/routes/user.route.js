@@ -2,6 +2,7 @@ const express = require("express");
 const {
   getUsers,
   getUser,
+  getSearchUsers,
   getImage,
   deleteUser,
   updateUser,
@@ -34,6 +35,10 @@ userRouter
     checkValidate,
     updateUser
   );
+
+userRouter
+    .route("/search")
+    .get(getSearchUsers)
 
 userRouter
   .route("/:id")

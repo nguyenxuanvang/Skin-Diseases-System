@@ -16,6 +16,15 @@ const userApi = apiSlice.injectEndpoints({
         url: `/user/${id}`
       })
     }),
+    getSearchUsers: builder.query({
+      serializeQueryArgs: () => {
+        return undefined;
+      },
+      query: (name) => ({
+        url: `/user/search`,
+        params: name
+      })
+    }),
     deleteUser: builder.mutation({
       query: (id) => ({
         url: `/user/${id}`,

@@ -16,6 +16,15 @@ const doctorApi = apiSlice.injectEndpoints({
         url: `doctor/${id}`,
       })
     }),
+    getSearchDoctors: builder.query({
+      serializeQueryArgs: () => {
+        return undefined;
+      },
+      query: (name) => ({
+        url: `/doctor/search`,
+        params: name
+      })
+    }),
     deleteDoctor: builder.mutation({
       query: (id) => ({
         url: `/doctor/${id}`,

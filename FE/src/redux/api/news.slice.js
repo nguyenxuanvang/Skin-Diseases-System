@@ -17,6 +17,15 @@ const newsApi = apiSlice.injectEndpoints({
         url: `/news/${id}`
       })
     }),
+    getSearchNews: builder.query({
+      serializeQueryArgs: () => {
+        return undefined;
+      },
+      query: (title) => ({
+        url: `/news/search`,
+        params: title
+      })
+    }),
     getNewsRelated: builder.query({
       serializeQueryArgs: () => {
         return undefined;

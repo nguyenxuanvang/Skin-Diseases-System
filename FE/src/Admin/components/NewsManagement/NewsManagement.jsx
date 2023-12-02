@@ -5,7 +5,7 @@ import newsApi from '../../../redux/api/news.slice';
 import { ToastContainer, toast } from "react-toastify";
 import Styles from './NewsManagement.module.css';
 function NewsManagement() {
-  const { data = [] } = newsApi.useGetListNewsQuery();
+  const [searchNews, {data = {}}] = newsApi.useLazyGetSearchNewsQuery();
   const [updateNews] = newsApi.useUpdateNewsMutation();
   const [deleteNews] = newsApi.useDeleteNewsMutation();
   const [list, setList] = useState([]);
@@ -15,8 +15,11 @@ function NewsManagement() {
   const [updateForm] = Form.useForm();
   const [record, setSelectedRecord] = React.useState(null);
   const [editFormVisible, setEditFormVisible] = React.useState(false);
-  const { TextArea } = Input;
+  const { Search } = Input;
 
+  useEffect(()=>{
+    searchNews({title: ""});
+  },[]);
   useEffect(() => {
     setList(data.data);
   }, [data.data]);
@@ -150,6 +153,13 @@ function NewsManagement() {
   });
   return (
     <div>
+      <Search
+        placeholder="Search By Title"
+        enterButton="Search"
+        size="large"
+        onChange={(e)=>{searchNews({title: e.target.value});}}
+        /*onSearch={onSearch}*/
+      />
       <Table columns={columns} dataSource={dataSource} bordered pagination={{ pageSize: 10 }} />;
       <Modal
         width={1100}

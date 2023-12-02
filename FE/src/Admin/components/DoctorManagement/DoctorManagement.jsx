@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Table, Button, Form, Input, Modal, Select, Space, Popconfirm, Upload, message } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import doctorApi from '../../../redux/api/doctor.slice';
 import { ToastContainer, toast } from "react-toastify";
 import Styles from './DoctorManagement.module.css';
 function DoctorManagement() {
-  const {data = {}} = doctorApi.useGetListDoctorQuery();
+  const [searchDoctors, {data = {}}] = doctorApi.useLazyGetSearchDoctorsQuery();
   const [deleteDoctor] = doctorApi.useDeleteDoctorMutation();
+  const { Search } = Input;
+  useEffect(()=>{
+    searchDoctors({name: ""});
+  },[])
   const columns = [
     {
       title: 'ID',
@@ -112,6 +116,13 @@ function DoctorManagement() {
   
   return (
     <div>
+      <Search
+        placeholder="Search By Name"
+        enterButton="Search"
+        size="large"
+        onChange={(e)=>{searchDoctors({name: e.target.value});}}
+        /*onSearch={onSearch}*/
+      />
       <Table columns={columns} dataSource={dataSource} bordered pagination={{pageSize: 10}}/>;
       <ToastContainer />
     </div>

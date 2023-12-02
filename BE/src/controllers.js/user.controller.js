@@ -49,6 +49,24 @@ const getUser = async (req, res, next) => {
   }
 };
 
+const getSearchUsers = async (req, res, next) => {
+  try {
+    const { name } = req.query;
+    const listUser = await User.findAll({
+      raw: true
+    });
+    const list = listUser.filter(item => item.name.toLowerCase().includes(name.toLowerCase()));
+    
+    return res.status(200).json({
+      status: 200,
+      data: list,
+      message: "Get Search User Successfully",
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
 const deleteUser = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -296,6 +314,7 @@ const resetPassword = async (req, res, next) => {
 module.exports = {
   getUsers,
   getUser,
+  getSearchUsers,
   getImage,
   deleteUser,
   updateUser,

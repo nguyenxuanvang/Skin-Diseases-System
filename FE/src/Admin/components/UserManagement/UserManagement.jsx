@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Table, Button, Form, Input, Modal, Select, Space, Popconfirm, Upload, message } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import userApi from '../../../redux/api/user.slice';
 import { ToastContainer, toast } from "react-toastify";
 import Styles from './UserManagement.module.css';
 function UserManagement() {
-  const { data = {} } = userApi.useGetListUserQuery();
+  const [searchUsers, {data = {}}] = userApi.useLazyGetSearchUsersQuery();
   const [deleteUser] = userApi.useDeleteUserMutation();
-  
+  const { Search } = Input;
+  useEffect(()=>{
+    searchUsers({name: ""});
+  },[]);
   const columns = [
     {
       title: 'ID',
@@ -113,6 +116,13 @@ function UserManagement() {
 
   return (
     <div>
+       <Search
+        placeholder="Search By Name"
+        enterButton="Search"
+        size="large"
+        onChange={(e)=>{searchUsers({name: e.target.value});}}
+        /*onSearch={onSearch}*/
+      />
       <Table columns={columns} dataSource={dataSource} bordered pagination={{ pageSize: 10 }} />;
       <ToastContainer />
     </div>
