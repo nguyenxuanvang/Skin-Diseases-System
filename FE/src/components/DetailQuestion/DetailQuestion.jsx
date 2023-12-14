@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import Styles from './DetailQuestion.module.css'
-import { FiMessageCircle } from "react-icons/fi";
+import { FiMessageCircle, FiEdit } from "react-icons/fi";
 import questionApi from '../../redux/api/question.slice';
 import commentApi from '../../redux/api/comment.slice';
+import personalApi from '../../redux/api/personal.slice';
 import AnswerQuestion from '../AnswerQuestion/AnswerQuestion';
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -11,24 +12,39 @@ import { Modal } from 'antd';
 function DetailQuestion() {
     const navigate = useNavigate();
     const { id } = useParams();
+    const { data: info = {},isError} = personalApi.useGetDetailInforQuery();
     const [getQuestion, { data: objQ = {} }] = questionApi.useLazyGetQuestionQuery();
     const [createComment] = commentApi.useCreateCommentMutation();
+    const [removeQuestion] = questionApi.useDeleteQuestionMutation();
+    const [updateQuestion] = questionApi.useUpdateQuestionMutation();
     let [numberComment, setNumberComment] = useState(3);
     const [Content, setContent] = useState('');
-
+    const [ContentQ, setContentQ] = useState('');
+    const [isEdit, setIsEdit] = useState(false);
+    const [isOwner, setIsOwner] = useState(false);
     useEffect(() => {
         getQuestion(id);
     }, [id]);
-
+    useEffect(() => {
+        if(!isError) {
+            if (info?.user?.User_id === objQ?.data?.User_id || info?.user?.Doctor_id === objQ?.data?.Doctor_id) {
+                setIsOwner(true);
+            } else {
+                setIsOwner(false);
+            }
+        } else {
+            setIsOwner(false);
+        }
+    }, [info?.user, objQ?.data, isError]);
     const date = new Date(objQ.data?.createdAt);
     const time = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear()
         + ' ' + ((date.getHours() > 9) ? date.getHours() : `0${date.getHours()}`)
         + ":" + ((date.getMinutes() > 9) ? date.getMinutes() : `0${date.getMinutes()}`)
         + ' ' + ((date.getHours() > 11) ? 'PM' : 'AM');
-    
+
     const handleShowMore = () => {
         if ((numberComment + 3) > objQ.data?.comments.length) {
-             if (numberComment === objQ.data?.comments.length) {
+            if (numberComment === objQ.data?.comments.length) {
             } else {
                 setNumberComment(objQ.data?.comments.length);
             }
@@ -39,24 +55,49 @@ function DetailQuestion() {
     const handleHideLess = () => {
         setNumberComment(3);
     }
+    const onRemove = async (id) => {
+        const response = await removeQuestion(id);
+        if (response.data) {
+            toast.success(response.data.message, { autoClose: 3000 });
+            setTimeout(() => {
+                navigate("/ForumPage");
+            }, 1000);
+        } else {
+            toast.error(response.error.data.message, { autoClose: 3000 });
+        }
+    }
+    const onSaveEdit = async () => {
+        if(ContentQ.trim() !== '') {
+            const respone = await updateQuestion({ id, Content: ContentQ });
+            if (respone.data) {
+                toast.success(respone.data.message, { autoClose: 3000 });
+                setIsEdit(false);
+            } else {
+                toast.error(respone.error.data.message, { autoClose: 3000 });
+            }
+        } else {
+            toast.error('Không Được Phép Bỏ Trống !',{autoClose: 3000});
+        }
+      
+    }
     const onOk = () => {
         navigate("/login");
     }
 
     const onHandleComment = async () => {
-        if(Content.trim() === '') {
-            toast.error('Vui Lòng Nhập Nội Dung Bình Luận',{autoClose: 3000});
+        if (Content.trim() === '') {
+            toast.error('Vui Lòng Nhập Nội Dung Bình Luận', { autoClose: 3000 });
         } else {
             const response = await createComment({
                 id,
-                arg: {Content}
+                arg: { Content }
             });
-            if(response.data) {
+            if (response.data) {
                 setContent('');
-                toast.success('Added Comment Successfully !',{autoClose: 1000});
-                
+                toast.success('Added Comment Successfully !', { autoClose: 1000 });
+
             } else {
-                toast.error(response.error.data.message,{autoClose: 3000});
+                toast.error(response.error.data.message, { autoClose: 3000 });
             }
         }
     }
@@ -73,43 +114,83 @@ function DetailQuestion() {
                         <p style={{ paddingRight: '30px' }}><FiMessageCircle />{objQ.data?.num_comments}</p>
                     </div>
                 </div>
-            </div>
+                {(isOwner)
+                    ?
 
-            <div style={{ margin: '15px 150px 0 300px', border: '2px solid black', backgroundColor: '#ecfffe', boxShadow: ' 0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-                <div className='context' style={{ margin: '15px 0px 15px 15px', fontWeight: 600, fontSize: '17px' }}>
-                    {objQ.data?.Content}
-                </div>
+                    <button className={Styles.btn_remove} onClick={() => {
+                        Modal.confirm({
+                            title: 'Alert',
+                            content: 'Do You Want To Remove This Question!',
+                            onOk: () => onRemove(objQ.data?.Question_id),
+                            footer: (_, { OkBtn, CancelBtn }) => (
+                                <>
+                                    <CancelBtn />
+                                    <OkBtn />
+                                </>
+                            ),
+                        });
+                    }}>X</button>
+                    : ''
+                }
+                {(isOwner)
+                    ?
+                    <button className={Styles.btn_edit} onClick={() => { setIsEdit(true); setContentQ(objQ?.data?.Content) }}><FiEdit /></button>
+                    : ''
+                }
             </div>
+            {(isEdit)
+                ?
+                <div style={{ margin: '15px 150px 0 300px' }}>
+                    <textarea
+                        onChange={(e) => setContentQ(e.target.value)}
+                        rows="5"
+                        cols="162"
+                        value={ContentQ}
+                        style={{ padding: '10px', border: '5px solid #0876cc', borderRadius: '10px' }}
+                        placeholder="Nhập Nội Dung Câu Hỏi"
+                    />
+                    <div style={{ display: 'flex', justifyContent: 'center', gap: '30px', marginTop: '15px' }}>
+                        <button onClick={() => { setIsEdit(false) }}>Cancle</button>
+                        <button onClick={onSaveEdit}>Save</button>
+                    </div>
+                </div>
+                :
+                <div style={{ margin: '15px 150px 0 300px', border: '2px solid black', backgroundColor: '#ecfffe', boxShadow: ' 0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+                    <div className='context' style={{ margin: '15px 0px 15px 15px', fontWeight: 600, fontSize: '17px' }}>
+                        {objQ.data?.Content}
+                    </div>
+                </div>
+            }
 
             <div className='reply d-flex' style={{ margin: '5px 0 25px 200px', width: '50%' }}>
                 <div className='create_question' style={{ width: '60%' }}>
                     <div className='form-container' style={{ margin: '30px 0 0 100px' }}>
                         <textarea
                             rows="3"
-                            cols="143"
+                            cols="166"
                             placeholder="Nhập nội dung bình luận..."
                             value={Content}
-                            onChange={(e)=>{setContent(e.target.value)}}
+                            onChange={(e) => { setContent(e.target.value) }}
                         />
                         <button type="primary"
                             onClick={async () => {
-                            if(localStorage.getItem('token')) {
-                                onHandleComment();
-                            }else {
-                                Modal.confirm({
-                                    title: 'Alert',
-                                    content: 'Please LOGIN before post your question!',
-                                    onOk: onOk,
-                                    footer: (_, { OkBtn, CancelBtn }) => (
-                                        <>
-                                            <CancelBtn />
-                                            <OkBtn />
-                                        </>
-                                    ),
-                                });
-                            }
-                                
-                            }} style={{ width: 100, borderRadius: 10, marginLeft: '950px', marginTop: '20px' }}
+                                if (localStorage.getItem('token')) {
+                                    onHandleComment();
+                                } else {
+                                    Modal.confirm({
+                                        title: 'Alert',
+                                        content: 'Please LOGIN before post your question!',
+                                        onOk: onOk,
+                                        footer: (_, { OkBtn, CancelBtn }) => (
+                                            <>
+                                                <CancelBtn />
+                                                <OkBtn />
+                                            </>
+                                        ),
+                                    });
+                                }
+
+                            }} style={{ width: 100, borderRadius: 10, marginLeft: '575px', marginTop: '20px' }}
                         >Comment</button>
                     </div>
 
@@ -118,20 +199,20 @@ function DetailQuestion() {
 
 
             <div className={Styles.comment_table}>
-                {objQ.data?.comments.slice(0,numberComment).map(item => (
+                {objQ.data?.comments.slice(0, numberComment).map(item => (
                     <AnswerQuestion key={item.Comment_id} comment={item} />
                 ))}
-                {(objQ.data?.comments.length > numberComment) && 
+                {(objQ.data?.comments.length > numberComment) &&
                     <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '15px' }}>
-                        <button className={Styles.btn_more} onClick={handleShowMore} style={{width: '200px', border: 'none', backgroundColor: '#b1fffb'}}>More Comments...</button>
+                        <button className={Styles.btn_more} onClick={handleShowMore} style={{ width: '200px', border: 'none', backgroundColor: '#b1fffb' }}>More Comments...</button>
                     </div>
                 }
-                {(numberComment > 5) && 
+                {(numberComment > 5) &&
                     <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '15px' }}>
-                        <button className={Styles.btn_more} onClick={handleHideLess} style={{width: '200px', border: 'none', backgroundColor: '#b1fffb'}}>Hide...</button>
+                        <button className={Styles.btn_more} onClick={handleHideLess} style={{ width: '200px', border: 'none', backgroundColor: '#b1fffb' }}>Hide...</button>
                     </div>
                 }
-                
+
             </div>
 
             <ToastContainer />

@@ -21,3 +21,19 @@
 .btn_more:hover {
     color: red;
 }
+.btn_remove {
+    width: 50px;
+    position: absolute;
+    right: 148px;
+    top: 528px;
+    color: red;
+    font-size: 21px;
+}
+.btn_edit {
+    width: 50px;
+    position: absolute;
+    right: 210px;
+    top: 528px;
+    color: red;
+    font-size: 21px;
+}

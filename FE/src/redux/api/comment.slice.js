@@ -40,6 +40,51 @@ const commentApi = apiSlice.injectEndpoints({
         }
       }
     }),
+    updateComment: builder.mutation({
+      query: ({id,Content}) => ({
+        url: `/comment/${id}`,
+        method: 'PATCH',
+        body: {Content}
+      }),
+      async onQueryStarted({id,Content}, { dispatch, queryFulfilled }) {
+        try {
+          
+          const response = await queryFulfilled;
+          if (response.data) {
+            const action = apiSlice.util.updateQueryData('getQuestion', undefined, draft => {
+              const findIndex = draft.data.comments.findIndex(item => item.Comment_id === id);
+              draft.data.comments[findIndex].Content = Content;
+              draft.data.comments[findIndex].updatedAt = response.data.data.updatedAt;
+            });
+            await dispatch(action);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }),
+    deleteComment: builder.mutation({
+      query: id => ({
+        url: `/comment/${id}`,
+        method: 'DELETE'
+      }),
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        try {
+          
+          const response = await queryFulfilled;
+          if (response.data) {
+            const action = apiSlice.util.updateQueryData('getQuestion', undefined, draft => {
+              const findIndex = draft.data.comments.findIndex(item => item.Comment_id === id);
+              draft.data.num_comments -= draft.data.comments[findIndex].replies.length + 1;
+              draft.data.comments.splice(findIndex,1);
+            });
+            await dispatch(action);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }),
   })
 });
 

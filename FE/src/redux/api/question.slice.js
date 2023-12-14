@@ -54,6 +54,27 @@ const questionApi = apiSlice.injectEndpoints({
         }
       }
     }),
+    updateQuestion: builder.mutation({
+      query: ({id,Content}) => ({
+        url: `/question/detail/${id}`,
+        method: 'PATCH',
+        body: {Content}
+      }),
+      async onQueryStarted({id,Content}, { dispatch, queryFulfilled }) {
+        try {
+          
+          const response = await queryFulfilled;
+          if (response.data) {
+            const action = apiSlice.util.updateQueryData('getQuestion', undefined, draft => {
+              draft.data.Content = Content;
+            });
+            await dispatch(action);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }),
     deleteQuestion: builder.mutation({
       query: id => ({
         url: `/question/detail/${id}`,

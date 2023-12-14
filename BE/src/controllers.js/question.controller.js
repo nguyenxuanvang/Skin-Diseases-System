@@ -80,14 +80,47 @@ const updateQuestion = async (req, res, next) => {
 
 const deleteQuestion = async (req, res, next) => {
   try {
+
     const { id } = req.params;
-    const comments = Comment.findAll({
+    const { User_id, Doctor_id, role } = req.user;
+    let check = true;
+
+    const question = await Questions.findOne({
       where: {
         Question_id: id
       },
       raw: true
     });
-    for(let i = 0; i < comments.length; i += 1) {
+    if(!question) {
+      return res.status(404).json({
+        status: 404,
+        message: 'Question Is Not Found !'
+      })
+    }
+    if(role !== 'admin') {
+      if(question.User_id) {
+        if (User_id !== question.User_id) {
+          check = false;
+        }
+      } else {
+        if(Doctor_id !== question.Doctor_id) {
+          check = false;
+        }
+      }
+    }
+    if(!check) {
+      return res.status(403).json({
+        status: 403,
+        message: 'Unauthorized access to this resource !'
+      })
+    }
+    const comments = await Comment.findAll({
+      where: {
+        Question_id: id
+      },
+      raw: true
+    });
+    for (let i = 0; i < comments.length; i += 1) {
       await Replies.destroy({
         where: {
           Comment_id: comments[i].Comment_id
@@ -110,6 +143,7 @@ const deleteQuestion = async (req, res, next) => {
       status: 200,
       message: "Deleted Question Successfully",
     });
+
   } catch (error) {
     return next(error);
   }
@@ -314,7 +348,7 @@ const getQuestion = async (req, res, next) => {
 
 const getOwnQuetion = async (req, res, next) => {
   try {
-    let {Doctor_id, User_id} = req.user;
+    let { Doctor_id, User_id } = req.user;
     Doctor_id = Doctor_id || null;
     User_id = User_id || null;
 
@@ -325,7 +359,7 @@ const getOwnQuetion = async (req, res, next) => {
       },
       raw: true
     });
-   
+
     return res.status(200).json({
       status: 200,
       data: questions,

@@ -14,7 +14,6 @@ function HeaderL() {
       setCheck(true);
     }
   },[isFetching]);
-  
   useEffect(()=>{
     if(check) {
       if(isError) {
