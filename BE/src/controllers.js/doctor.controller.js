@@ -6,7 +6,7 @@ const { Doctor, Admin, User, Questions, Comment, Replies } = require("../databas
 const saltRounds = 10;
 const getDoctors = async (req, res, next) => {
   try {
-    
+
     const doctors = await Doctor.findAll({
       order: [["createdAt", /*"DESC"*/ "ASC"]],
     });
@@ -28,7 +28,7 @@ const getDoctor = async (req, res, next) => {
         Doctor_id: id,
       },
     });
-    if(!findDoctor) {
+    if (!findDoctor) {
       return res.status(404).json({
         status: 404,
         message: 'Doctor Not Found !'
@@ -60,8 +60,8 @@ const getSearchDoctors = async (req, res, next) => {
   }
 };
 
-const getImage = async (req,res,next) => {
-  try{
+const getImage = async (req, res, next) => {
+  try {
     const { id } = req.params;
     const findDoctor = await Doctor.findOne({
       where: {
@@ -75,7 +75,7 @@ const getImage = async (req,res,next) => {
       });
     }
     return res.sendFile(path.join(__dirname, "../Images/Avatars", findDoctor.avatar));
-  } catch(error) {
+  } catch (error) {
     return next(error);
   }
 }
@@ -84,20 +84,58 @@ const getImage = async (req,res,next) => {
 const deleteDoctor = async (req, res, next) => {
   try {
     const { id } = req.params;
+    const questions = await Questions.findAll({
+      where: {
+        Doctor_id: id
+      },
+      raw: true
+    });
+    questions.forEach(async (item) => {
+      const comments = await Comment.findAll({
+        where: {
+          Question_id: item.Question_id
+        },
+        raw: true
+      });
+      comments.forEach(async (element) => {
+        await Replies.destroy({
+          where: {
+            Comment_id: element.Comment_id
+          }
+        })
+      })
+      await Comment.destroy({
+        where: {
+          Question_id: item.Question_id
+        }
+      })
+      await Questions.destroy({
+        where: {
+          Question_id: item.Question_id
+        }
+      })
+    });
+    const comments = await Comment.findAll({
+      where: {
+        Doctor_id: id
+      }
+    })
+    comments.forEach(async (item) => {
+      await Replies.destroy({
+        where: {
+          Comment_id: item.Comment_id
+        }
+      });
+      await Comment.destroy({
+        where: {
+          Comment_id: item.Comment_id
+        }
+      });
+    });
     await Replies.destroy({
       where: {
-        Doctor_id: id,
-      },
-    });
-    await Comment.destroy({
-      where: {
-        Doctor_id: id,
-      },
-    });
-    await Questions.destroy({
-      where: {
-        Doctor_id: id,
-      },
+        Doctor_id: id
+      }
     });
     await Doctor.destroy({
       where: {
@@ -121,7 +159,7 @@ const deleteDoctor = async (req, res, next) => {
 const updateDoctor = async (req, res, next) => {
   try {
     const { user } = req;
-    const { 
+    const {
       email,
       password,
       oldPassword,
@@ -147,13 +185,13 @@ const updateDoctor = async (req, res, next) => {
           email: email,
         },
       });
-      if(!findDoctor) {
+      if (!findDoctor) {
         findDoctor = await Admin.findOne({
           where: {
             email: email,
           },
         });
-        if(!findDoctor) {
+        if (!findDoctor) {
           findDoctor = await User.findOne({
             where: {
               email: email,
@@ -171,7 +209,7 @@ const updateDoctor = async (req, res, next) => {
     }
     if (oldPassword) {
       const isValidPassword = bcrypt.compareSync(oldPassword, user.password);
-      if(!isValidPassword) {
+      if (!isValidPassword) {
         return res.status(400).json({
           status: 400,
           message: "Old Password Incorrect !"

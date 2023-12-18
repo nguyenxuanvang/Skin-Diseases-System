@@ -1,6 +1,31 @@
 const { Questions, Doctor, User, Comment, Replies } = require("../database/sequelize");
 const { v4: uuidv4 } = require("uuid");
 
+const updateNumComment = async (id) => {
+  let num_comment = 0;
+  const question = await Questions.findOne({
+    where: {
+      Question_id: id
+    }
+  });
+  const comments = await Comment.findAll({
+    where: {
+      Question_id: id
+    },
+    raw: true
+  });
+  for(let i = 0; i < comments.length; i += 1) {
+    const replies = await Replies.findAll({
+      where: {
+        Comment_id: comments[i].Comment_id
+      },
+      raw: true
+    });
+    num_comment = num_comment + 1 + replies.length;
+  }
+  question.num_comments = num_comment;
+  await question.save();
+}
 const createQuestion = async (req, res, next) => {
   try {
     const { Content } = req.body;
@@ -200,6 +225,9 @@ const getPublicQuestions = async (req, res, next) => {
       order: [["createdAt", "DESC" /*"ASC"*/]],
       raw: true
     });
+    questions.forEach(async (item) => {
+      await updateNumComment(item.Question_id);
+    })
     let questionList = [];
     for (let i = 0; i < questions.length; i++) {
       if (questions[i].User_id) {

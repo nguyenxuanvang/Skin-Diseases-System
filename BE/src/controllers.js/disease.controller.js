@@ -3,11 +3,15 @@ const path = require("path");
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
 const { spawn } = require("child_process");
+const { Mutex } = require('async-mutex');
 const { Diseases } = require("../database/sequelize");
 
+const lock = new Mutex();
+let release;
 const storage = multer.diskStorage({
   destination: "./src/Images/predictImage",
-  filename: (req, file, cb) => {
+  filename: async(req, file, cb) => {
+    release = await lock.acquire();
     const oldImage = fs.readdirSync("./src/Images/predictImage")[0];
     if (oldImage) {
       fs.unlinkSync(`./src/Images/predictImage/${oldImage}`);
@@ -17,6 +21,7 @@ const storage = multer.diskStorage({
     const newFileName = file.fieldname + originalExtension;
 
     cb(null, newFileName);
+    
   },
 });
 
@@ -27,6 +32,7 @@ const predict = async (req,res,next) => {
     const pythonProcess = spawn("python", ["./src/python/predict.py"]);
     pythonProcess.stdout.setEncoding("utf-8");
     pythonProcess.stdout.on("data", (data) => {
+      release();
       if(data.trim() === "false") {
         return res.status(200).json({
           status: 400,

@@ -35,7 +35,7 @@ const doctorApi = apiSlice.injectEndpoints({
           
           const response = await queryFulfilled;
           if (response.data) {
-            const action = apiSlice.util.updateQueryData('getListDoctor', undefined, draft => {
+            const action = apiSlice.util.updateQueryData('getSearchDoctors', undefined, draft => {
               const findIndex = draft.data.findIndex(item => item.Doctor_id === id);
               draft.data.splice(findIndex,1);                
             });

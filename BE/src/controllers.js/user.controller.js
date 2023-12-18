@@ -70,20 +70,58 @@ const getSearchUsers = async (req, res, next) => {
 const deleteUser = async (req, res, next) => {
   try {
     const { id } = req.params;
+    const questions = await Questions.findAll({
+      where: {
+        User_id: id
+      },
+      raw: true
+    });
+    questions.forEach(async (item) => {
+      const comments = await Comment.findAll({
+        where: {
+          Question_id: item.Question_id
+        },
+        raw: true
+      });
+      comments.forEach(async (element) => {
+        await Replies.destroy({
+          where: {
+            Comment_id: element.Comment_id
+          }
+        })
+      })
+      await Comment.destroy({
+        where: {
+          Question_id: item.Question_id
+        }
+      })
+      await Questions.destroy({
+        where: {
+          Question_id: item.Question_id
+        }
+      })
+    });
+    const comments = await Comment.findAll({
+      where: {
+        User_id: id
+      }
+    })
+    comments.forEach(async (item) => {
+      await Replies.destroy({
+        where: {
+          Comment_id: item.Comment_id
+        }
+      });
+      await Comment.destroy({
+        where: {
+          Comment_id: item.Comment_id
+        }
+      });
+    });
     await Replies.destroy({
       where: {
-        User_id: id,
-      },
-    });
-    await Comment.destroy({
-      where: {
-        User_id: id,
-      },
-    });
-    await Questions.destroy({
-      where: {
-        User_id: id,
-      },
+        User_id: id
+      }
     });
     await User.destroy({
       where: {
