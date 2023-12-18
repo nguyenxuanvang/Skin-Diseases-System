@@ -81,9 +81,7 @@ const updateReplies = async (req, res, next) => {
 
     return res.status(200).json({
       status: 200,
-      data: {
-        updatedReplies: replies,
-      },
+      data: replies,
       message: "Updated Replies Successfully!",
     });
   } catch (error) {
@@ -123,8 +121,19 @@ const deleteReplies = async (req, res, next) => {
         message: "Replies Not Found !",
       });
     }
-
+    const comment = await Comment.findOne({
+      where: {
+        Comment_id: replies.Comment_id,
+      },
+    });
+    const question = await Questions.findOne({
+      where: {
+        Question_id: comment.Question_id,
+      },
+    });
     await replies.destroy();
+    question.num_comments -= 1;
+    await question.save();
 
     return res.status(200).json({
       status: 200,

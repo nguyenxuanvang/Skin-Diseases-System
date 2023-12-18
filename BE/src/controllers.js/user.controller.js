@@ -49,23 +49,79 @@ const getUser = async (req, res, next) => {
   }
 };
 
+const getSearchUsers = async (req, res, next) => {
+  try {
+    const { name } = req.query;
+    const listUser = await User.findAll({
+      raw: true
+    });
+    const list = listUser.filter(item => item.name.toLowerCase().includes(name.toLowerCase()));
+    
+    return res.status(200).json({
+      status: 200,
+      data: list,
+      message: "Get Search User Successfully",
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
 const deleteUser = async (req, res, next) => {
   try {
     const { id } = req.params;
+    const questions = await Questions.findAll({
+      where: {
+        User_id: id
+      },
+      raw: true
+    });
+    questions.forEach(async (item) => {
+      const comments = await Comment.findAll({
+        where: {
+          Question_id: item.Question_id
+        },
+        raw: true
+      });
+      comments.forEach(async (element) => {
+        await Replies.destroy({
+          where: {
+            Comment_id: element.Comment_id
+          }
+        })
+      })
+      await Comment.destroy({
+        where: {
+          Question_id: item.Question_id
+        }
+      })
+      await Questions.destroy({
+        where: {
+          Question_id: item.Question_id
+        }
+      })
+    });
+    const comments = await Comment.findAll({
+      where: {
+        User_id: id
+      }
+    })
+    comments.forEach(async (item) => {
+      await Replies.destroy({
+        where: {
+          Comment_id: item.Comment_id
+        }
+      });
+      await Comment.destroy({
+        where: {
+          Comment_id: item.Comment_id
+        }
+      });
+    });
     await Replies.destroy({
       where: {
-        User_id: id,
-      },
-    });
-    await Comment.destroy({
-      where: {
-        User_id: id,
-      },
-    });
-    await Questions.destroy({
-      where: {
-        User_id: id,
-      },
+        User_id: id
+      }
     });
     await User.destroy({
       where: {
@@ -296,6 +352,7 @@ const resetPassword = async (req, res, next) => {
 module.exports = {
   getUsers,
   getUser,
+  getSearchUsers,
   getImage,
   deleteUser,
   updateUser,

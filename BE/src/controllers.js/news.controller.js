@@ -78,6 +78,23 @@ const getNews = async (req, res, next) => {
   }
 };
 
+const getSearchNews = async (req, res, next) => {
+  try {
+    const { title } = req.query;
+    const listNews = await News.findAll({
+      raw: true
+    });
+    const list = listNews.filter(item => item.Title.toLowerCase().includes(title.toLowerCase()));
+    return res.status(200).json({
+      status: 200,
+      data: list,
+      message: "Get Search News Successfully",
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
 const getNewsRelated = async (req,res,next) => {
   try{
     const { name } = req.params;
@@ -206,6 +223,7 @@ module.exports = {
   createNew,
   upload,
   getNews,
+  getSearchNews,
   getNewsRelated,
   getNew,
   getImageNews,

@@ -1,4 +1,4 @@
-const { Comment,Questions,Doctor,User } = require("../database/sequelize");
+const { Comment,Questions,Doctor,User, Replies } = require("../database/sequelize");
 const { v4: uuidv4 } = require("uuid");
 
 const createComment = async (req, res, next) => {
@@ -61,7 +61,7 @@ const updateCommentQuestion = async (req, res, next) => {
     if (!comment) {
       return res.status(404).json({
         status: 404,
-        message: "Update Denied!",
+        message: "Comment Is Not Found !",
       });
     }
 
@@ -70,9 +70,7 @@ const updateCommentQuestion = async (req, res, next) => {
 
     return res.status(200).json({
       status: 200,
-      data: {
-        updatedComment: comment,
-      },
+      data: comment,
       message: "Updated Comment Successfully!",
     });
   } catch (error) {
@@ -117,8 +115,19 @@ const deleteCommentQuestion = async (req, res, next) => {
         Question_id: comment.Question_id,
       },
     });
+    const replies = await Replies.findAll({
+      where: {
+        Comment_id: comment.Comment_id
+      },
+      raw: true
+    });
+    await Replies.destroy({
+      where: {
+        Comment_id: comment.Comment_id
+      }
+    })
     await comment.destroy();
-    question.num_comments -= 1;
+    question.num_comments -= replies.length + 1;
     await question.save();
 
     return res.status(200).json({

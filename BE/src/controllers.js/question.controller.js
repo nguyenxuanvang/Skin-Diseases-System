@@ -1,6 +1,31 @@
 const { Questions, Doctor, User, Comment, Replies } = require("../database/sequelize");
 const { v4: uuidv4 } = require("uuid");
 
+const updateNumComment = async (id) => {
+  let num_comment = 0;
+  const question = await Questions.findOne({
+    where: {
+      Question_id: id
+    }
+  });
+  const comments = await Comment.findAll({
+    where: {
+      Question_id: id
+    },
+    raw: true
+  });
+  for(let i = 0; i < comments.length; i += 1) {
+    const replies = await Replies.findAll({
+      where: {
+        Comment_id: comments[i].Comment_id
+      },
+      raw: true
+    });
+    num_comment = num_comment + 1 + replies.length;
+  }
+  question.num_comments = num_comment;
+  await question.save();
+}
 const createQuestion = async (req, res, next) => {
   try {
     const { Content } = req.body;
@@ -80,14 +105,47 @@ const updateQuestion = async (req, res, next) => {
 
 const deleteQuestion = async (req, res, next) => {
   try {
+
     const { id } = req.params;
-    const comments = Comment.findAll({
+    const { User_id, Doctor_id, role } = req.user;
+    let check = true;
+
+    const question = await Questions.findOne({
       where: {
         Question_id: id
       },
       raw: true
     });
-    for(let i = 0; i < comments.length; i += 1) {
+    if(!question) {
+      return res.status(404).json({
+        status: 404,
+        message: 'Question Is Not Found !'
+      })
+    }
+    if(role !== 'admin') {
+      if(question.User_id) {
+        if (User_id !== question.User_id) {
+          check = false;
+        }
+      } else {
+        if(Doctor_id !== question.Doctor_id) {
+          check = false;
+        }
+      }
+    }
+    if(!check) {
+      return res.status(403).json({
+        status: 403,
+        message: 'Unauthorized access to this resource !'
+      })
+    }
+    const comments = await Comment.findAll({
+      where: {
+        Question_id: id
+      },
+      raw: true
+    });
+    for (let i = 0; i < comments.length; i += 1) {
       await Replies.destroy({
         where: {
           Comment_id: comments[i].Comment_id
@@ -110,6 +168,7 @@ const deleteQuestion = async (req, res, next) => {
       status: 200,
       message: "Deleted Question Successfully",
     });
+
   } catch (error) {
     return next(error);
   }
@@ -166,6 +225,9 @@ const getPublicQuestions = async (req, res, next) => {
       order: [["createdAt", "DESC" /*"ASC"*/]],
       raw: true
     });
+    questions.forEach(async (item) => {
+      await updateNumComment(item.Question_id);
+    })
     let questionList = [];
     for (let i = 0; i < questions.length; i++) {
       if (questions[i].User_id) {
@@ -314,7 +376,7 @@ const getQuestion = async (req, res, next) => {
 
 const getOwnQuetion = async (req, res, next) => {
   try {
-    let {Doctor_id, User_id} = req.user;
+    let { Doctor_id, User_id } = req.user;
     Doctor_id = Doctor_id || null;
     User_id = User_id || null;
 
@@ -325,7 +387,7 @@ const getOwnQuetion = async (req, res, next) => {
       },
       raw: true
     });
-   
+
     return res.status(200).json({
       status: 200,
       data: questions,

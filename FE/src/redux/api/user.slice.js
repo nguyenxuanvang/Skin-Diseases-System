@@ -16,6 +16,15 @@ const userApi = apiSlice.injectEndpoints({
         url: `/user/${id}`
       })
     }),
+    getSearchUsers: builder.query({
+      serializeQueryArgs: () => {
+        return undefined;
+      },
+      query: (name) => ({
+        url: `/user/search`,
+        params: name
+      })
+    }),
     deleteUser: builder.mutation({
       query: (id) => ({
         url: `/user/${id}`,
@@ -26,7 +35,7 @@ const userApi = apiSlice.injectEndpoints({
           
           const response = await queryFulfilled;
           if (response.data) {
-            const action = apiSlice.util.updateQueryData('getListUser', undefined, draft => {
+            const action = apiSlice.util.updateQueryData('getSearchUsers', undefined, draft => {
               const findIndex = draft.data.findIndex(item => item.User_id === id);
               draft.data.splice(findIndex,1);                
             });

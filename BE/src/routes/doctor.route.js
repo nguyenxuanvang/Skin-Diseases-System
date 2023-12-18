@@ -3,6 +3,7 @@ const express = require("express");
 const {
   getDoctors,
   getDoctor,
+  getSearchDoctors,
   getImage,
   deleteDoctor,
   updateDoctor,
@@ -28,6 +29,10 @@ doctorRouter
     checkValidate,
     updateDoctor
   );
+
+doctorRouter
+    .route("/search")
+    .get(getSearchDoctors)
 
 doctorRouter
   .route("/:id")

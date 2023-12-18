@@ -10,7 +10,7 @@ function TestDiagno_Result() {
   const { data, updateData } = useMyContext();
   const [isSuccess, setIsSuccess] = useState(false);
   useEffect(() => {
-    if (data.status === 200) {setIsSuccess(true);getDisease(data.result);getNewsRelated(data.result)}
+    if (data.status === 200 && data.result !== 'Normal') {setIsSuccess(true);getDisease(data.result);getNewsRelated(data.result)}
     else setIsSuccess(false);
   }, [data])
   return (
