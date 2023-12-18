@@ -144,7 +144,7 @@ function DetailQuestion() {
                     <textarea
                         onChange={(e) => setContentQ(e.target.value)}
                         rows="5"
-                        cols="162"
+                        cols="140"
                         value={ContentQ}
                         style={{ padding: '10px', border: '5px solid #0876cc', borderRadius: '10px' }}
                         placeholder="Nhập Nội Dung Câu Hỏi"
@@ -167,7 +167,7 @@ function DetailQuestion() {
                     <div className='form-container' style={{ margin: '30px 0 0 100px' }}>
                         <textarea
                             rows="3"
-                            cols="166"
+                            cols="143"
                             placeholder="Nhập nội dung bình luận..."
                             value={Content}
                             onChange={(e) => { setContent(e.target.value) }}
