@@ -6,8 +6,6 @@ const {
   getImage,
   deleteUser,
   updateUser,
-  forgotPassword,
-  resetPassword,
 } = require("../controllers.js/user.controller");
 
 const { checkValidate } = require("../middlewares/authMiddleware");
@@ -59,8 +57,6 @@ userRouter
   .get(
     getImage
   )
-userRouter.route("/forgot-password").post(forgotPassword);
-userRouter.route("/reset-password").post(resetPassword);
 
 module.exports = {
   userRouter,

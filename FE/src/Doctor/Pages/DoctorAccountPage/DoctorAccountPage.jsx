@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Style from './DoctorAccountPage.module.css'
 import Sidebar from '../../Components/Sidebar/Sidebar'
 import { Modal, message, Button, Form, Input } from 'antd';
@@ -6,8 +6,13 @@ import HeaderL from '../../../components/HeaderL/Header';
 import { ToastContainer, toast } from "react-toastify";
 import personalApi from '../../../redux/api/personal.slice';
 function DoctorAccountPage() {
+  const {data = {}} = personalApi.useGetDetailInforQuery();
+  const [email, setEmail] = useState('');
   const [updateAccount] = personalApi.useUpdateDoctorMutation();
   const [editForm] = Form.useForm();
+  useEffect(()=>{
+    setEmail(data.user?.email);
+  },[data.user])
   const onHandleSave = () => {
     editForm.validateFields().then((values)=>{
       updateAccount({
@@ -36,7 +41,7 @@ function DoctorAccountPage() {
       </div>
       <div className={Style.doctorAccountPage_ml350} >
         <div>
-            <Form form={editForm} name='edit-form' labelCol={{ span: 5 }} wrapperCol={{span: 15 }} initialValues={{ remember: true }} autoComplete='on'>
+            <Form form={editForm} name='edit-form' fields={[{name:['email'],value: email}]} labelCol={{ span: 5 }} wrapperCol={{span: 15 }} initialValues={{ remember: true }} autoComplete='on'>
               <Form.Item 
                 label='Email' 
                 name='email'
@@ -52,7 +57,7 @@ function DoctorAccountPage() {
                 ]}
                 hasFeedback
                 >
-                <Input />
+                <Input onChange={(e)=>setEmail(e.target.value)}/>
               </Form.Item>
               <Form.Item 
                 label='Mật Khẩu Cũ' 

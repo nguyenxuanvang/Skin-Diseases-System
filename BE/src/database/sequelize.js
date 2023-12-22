@@ -8,7 +8,7 @@ const { repliesModel } = require("../models/replies.model");
 const { newsModel } = require("../models/news.model");
 const { diseasesModel } = require("../models/diseases.model");
 const { adminModels } = require("../models/admin.model");
-const { otpModel } = require("../models/otp.model");
+
 const host = "localhost";
 const port = 3306;
 const user = "root";
@@ -41,9 +41,7 @@ const Comment = commentModel(sequelize, DataTypes);
 const Replies = repliesModel(sequelize, DataTypes);
 const News = newsModel(sequelize, DataTypes);
 const Diseases = diseasesModel(sequelize, DataTypes);
-const Otp = otpModel(sequelize, DataTypes);
 
-User.hasOne(Otp);
 
 sequelize.sync({
   force: false,
@@ -94,5 +92,4 @@ module.exports = {
   Replies,
   News,
   Diseases,
-  Otp,
 };
