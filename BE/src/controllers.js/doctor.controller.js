@@ -199,7 +199,7 @@ const updateDoctor = async (req, res, next) => {
           });
         }
       }
-      if (findDoctor) {
+      if (findDoctor && email !== user.email) {
         return res.status(400).json({
           status: 400,
           message: "Email already exists !",
