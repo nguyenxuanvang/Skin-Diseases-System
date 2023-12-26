@@ -62,3 +62,31 @@
 {
     margin-right: 60px;
 }
+.popupSearch {
+    border-left: 1px solid #d9d9d9;
+    border-right: 1px solid #d9d9d9;
+    border-bottom: 1px solid #d9d9d9;
+    min-width: 500px;
+    max-width: 500px;
+    max-height: 250px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    white-space: nowrap;
+    background-color: #e9e9e9;
+}
+.address:first-child {
+    margin-top: 5px;
+}
+.address {
+    color: #8d7e7e;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px;
+}
+.address:hover {
+    cursor: pointer;
+    background-color: #d9d3d3;
+}

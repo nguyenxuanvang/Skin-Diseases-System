@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useState } from 'react';
 import Style from './EditInformationPage.module.css';
 import Sidebar from '../../Components/Sidebar/Sidebar';
-import { Avatar, Button, Form, Input, Upload, message } from 'antd';
+import {Form, Input } from 'antd';
 import { ToastContainer, toast } from "react-toastify";
 import personalApi from '../../../redux/api/personal.slice';
 import HeaderL from '../../../components/HeaderL/Header';
@@ -22,6 +22,8 @@ function EditInformationPage() {
     const [position, setPosition] = useState("");
     const [introduce, setIntroduce] = useState("");
     const [experience, setExperience] = useState("");
+    const [searchAddress, setSearchAddress] = useState([]);
+    const [isSearch, setIsSearch] = useState(false);
 
     useEffect(() => {
         setName(data.user?.name);
@@ -83,7 +85,11 @@ function EditInformationPage() {
         })
         
     };
-
+    const onSearch = async () => {
+        const response = await fetch(`https://rsapi.goong.io/Place/AutoComplete?api_key=EfJSk00uubh5lpF7GNP1VKFtXQfA9PiIjQiTwY83&input=${address}`)
+        const data = await response.json();
+        setSearchAddress(data.predictions);
+    }
     return (
         <>
             <div style={{ position: 'fixed', width: '100%', backgroundColor: 'white', height: '100px', top: '0', zIndex: '1' }}>
@@ -152,7 +158,24 @@ function EditInformationPage() {
                         </Form.Item>
 
                         <Form.Item label='Địa chỉ' name='address' hasFeedback>
-                            <Input onChange={(e)=>setAddress(e.target.value)}/>
+                            <Input value={address} onFocus={()=>setIsSearch(true)} onBlur={()=>{setTimeout(()=>{setIsSearch(false)},300)}} onChange={(e)=>{setAddress(e.target.value);onSearch();setIsSearch(true)}}/>
+                            {(isSearch)
+                                ?
+                                <div className={Style.popupSearch}>
+                                    {
+                                        (searchAddress)
+                                        ?
+                                        (searchAddress.length > 0)
+                                        ?
+                                        searchAddress.map(item => (
+                                            <div className={Style.address} onClick={()=>setAddress(item.description)}>{item.description}</div>
+                                        ))
+                                        : setIsSearch(false)
+                                        : <div style={{fontSize: '17px',fontWeight: '700',color: 'red',textAlign: 'center', padding: '15px'}}>Không Tìm Thấy Kết Quả</div>
+                                    }
+                                </div>
+                                : ''
+                            }
                         </Form.Item>
 
                         <Form.Item label='Địa chỉ công tác' name='work_location' hasFeedback>
