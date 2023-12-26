@@ -2,10 +2,7 @@ import React from 'react'
 import { useState, useEffect,useRef } from 'react';
 import Style from './UserEditInformationPage.module.css'
 import Sidebar from '../../Components/Sidebar/Sidebar';
-import Reactquill from '../../../components/Text_Editor';
-import { BsFillInfoCircleFill, BsFillBagPlusFill, BsHospitalFill, BsBookFill } from "react-icons/bs";
-import { Button, Form, Input, Upload, message } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { Form, Input} from 'antd';
 import personalApi from '../../../redux/api/personal.slice';
 import { ToastContainer, toast } from "react-toastify";
 import HeaderL from '../../../components/HeaderL/Header';
@@ -20,6 +17,8 @@ function UserEditInformationPage() {
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
     const [address, setAddress] = useState("");
+    const [searchAddress, setSearchAddress] = useState([]);
+    const [isSearch, setIsSearch] = useState(false);
 
     useEffect(() => {
         setName(data.user?.name);
@@ -68,6 +67,11 @@ function UserEditInformationPage() {
         }).catch(()=>{
             toast.error("Invalid Form!",{autoClose: 3000});
         })
+    }
+    const onSearch = async () => {
+        const response = await fetch(`https://rsapi.goong.io/Place/AutoComplete?api_key=EfJSk00uubh5lpF7GNP1VKFtXQfA9PiIjQiTwY83&input=${address}`)
+        const data = await response.json();
+        setSearchAddress(data.predictions);
     }
     return (
         <>
@@ -123,9 +127,26 @@ function UserEditInformationPage() {
                             hasFeedback>
                             <Input onChange={(e)=>setPhone(e.target.value)}/>
                         </Form.Item>
-
-                        <Form.Item label='Địa chỉ' name='address' hasFeedback>
-                            <Input onChange={(e)=>setAddress(e.target.value)}/>
+                        <Form.Item label='Địa chỉ' name='address'>
+                            <Input value={address} onFocus={()=>setIsSearch(true)} onBlur={()=>{setTimeout(()=>{setIsSearch(false)},300)}} onChange={(e)=>{setAddress(e.target.value);onSearch();setIsSearch(true)}}/>
+                            {(isSearch)
+                                ?
+                                <div className={Style.popupSearch}>
+                                    {
+                                        (searchAddress)
+                                        ?
+                                        (searchAddress.length > 0)
+                                        ?
+                                        searchAddress.map(item => (
+                                            <div className={Style.address} onClick={()=>setAddress(item.description)}>{item.description}</div>
+                                        ))
+                                        : setIsSearch(false)
+                                        : <div style={{fontSize: '17px',fontWeight: '700',color: 'red',textAlign: 'center', padding: '15px'}}>Không Tìm Thấy Kết Quả</div>
+                                    }
+                                </div>
+                                : ''
+                            }
+                            
                         </Form.Item>
                     </Form>
                     <div style={{ flex: 1 }}>
@@ -155,10 +176,11 @@ function UserEditInformationPage() {
                 </div>
                 
 
-                <div className='text-center' style={{ marginBottom: '20px', display: 'flex', marginLeft: '230px' }}>
+                <div className='text-center' style={{ marginTop: '70px',marginBottom: '20px', display: 'flex', marginLeft: '230px' }}>
                     <button className={Style.btn_update} onClick={onHandleUpdate}>Update</button>
                 </div>
             </div>
+            
             <ToastContainer />
         </>
     )
