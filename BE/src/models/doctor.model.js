@@ -53,7 +53,12 @@ const doctorsModel = (sequelize, DataTypes) => {
       avatar: {
         type: DataTypes.STRING,
         allowNull: false
-      }
+      },
+      approved: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+      },
     },
     {
       timestamps: true,
