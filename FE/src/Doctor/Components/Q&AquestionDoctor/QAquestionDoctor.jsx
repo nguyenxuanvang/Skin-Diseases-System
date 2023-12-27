@@ -5,7 +5,6 @@ import { FiMessageCircle } from "react-icons/fi";
 import { AiOutlineRight } from "react-icons/ai";
 
 function QAquestionDoctor({item,info}) {
-    console.log(item);
     const date = new Date(item.createdAt);
     const newDate = String(date.getFullYear())+ '-' + String(date.getMonth()+1)+ '-' + String(date.getDate());
     return (

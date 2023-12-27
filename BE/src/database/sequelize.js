@@ -2,13 +2,15 @@ const mysql = require("mysql2");
 const { Sequelize, DataTypes } = require("sequelize");
 const { userModel } = require("../models/users.model");
 const { doctorsModel } = require("../models/doctor.model");
+const {approvalModel} = require("../models/approval.model");
+const {deniedModel} = require("../models/denied.model");
 const { questionsModel } = require("../models/questions.model");
 const { commentModel } = require("../models/comment.model");
 const { repliesModel } = require("../models/replies.model");
 const { newsModel } = require("../models/news.model");
 const { diseasesModel } = require("../models/diseases.model");
 const { adminModels } = require("../models/admin.model");
-const { otpModel } = require("../models/otp.model");
+
 const host = "localhost";
 const port = 3306;
 const user = "root";
@@ -36,14 +38,14 @@ const sequelize = new Sequelize(databaseName, user, password, {
 const User = userModel(sequelize, DataTypes);
 const Admin = adminModels(sequelize, DataTypes);
 const Doctor = doctorsModel(sequelize, DataTypes);
+const Approvals = approvalModel(sequelize, DataTypes);
+const Denied = deniedModel(sequelize,DataTypes);
 const Questions = questionsModel(sequelize, DataTypes);
 const Comment = commentModel(sequelize, DataTypes);
 const Replies = repliesModel(sequelize, DataTypes);
 const News = newsModel(sequelize, DataTypes);
 const Diseases = diseasesModel(sequelize, DataTypes);
-const Otp = otpModel(sequelize, DataTypes);
 
-User.hasOne(Otp);
 
 sequelize.sync({
   force: false,
@@ -51,6 +53,8 @@ sequelize.sync({
 
 Questions.belongsTo(User, { foreignKey: "User_id" });
 Questions.belongsTo(Doctor, { foreignKey: "Doctor_id" });
+Approvals.belongsTo(Doctor, {foreignKey: "Doctor_id"});
+Denied.belongsTo(Doctor, {foreignKey: "Doctor_id"});
 Comment.belongsTo(User, { foreignKey: "User_id" });
 Comment.belongsTo(Doctor, { foreignKey: "Doctor_id" });
 Comment.belongsTo(Questions, { foreignKey: "Question_id" });
@@ -58,6 +62,12 @@ Replies.belongsTo(User, { foreignKey: "User_id" });
 Replies.belongsTo(Doctor, { foreignKey: "Doctor_id" });
 Replies.belongsTo(Comment, { foreignKey: "Comment_id" });
 
+Doctor.hasMany(Approvals, {
+  foreignKey: "Doctor_id",
+})
+Doctor.hasMany(Denied, {
+  foreignKey: "Doctor_id",
+})
 User.hasMany(Questions, {
   foreignKey: "User_id",
 });
@@ -94,5 +104,4 @@ module.exports = {
   Replies,
   News,
   Diseases,
-  Otp,
 };

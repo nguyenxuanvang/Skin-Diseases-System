@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Style from './UserAccountPage.module.css'
 import Sidebar from '../../Components/Sidebar/Sidebar'
 import { Modal, message, Button, Form, Input } from 'antd';
@@ -6,9 +6,13 @@ import { ToastContainer, toast } from "react-toastify";
 import personalApi from '../../../redux/api/personal.slice';
 import HeaderL from '../../../components/HeaderL/Header';
 function UserAccountPage() {
+  const {data = {}} = personalApi.useGetDetailInforQuery();
   const [updateAccount] = personalApi.useUpdateUserMutation();
+  const [email, setEmail] = useState('');
   const [editForm] = Form.useForm();
-  
+  useEffect(()=>{
+    setEmail(data.user?.email);
+  },[data.user])
   const onHandleSave = () => {
     editForm.validateFields().then((values)=>{
       updateAccount({
@@ -37,7 +41,7 @@ function UserAccountPage() {
       <div className={Style.userAccountPage_ml350} >
 
         <div>
-            <Form form={editForm} name='edit-form' labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} initialValues={{ remember: true }} autoComplete='on'>
+            <Form form={editForm} name='edit-form' fields={[{name: ["email"],value: email}]} labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} initialValues={{ remember: true }} autoComplete='on'>
               <Form.Item 
                 label='Email' 
                 name='email'
@@ -53,7 +57,7 @@ function UserAccountPage() {
                 ]}
                 hasFeedback
                 >
-                <Input />
+                <Input onChange={(e)=>setEmail(e.target.value)}/>
               </Form.Item>
               <Form.Item 
                 label='Mật Khẩu Cũ' 

@@ -97,7 +97,7 @@ function AnswerQuestion({ comment }) {
     }
   }
   return (
-    <div className='reply d-flex' style={{ margin: '25px 15px 30px 15px', backgroundColor: '#ecfffe', border: '3px solid black', padding: '15px' }}>
+    <div className='reply d-flex' style={{ margin: '25px 15px 30px 15px'  ,borderRadius: '15px', border: '3px solid black', padding: '15px' }}>
       <div className={Styles.avatar_answer}>
         <img src={`http://localhost:3000/detail/image/${comment.avatar}`} alt="" />
       </div>

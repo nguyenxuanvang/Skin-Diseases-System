@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import Styles from './DetailQuestion.module.css'
-import { FiMessageCircle, FiEdit } from "react-icons/fi";
+import { FiMessageCircle, FiEdit, FiTrash } from "react-icons/fi";
 import questionApi from '../../redux/api/question.slice';
 import commentApi from '../../redux/api/comment.slice';
 import personalApi from '../../redux/api/personal.slice';
@@ -59,9 +59,9 @@ function DetailQuestion() {
         const response = await removeQuestion(id);
         if (response.data) {
             toast.success(response.data.message, { autoClose: 3000 });
-            setTimeout(() => {
-                navigate("/ForumPage");
-            }, 1000);
+            // setTimeout(() => {
+            //     navigate("/ForumPage");
+            // }, 1000);
         } else {
             toast.error(response.error.data.message, { autoClose: 3000 });
         }
@@ -129,7 +129,7 @@ function DetailQuestion() {
                                 </>
                             ),
                         });
-                    }}>X</button>
+                    }}><FiTrash/></button>
                     : ''
                 }
                 {(isOwner)
@@ -144,7 +144,7 @@ function DetailQuestion() {
                     <textarea
                         onChange={(e) => setContentQ(e.target.value)}
                         rows="5"
-                        cols="140"
+                        cols="163"
                         value={ContentQ}
                         style={{ padding: '10px', border: '5px solid #0876cc', borderRadius: '10px' }}
                         placeholder="Nhập Nội Dung Câu Hỏi"
@@ -167,7 +167,7 @@ function DetailQuestion() {
                     <div className='form-container' style={{ margin: '30px 0 0 100px' }}>
                         <textarea
                             rows="3"
-                            cols="143"
+                            cols="166"
                             placeholder="Nhập nội dung bình luận..."
                             value={Content}
                             onChange={(e) => { setContent(e.target.value) }}
@@ -207,6 +207,7 @@ function DetailQuestion() {
                         <button className={Styles.btn_more} onClick={handleShowMore} style={{ width: '200px', border: 'none', backgroundColor: '#b1fffb' }}>More Comments...</button>
                     </div>
                 }
+                
                 {(numberComment > 5) &&
                     <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '15px' }}>
                         <button className={Styles.btn_more} onClick={handleHideLess} style={{ width: '200px', border: 'none', backgroundColor: '#b1fffb' }}>Hide...</button>
