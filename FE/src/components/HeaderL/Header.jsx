@@ -55,7 +55,7 @@ function HeaderL() {
           <li className={styles.linkToLogin}>
             <div className={styles.avatar_question}>
               <Link to={(data.user?.role === 'doctor') ? '/DoctorInformationPage' : '/UserInformationPage' }>
-                {<img src={`http://localhost:3000/detail/image/${data.user?.avatar}`} alt="" />}
+                {<img style={{border: (data.user?.approved) ? '4px solid #12d212' : '4px solid #4070F4'}} src={`http://localhost:3000/detail/image/${data.user?.avatar}`} alt="" />}
               </Link>
             </div>
           </li>

@@ -99,6 +99,8 @@ module.exports = {
   User,
   Admin,
   Doctor,
+  Approvals,
+  Denied,
   Questions,
   Comment,
   Replies,

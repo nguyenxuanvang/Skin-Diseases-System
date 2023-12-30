@@ -60,6 +60,12 @@ const Sidebar = () => {
           </Menu.Item>
 
         </Menu.SubMenu>
+        <Menu.SubMenu key="sub5" icon={<AiOutlineSolution style={{fontSize:20, color:'white'}}/>} title={<span style={{color: 'white'}}>Duyệt Bác Sĩ</span>} style={{fontSize:20, color:'white'}}>
+          <Menu.Item key="">
+            <Link to="/ApprovalPage" style={{fontSize:15, color:'white'}}>Danh Sách Yêu Cầu</Link>
+          </Menu.Item>
+
+        </Menu.SubMenu>
       </Menu>
 
       <div className={Styles.user_info}>

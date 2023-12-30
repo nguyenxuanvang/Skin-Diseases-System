@@ -51,7 +51,6 @@ function EditInformationPage() {
         fileInputRef.current.click();
     };
 
-
     const handleOnUpdate = async () => {
         form.validateFields().then(()=>{
             updateDoctor({

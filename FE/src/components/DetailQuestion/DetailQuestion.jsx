@@ -59,9 +59,9 @@ function DetailQuestion() {
         const response = await removeQuestion(id);
         if (response.data) {
             toast.success(response.data.message, { autoClose: 3000 });
-            // setTimeout(() => {
-            //     navigate("/ForumPage");
-            // }, 1000);
+            setTimeout(() => {
+                navigate("/ForumPage");
+            }, 1000);
         } else {
             toast.error(response.error.data.message, { autoClose: 3000 });
         }
@@ -105,10 +105,10 @@ function DetailQuestion() {
         <>
             <div className='d-flex' style={{ margin: '50px 0 0 300px' }}>
                 <div className={Styles.avatar_question}>
-                    <img src={`http://localhost:3000/detail/image/${objQ.data?.avatar}`} alt="" />
+                    <img style={{border: (objQ.data?.approved) ? '4px solid #12d212' : '4px solid #4070F4'}} src={`http://localhost:3000/detail/image/${objQ.data?.avatar}`} alt="" />
                 </div>
                 <div className='title_question' style={{ padding: '20px 0 0 20px' }}>
-                    <h3>{objQ.data?.name}</h3>
+                    <h3>{objQ.data?.name} {(objQ.data?.approved) ? <img style={{width: "30px", height: "30px"}} src="http://localhost:3000/doctor/request/tick.png"/> : ''} </h3>
                     <div className='d-flex'>
                         <p style={{ paddingRight: '30px' }}>{time}</p>
                         <p style={{ paddingRight: '30px' }}><FiMessageCircle />{objQ.data?.num_comments}</p>
@@ -144,7 +144,7 @@ function DetailQuestion() {
                     <textarea
                         onChange={(e) => setContentQ(e.target.value)}
                         rows="5"
-                        cols="163"
+                        cols="140"
                         value={ContentQ}
                         style={{ padding: '10px', border: '5px solid #0876cc', borderRadius: '10px' }}
                         placeholder="Nhập Nội Dung Câu Hỏi"
@@ -167,7 +167,7 @@ function DetailQuestion() {
                     <div className='form-container' style={{ margin: '30px 0 0 100px' }}>
                         <textarea
                             rows="3"
-                            cols="166"
+                            cols="143"
                             placeholder="Nhập nội dung bình luận..."
                             value={Content}
                             onChange={(e) => { setContent(e.target.value) }}
@@ -190,7 +190,7 @@ function DetailQuestion() {
                                     });
                                 }
 
-                            }} style={{ width: 100, borderRadius: 10, marginLeft: '575px', marginTop: '20px' }}
+                            }} style={{ width: 100, borderRadius: 10, marginLeft: '500px', marginTop: '20px' }}
                         >Comment</button>
                     </div>
 

@@ -23,7 +23,7 @@ function DetailDoctorInformation() {
       <div className='d-flex' style={{ marginLeft: '350px' }}>
         {(doctor) ?
         <div className={Style.detailDoctorInformation_avatar}>
-          <img src={`http://localhost:3000/detail/image/${doctor.avatar}`} alt="" />
+          <img style={{border: (doctor.approved) ? '4px solid #12d212' : '4px solid #4070F4'}} src={`http://localhost:3000/detail/image/${doctor.avatar}`} alt="" />
         </div> : 
         <div className={Style.detailDoctorInformation_avatar}>
           <img src="" alt="" />
@@ -40,6 +40,7 @@ function DetailDoctorInformation() {
             <p><FaPhoneAlt />   {(doctor.phone) ? doctor.phone : 'Chưa Cập Nhật'}</p>
             <p><FaAddressCard />  {(doctor.address) ? doctor.address : 'Chưa Cập Nhật'}</p>
             <p><FaMailBulk /> {(doctor.email) ? doctor.email : 'Chưa Cập Nhật'}</p>
+            <p>Trạng Thái: <span style={{color: (doctor.approved) ? '#12d212' : 'red'}}>{(doctor.approved) ? 'Đã Xác Thực' : 'Chưa Xác Thực'}</span></p>
           </div>
           }
           
