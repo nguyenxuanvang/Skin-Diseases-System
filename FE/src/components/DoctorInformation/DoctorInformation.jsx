@@ -34,7 +34,7 @@ function DoctorInformation() {
               <span><FaAngleRight />{data.data?.name}</span>
             </div>
 
-            <p>{data.data?.name}</p>
+            <p>{data.data?.name} <img style={{width: '30px', height: '30px'}} src="http://localhost:3000/doctor/request/tick.png" /></p>
           </div>
         </div>
 
@@ -43,11 +43,11 @@ function DoctorInformation() {
         <div>
           <DoctorInformationDetail iconName = 'BsFillInfoCircleFill' introduction='Giới thiệu' content={data.data?.introduce}/>
 
-          <DoctorInformationDetail iconName='BsFillBagPlusFill' introduction='Chức vụ'/>
+          <DoctorInformationDetail iconName='BsFillBagPlusFill' introduction='Chức vụ' content={data.data?.position}/>
 
-          <DoctorInformationDetail iconName='BsHospitalFill' introduction='Nơi làm việc'/>
+          <DoctorInformationDetail iconName='BsHospitalFill' introduction='Nơi làm việc' content={data.data?.work_location}/>
 
-          <DoctorInformationDetail iconName='BsBookFill' introduction='Kinh nghiệm'/>
+          <DoctorInformationDetail iconName='BsBookFill' introduction='Kinh nghiệm' content={data.data?.experience}/>
         </div>
         
       </div>

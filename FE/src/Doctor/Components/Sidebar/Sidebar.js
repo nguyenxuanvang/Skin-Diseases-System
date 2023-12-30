@@ -40,6 +40,11 @@ const Sidebar = () => {
             <Link to="/HistoryQAPage" style={{fontSize:15, color:'black'}}>History</Link>
           </Menu.Item>
         </Menu.SubMenu>
+        <Menu.SubMenu key="sub5" icon={<AiOutlineSnippets />} title="Xác Thực" style={{fontSize:20, color:'black'}}>
+          <Menu.Item key="5">
+            <Link to="/ApprovalRequestPage" style={{fontSize:15, color:'black'}}>Thông Tin Xác Thực</Link>
+          </Menu.Item>
+        </Menu.SubMenu>
         <div style={{display:'flex',justifyContent:'center',marginTop: '15px'}}>
           <button onClick={logout}>Đăng Xuất</button>
         </div>

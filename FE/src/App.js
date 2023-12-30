@@ -21,10 +21,12 @@ import UserManagementPage from './Admin/Pages/UserManagementPage/UserManagementP
 import NewsManagementPage from './Admin/Pages/NewsManagementPage';
 import AddNewsPage from './Admin/Pages/AddNewsPage'
 import QAManagementPage from './Admin/Pages/QAManagementPage/QAManagementPage';
+import ApprovalPage from './Admin/Pages/ApprovalPage/ApprovalPage';
 import DoctorAccountPage from './Doctor/Pages/DoctorAccountPage'
 import DoctorInformationPage from './Doctor/Pages/DoctorInformationPage';
 import EditInformationPage from './Doctor/Pages/EditInformationPage';
 import HistoryQAPage from './Doctor/Pages/HistoryQAPage';
+import ApprovalRequestPage from './Doctor/Pages/ApprovalRequestPage/ApprovalRequestPage';
 import DetailDoctorInformation from './Doctor/Components/DetailDoctorInformation/DetailDoctorInformation';
 import UserInformationPage from '../src/User/Pages/UserInformationPage'
 import HistoryUserQAPage from './User/Pages/HistoryQAPage/HistoryQAPage';
@@ -64,6 +66,7 @@ function App() {
             <Route path='/news-management' element={<NewsManagementPage />} />
             <Route path='/add-news' element={<AddNewsPage />} />
             <Route path='/QAManagementPage' element={<QAManagementPage />} />
+            <Route path='/ApprovalPage' element={<ApprovalPage/>} />
           </Routes>
         </div>
 
@@ -74,6 +77,7 @@ function App() {
             <Route path='/EditInformationPage' element={<EditInformationPage />} />
             <Route path='/DoctorAccountPage' element={<DoctorAccountPage />} />
             <Route path='/HistoryQAPage' element={<HistoryQAPage />} />
+            <Route path='/ApprovalRequestPage' element={<ApprovalRequestPage/>} />
           </Routes>
         </div>
 

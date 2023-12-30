@@ -1,0 +1,28 @@
+.Content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 500px;
+  font-size: 17px;
+  font-weight: 700;
+}
+.denyIcon {
+  font-size: 15px;
+  font-weight: 700;
+}
+.denyIcon:hover {
+  background-color: red;
+}
+.img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+.testDiagno
+{
+    border: 5px solid yellowgreen;
+    width: 500px;
+    height: 400px;
+    border-radius: 10px;
+    position: relative;
+}
