@@ -56,10 +56,10 @@ function ReplyAnswer({ reply, idC }) {
   return (
     <div className='reply d-flex' style={{ margin: '25px 0 0 0' }}>
       <div className={Styles.avatar_answer}>
-        <img src={`http://localhost:3000/detail/image/${reply.avatar}`} alt="" />
+        <img style={{border: (reply?.approved) ? '4px solid #12d212' : '4px solid #4070F4'}} src={`http://localhost:3000/detail/image/${reply.avatar}`} alt="" />
       </div>
       <div className='title_question' style={{ padding: '5px 0 0 20px' }}>
-        <h3>{reply.name}</h3>
+        <h3>{reply.name} {(reply?.approved) ? <img style={{width: "30px", height: "30px"}} src="http://localhost:3000/doctor/request/tick.png"/> : ''}</h3>
         <div className='d-flex'>
           <p style={{ paddingRight: '30px', fontSize: '15px' }}>{time}</p>
           {(isOwner)

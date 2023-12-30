@@ -16,6 +16,7 @@ const approvalModel = (sequelize, DataTypes) => {
       Doctor_id: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true
       },
     },
     {

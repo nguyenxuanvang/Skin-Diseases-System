@@ -99,10 +99,10 @@ function AnswerQuestion({ comment }) {
   return (
     <div className='reply d-flex' style={{ margin: '25px 15px 30px 15px'  ,borderRadius: '15px', border: '3px solid black', padding: '15px' }}>
       <div className={Styles.avatar_answer}>
-        <img src={`http://localhost:3000/detail/image/${comment.avatar}`} alt="" />
+        <img style={{border: (comment?.approved) ? '4px solid #12d212' : '4px solid #4070F4'}} src={`http://localhost:3000/detail/image/${comment.avatar}`} alt="" />
       </div>
       <div className='title_question' style={{ padding: '5px 0 0 20px' }}>
-        <h3>{comment.name}</h3>
+        <h3>{comment.name} {(comment?.approved) ? <img style={{width: "30px", height: "30px"}} src="http://localhost:3000/doctor/request/tick.png"/> : ''}</h3>
         <div className='d-flex'>
           <p style={{ paddingRight: '30px' }}>{time}</p>
           <span className={Styles.reply_btn} onClick={() => { setShowReply(true); setContent('') }} >Reply</span>

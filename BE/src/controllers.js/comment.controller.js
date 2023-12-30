@@ -27,7 +27,7 @@ const createComment = async (req, res, next) => {
       Question_id: id
     });
     newComment = newComment.get({plain: true});
-    newComment = {...newComment, name: req.user.name, avatar: req.user.avatar, replies: []};
+    newComment = {...newComment, name: req.user.name, avatar: req.user.avatar, approved: req.user.approved, replies: []};
     question.num_comments += 1;
     await question.save();
 

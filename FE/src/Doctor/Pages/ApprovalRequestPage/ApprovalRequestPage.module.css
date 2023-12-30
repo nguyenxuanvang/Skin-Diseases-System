@@ -1,0 +1,49 @@
+.approvalRequestPage_sidebar {
+  width: 350px;
+}
+.approvalRequestPage_content {
+  width: 1235px;
+}
+.img {
+  width: 100px;
+  height: 100px;  
+  object-fit: cover;
+}
+.testDiagno
+{
+    border: 5px solid yellowgreen;
+    width: 400px;
+    height: 350px;
+    border-radius: 10px;
+    position: relative;
+    background-color: aquamarine;
+}
+
+.uploadDescription {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 17px;
+  color: #ed6b6b;
+  font-weight: 700;
+}
+.currentRequest {
+  margin: 30px 0px;
+  font-size: 17px;
+  font-weight: 700;
+  text-align: center;
+}
+.denyIcon {
+  font-size: 15px;
+  font-weight: 700;
+  margin-left: 5px;
+}
+.denyIcon:hover {
+  background-color: red;
+}
+.approvalRequestPage_content_approved {
+  width: 1235px;
+  text-align: center;
+  margin-top: 70px;
+}

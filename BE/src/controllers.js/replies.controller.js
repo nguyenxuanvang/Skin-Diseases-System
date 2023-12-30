@@ -42,7 +42,7 @@ const createReplies = async (req, res, next) => {
     await question.save();
 
     newReplies = newReplies.get({plain: true});
-    newReplies = {...newReplies, name: req.user.name, avatar: req.user.avatar};
+    newReplies = {...newReplies, name: req.user.name, avatar: req.user.avatar, approved: req.user.approved};
 
     return res.status(200).json({
       status: 200,

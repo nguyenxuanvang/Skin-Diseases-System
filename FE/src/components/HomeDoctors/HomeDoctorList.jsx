@@ -7,7 +7,7 @@ function HomeDoctorList({info}) {
     <>
     <div className={Styles.container}>
         <div className={Styles.doctorImage}>
-            <img src={`http://localhost:3000/detail/image/${info?.avatar}`} alt="" />
+            <img style={{border: (info?.approved) ? '4px solid #12d212' : '4px solid #4070F4'}} src={`http://localhost:3000/detail/image/${info?.avatar}`} alt="" />
         </div>
         <div className={Styles.doctorContext}>
             <div className={Styles.doctorName}>

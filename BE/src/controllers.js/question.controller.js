@@ -39,7 +39,7 @@ const createQuestion = async (req, res, next) => {
       num_comments: 0
     });
     newQuestion = newQuestion.get({ plain: true });
-    newQuestion = { ...newQuestion, avatar: req.user.avatar };
+    newQuestion = { ...newQuestion, avatar: req.user.avatar, approved: req.user.approved };
     return res.status(200).json({
       status: 200,
       data: newQuestion,
@@ -253,6 +253,7 @@ const getPublicQuestions = async (req, res, next) => {
         const newDoctor = {
           ...questions[i],
           avatar: doctor.avatar,
+          approved: doctor.approved
         }
         questionList.push(newDoctor);
       }
@@ -297,7 +298,7 @@ const getQuestion = async (req, res, next) => {
         },
         raw: true
       });
-      question = { ...question, name: questionOwner.name, avatar: questionOwner.avatar }
+      question = { ...question, name: questionOwner.name, avatar: questionOwner.avatar, approved: questionOwner.approved }
     }
     const comments = await Comment.findAll({
       where: {
@@ -330,7 +331,8 @@ const getQuestion = async (req, res, next) => {
         comments[i] = {
           ...comments[i],
           name: commentOnwer.name,
-          avatar: commentOnwer.avatar
+          avatar: commentOnwer.avatar,
+          approved: commentOnwer.approved
         }
       }
     }
@@ -358,7 +360,7 @@ const getQuestion = async (req, res, next) => {
             },
             raw: true
           });
-          replies[j] = { ...replies[j], name: replyOwner.name, avatar: replyOwner.avatar }
+          replies[j] = { ...replies[j], name: replyOwner.name, avatar: replyOwner.avatar, approved: replyOwner.approved }
         }
       }
       comments[i] = { ...comments[i], replies }
