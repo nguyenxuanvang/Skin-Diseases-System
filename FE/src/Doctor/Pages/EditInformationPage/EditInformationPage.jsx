@@ -24,6 +24,8 @@ function EditInformationPage() {
     const [experience, setExperience] = useState("");
     const [searchAddress, setSearchAddress] = useState([]);
     const [isSearch, setIsSearch] = useState(false);
+    const [isSearchW, setIsSearchW] = useState(false);
+    const [searchWaddress, setSearchWaddress] = useState([]);
 
     useEffect(() => {
         setName(data.user?.name);
@@ -88,6 +90,11 @@ function EditInformationPage() {
         const response = await fetch(`https://rsapi.goong.io/Place/AutoComplete?api_key=EfJSk00uubh5lpF7GNP1VKFtXQfA9PiIjQiTwY83&input=${address}`)
         const data = await response.json();
         setSearchAddress(data.predictions);
+    };
+    const onSearchW = async () => {
+        const response = await fetch(`https://rsapi.goong.io/Place/AutoComplete?api_key=EfJSk00uubh5lpF7GNP1VKFtXQfA9PiIjQiTwY83&input=${work_location}`)
+        const data = await response.json();
+        setSearchWaddress(data.predictions);
     }
     return (
         <>
@@ -178,7 +185,24 @@ function EditInformationPage() {
                         </Form.Item>
 
                         <Form.Item label='Địa chỉ công tác' name='work_location' hasFeedback>
-                            <Input onChange={(e)=>setWorkLocation(e.target.value)}/>
+                            <Input value={work_location} onFocus={()=>{setIsSearchW(true)}} onBlur={()=>{setTimeout(()=>{setIsSearchW(false)},300)}} onChange={(e)=>{setWorkLocation(e.target.value);onSearchW();setIsSearchW(true)}}/>
+                            {(isSearchW)
+                                ?
+                                <div className={Style.popupSearch}>
+                                    {
+                                        (searchWaddress)
+                                        ?
+                                        (searchWaddress.length > 0)
+                                        ?
+                                        searchWaddress.map(item => (
+                                            <div className={Style.address} onClick={()=>setWorkLocation(item.description)}>{item.description}</div>
+                                        ))
+                                        : setIsSearchW(false)
+                                        : <div style={{fontSize: '17px',fontWeight: '700',color: 'red',textAlign: 'center', padding: '15px'}}>Không Tìm Thấy Kết Quả</div>
+                                    }
+                                </div>
+                                : ''
+                            }
                         </Form.Item>
 
                         <Form.Item label='Chức vụ' name='position' hasFeedback>
@@ -231,7 +255,7 @@ function EditInformationPage() {
 
 
                 <div className='text-center' style={{ marginBottom: '20px' }}>
-                    <button className={Style.btn_update} onClick={handleOnUpdate}>Update</button>
+                    <button className={Style.btn_update} onClick={handleOnUpdate}>Cập Nhật</button>
                 </div>
             </div>
             <ToastContainer />

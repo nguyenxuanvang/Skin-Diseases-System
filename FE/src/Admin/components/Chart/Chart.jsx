@@ -40,7 +40,7 @@ function Chart({title,values}) {
     },
   };
   
-  const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const labels = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
   
   const data = {
     labels,
@@ -67,7 +67,7 @@ function Chart({title,values}) {
   };
   return (
     <div style={{ width: '1500px', height: '400px' }}>
-        <h4 className={Styles.title}>Statistical {title}</h4>
+        <h4 className={Styles.title}>Biểu Đồ {title}</h4>
       <Bar options={options} data={data} />
     </div>
   )

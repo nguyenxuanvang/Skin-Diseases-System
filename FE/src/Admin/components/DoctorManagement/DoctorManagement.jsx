@@ -13,16 +13,6 @@ function DoctorManagement() {
   },[])
   const columns = [
     {
-      title: 'ID',
-      dataIndex: 'ID',
-      key: 'ID',
-      align: 'center',
-      width: 100,
-      render: (id) => {
-        return <p style={{fontWeight: 700}}>{id}</p>
-      }
-    },
-    {
       title: 'Ảnh Đại Diện',
       dataIndex: 'image',
       key: 'image',
@@ -77,13 +67,13 @@ function DoctorManagement() {
     {
       title: '',
       key: 'actions',
-
+      align: 'center',
       render: (text, record) => {
         return (
           <Space>
             <Popconfirm
               style={{ width: 800 }}
-              title='Are you sure delete?'
+              title='Bạn Có Chắc Chắn Muốn Xóa ?'
               onConfirm={async () => {
                 const response = await deleteDoctor(record.ID);
                 if(response.data) {
@@ -117,8 +107,7 @@ function DoctorManagement() {
   return (
     <div>
       <Search
-        placeholder="Search By Name"
-        enterButton="Search"
+        placeholder="Tìm Kiếm Theo Tên"
         size="large"
         onChange={(e)=>{searchDoctors({name: e.target.value});}}
         /*onSearch={onSearch}*/

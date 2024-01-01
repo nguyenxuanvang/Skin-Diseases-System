@@ -15,7 +15,7 @@ const createComment = async (req, res, next) => {
     if (!question) {
       return res.status(404).json({
         status: 404,
-        message: "Question not found!",
+        message: "Bài Viết Không Tồn Tại !",
       });
     }
     const Comment_id = uuidv4();
@@ -34,7 +34,7 @@ const createComment = async (req, res, next) => {
     return res.status(200).json({
       status: 200,
       data: newComment,
-      message: "Comment added successfully!",
+      message: "Thêm Thành Công !",
     });
   } catch (error) {
     return next(error);
@@ -61,7 +61,7 @@ const updateCommentQuestion = async (req, res, next) => {
     if (!comment) {
       return res.status(404).json({
         status: 404,
-        message: "Comment Is Not Found !",
+        message: "Bình Luận Không Tồn Tại !",
       });
     }
 
@@ -71,7 +71,7 @@ const updateCommentQuestion = async (req, res, next) => {
     return res.status(200).json({
       status: 200,
       data: comment,
-      message: "Updated Comment Successfully!",
+      message: "Cập Nhật Thành Công !",
     });
   } catch (error) {
     return next(error);
@@ -107,7 +107,7 @@ const deleteCommentQuestion = async (req, res, next) => {
     if (!comment) {
       return res.status(404).json({
         status: 404,
-        message: "Comment Not Found !",
+        message: "Bình Luận Không Tồn Tại !",
       });
     }
     const question = await Questions.findOne({
@@ -132,7 +132,7 @@ const deleteCommentQuestion = async (req, res, next) => {
 
     return res.status(200).json({
       status: 200,
-      message: "Deleted Comment Successfully!",
+      message: "Xóa Thành Công !",
     });
   } catch (error) {
     return next(error);
@@ -167,7 +167,7 @@ const getOwnComment = async (req, res, next) => {
     if(!comment) {
       return res.status(404).json({
         status: 404,
-        message: "Question Is Not Found !"
+        message: "Bài Viết Không Tồn Tại !"
       })
     }
     let owner;
@@ -187,7 +187,7 @@ const getOwnComment = async (req, res, next) => {
     return res.status(200).json({
       status: 200,
       data: owner,
-      message: "Get Comment Owner Successfully",
+      message: "Truy Vấn Bình Luận Cá Nhân Thành Công !",
     });
   } catch (error) {
     return next(error);

@@ -32,31 +32,31 @@ const Sidebar = () => {
           <Link to="/menu-list" style={{fontSize:20, color:'white'}}>Dashboard</Link>
         </Menu.Item>
         
-        <Menu.SubMenu key="sub1" icon={<AiOutlineSolution style={{fontSize:20, color:'white'}}/>} title={<span style={{color: 'white'}}>Doctor</span>} style={{fontSize:20, color:'white'}}>         
+        <Menu.SubMenu key="sub1" icon={<AiOutlineSolution style={{fontSize:20, color:'white'}}/>} title={<span style={{color: 'white'}}>Bác Sĩ</span>} style={{fontSize:20, color:'white'}}>         
           <Menu.Item key="2">
-            <Link to="/doctor-management" style={{fontSize:15, color:'white'}}>List Doctor</Link>
+            <Link to="/doctor-management" style={{fontSize:15, color:'white'}}>Danh Sách Bác Sĩ</Link>
           </Menu.Item>
         </Menu.SubMenu>
 
-        <Menu.SubMenu key="sub2" icon={<AiOutlineSolution style={{fontSize:20, color:'white'}}/>} title={<span style={{color: 'white'}}>User</span>} style={{fontSize:20, color:'white'}}>         
+        <Menu.SubMenu key="sub2" icon={<AiOutlineSolution style={{fontSize:20, color:'white'}}/>} title={<span style={{color: 'white'}}>Người Dùng</span>} style={{fontSize:20, color:'white'}}>         
           <Menu.Item key="3">
-            <Link to="/user-management" style={{fontSize:15, color:'white'}}>List User</Link>
+            <Link to="/user-management" style={{fontSize:15, color:'white'}}>Danh Sách Người Dùng</Link>
           </Menu.Item>
         </Menu.SubMenu>
 
-        <Menu.SubMenu key="sub3" icon={<AiOutlineSnippets style={{fontSize:20, color:'white'}}/>} title={<span style={{color: 'white'}}>News</span>} style={{fontSize:20}}>
+        <Menu.SubMenu key="sub3" icon={<AiOutlineSnippets style={{fontSize:20, color:'white'}}/>} title={<span style={{color: 'white'}}>Tin Tức</span>} style={{fontSize:20}}>
           <Menu.Item key="4">
-            <Link to="/news-management" style={{fontSize:15, color:'white'}}>List News</Link>
+            <Link to="/news-management" style={{fontSize:15, color:'white'}}>Danh Sách Tin Tức</Link>
           </Menu.Item>
 
           <Menu.Item key="5">
-            <Link to="/add-news" style={{fontSize:15, color:'white'}}>Add News</Link>
+            <Link to="/add-news" style={{fontSize:15, color:'white'}}>Tạo Mới Tin Tức</Link>
           </Menu.Item>
         </Menu.SubMenu>
 
-        <Menu.SubMenu key="sub4" icon={<AiOutlineSolution style={{fontSize:20, color:'white'}}/>} title={<span style={{color: 'white'}}>Q&A</span>} style={{fontSize:20, color:'white'}}>
+        <Menu.SubMenu key="sub4" icon={<AiOutlineSolution style={{fontSize:20, color:'white'}}/>} title={<span style={{color: 'white'}}>Bài Đăng</span>} style={{fontSize:20, color:'white'}}>
           <Menu.Item key="6">
-            <Link to="/QAManagementPage" style={{fontSize:15, color:'white'}}>List Q&A</Link>
+            <Link to="/QAManagementPage" style={{fontSize:15, color:'white'}}>Danh Sách Bài Đăng</Link>
           </Menu.Item>
 
         </Menu.SubMenu>
@@ -69,8 +69,8 @@ const Sidebar = () => {
       </Menu>
 
       <div className={Styles.user_info}>
-        <p style={{color:'white', padding:'0 20px'}}>Welcome, {data.user?.name}</p>
-        <button onClick={logOut} className={Styles.btn_logout}><Link to="/Login" style={{textDecoration:'none'}}>Logout</Link></button>
+        <p style={{color:'white', padding:'0 20px'}}>Xin Chào, {data.user?.name}</p>
+        <button onClick={logOut} className={Styles.btn_logout}><Link to="/Login" style={{textDecoration:'none'}}>Thoát</Link></button>
       </div>
     </div>
   );

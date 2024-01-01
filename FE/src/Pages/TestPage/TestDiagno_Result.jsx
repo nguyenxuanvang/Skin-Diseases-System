@@ -9,10 +9,21 @@ function TestDiagno_Result() {
   const [getNewsRelated, {data: objN = {}}] = newsApi.useLazyGetNewsRelatedQuery();
   const { data, updateData } = useMyContext();
   const [isSuccess, setIsSuccess] = useState(false);
+  const [result, setResult] = useState('');
   useEffect(() => {
-    if (data.status === 200 && data.result !== 'Normal') {setIsSuccess(true);getDisease(data.result);getNewsRelated(data.result)}
+    if (data.status === 200 && data.result !== 'Normal') {
+      if(data.result !== 'Normal') {
+        setIsSuccess(true);getDisease(data.result);getNewsRelated(data.result);
+      }
+      const class_namesE = ['Acne','Eczema','Nevus','Normal','Psoriasis','Pyoderma','Ringworm','Scabies','Urticaria','Warts'];
+      const class_namesV = ['Mụn Trứng Cá','Bệnh Chàm','Bệnh Nốt Ruồi','Da Khỏe Mạnh','Vảy Nến','Viêm Da','Nấm Da','Bệnh Ghẻ','Mề Đay','Mụn Cóc'];
+      const findIndex = class_namesE.findIndex(item => item === data.result);
+      setResult(class_namesV[findIndex]);
+      
+    }
     else setIsSuccess(false);
-  }, [data])
+  }, [data]);
+  
   return (
     <>
       <div className={Styles.result_Title}>
@@ -36,14 +47,14 @@ function TestDiagno_Result() {
       {
         (data.status) === 200 ?
           <div className={Styles.result_Des}>
-            <div style={{textAlign: 'center'}}>
+            <div style={{textAlign: 'center', marginTop: '10px'}}>
               <span style={{fontSize: '17px', fontWeight: '600', marginRight: '10px'}}>Chẩn Đoán:</span>
-              <span style={{fontSize: '17px', fontWeight: '700', color: 'red'}}>{data.result}</span>
+              <span style={{fontSize: '17px', fontWeight: '700', color: 'red'}}>{result}</span>
             </div>
             
             <div>
             <p style={{fontSize: '17px', fontWeight: '600'}}>Giải pháp:</p>
-            <p>{objD.data?.Solutions}</p>
+            <pre style={{whiteSpace: 'pre-line'}}>{objD.data?.Solutions}</pre>
             </div>
             
 

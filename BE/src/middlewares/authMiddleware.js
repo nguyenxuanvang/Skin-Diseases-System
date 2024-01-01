@@ -8,7 +8,7 @@ const checkValidate = async (req, res, next) => {
       if (!emailRegex.test(email)) {
         return res.status(400).json({
           status: 400,
-          message: "Invalid email format",
+          message: "Định Dạng Email Không Hợp Lệ !",
         });
       }
     }
@@ -19,8 +19,8 @@ const checkValidate = async (req, res, next) => {
         return res.status(400).json({
           status: 400,
           message:
-            "Password must contain at least one uppercase letter, one lowercase letter, and be at least 8 characters long",
-        });
+            "Mật Khẩu Phải Chứa Ít Nhất 1 Ký Tự In Hoa, 1 Ký Tự Thường và Có Chiều Dài Ít Nhất 8 Ký Tự !",
+        }); 
       }
     }
     
@@ -30,7 +30,7 @@ const checkValidate = async (req, res, next) => {
         return res.status(400).json({
           status: 400,
           message:
-            "Invalid name format. Name must be 5 to 20 characters long and can only contain letters",
+            "Họ Tên Phải Có Chiều Dài Từ 5 Đến 20 Ký Tự và Chỉ Được Phép Chứa Chữ Cái !",
         });
       }
     }
@@ -70,7 +70,7 @@ const checkSignUp = async (req, res, next) => {
     if (user) {
       return res.status(400).json({
         status: 400,
-        message: "Email already exists !",
+        message: "Email Đã Tồn Tại !",
       });
     }
 
@@ -109,7 +109,7 @@ const checkLogin = async (req, res, next) => {
     if (!user) {
       return res.status(400).json({
         status: 400,
-        message: "Email does not exist !",
+        message: "Email Không Tồn Tại !",
       });
     }
     req.user = user;

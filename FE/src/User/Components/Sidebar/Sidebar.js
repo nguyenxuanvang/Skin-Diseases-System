@@ -19,25 +19,25 @@ const Sidebar = () => {
           mode="inline"     
           style={{ width:'300px', height: '100%' }}
       >
-        <Menu.SubMenu key="sub1" icon={<AiOutlineSolution />} title="Profile" style={{fontSize:20, color:'black'}}>
+        <Menu.SubMenu key="sub1" icon={<AiOutlineSolution />} title="Hồ Sơ" style={{fontSize:20, color:'black'}}>
           <Menu.Item key="2">
-            <Link to="/DetailUserInformation" style={{fontSize:15, color:'black'}}>Personal Information</Link>
+            <Link to="/DetailUserInformation" style={{fontSize:15, color:'black'}}>Thông Tin Cá Nhân</Link>
           </Menu.Item>
 
           <Menu.Item key="3">
-            <Link to="/UserEditInformationPage" style={{fontSize:15, color:'black'}}>Edit</Link>
+            <Link to="/UserEditInformationPage" style={{fontSize:15, color:'black'}}>Cập Nhật Thông Tin</Link>
           </Menu.Item>
         </Menu.SubMenu>
 
-        <Menu.SubMenu key="sub2" icon={<AiOutlineSnippets />} title="Account" style={{fontSize:20, color:'black'}}>
+        <Menu.SubMenu key="sub2" icon={<AiOutlineSnippets />} title="Tài Khoản" style={{fontSize:20, color:'black'}}>
           <Menu.Item key="4">
-            <Link to="/UserAccountPage" style={{fontSize:15, color:'black'}}>UserName and Password</Link>
+            <Link to="/UserAccountPage" style={{fontSize:15, color:'black'}}>Email Và Mật Khẩu</Link>
           </Menu.Item>
         </Menu.SubMenu>
 
-        <Menu.SubMenu key="sub2" icon={<AiOutlineSnippets />} title="History QA" style={{fontSize:20, color:'black'}}>
+        <Menu.SubMenu key="sub2" icon={<AiOutlineSnippets />} title="Lịch Sử" style={{fontSize:20, color:'black'}}>
           <Menu.Item key="4">
-            <Link to="/HistoryUserQAPage" style={{fontSize:15, color:'black'}}>History</Link>
+            <Link to="/HistoryUserQAPage" style={{fontSize:15, color:'black'}}>Bài Viết</Link>
           </Menu.Item>
         </Menu.SubMenu>
         <div style={{display:'flex',justifyContent:'center',marginTop: '15px'}}>

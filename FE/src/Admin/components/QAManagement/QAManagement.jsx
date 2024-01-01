@@ -29,17 +29,7 @@ function QAManagement() {
   
   const columns = [
     {
-      title: 'ID',
-      dataIndex: 'ID',
-      key: 'ID',
-      width: 200,
-      align: 'center',
-      render: (id) => {
-        return <p style={{ fontWeight: 700 }}>{id}</p>
-      }
-    },
-    {
-      title: 'Content',
+      title: 'Nội Dung',
       dataIndex: 'Content',
       key: 'description',
       align: 'center',
@@ -49,7 +39,7 @@ function QAManagement() {
       },
     },
     {
-      title: 'Date',
+      title: 'Ngày Đăng',
       dataIndex: 'date',
       key: 'date',
       align: 'center',
@@ -60,7 +50,7 @@ function QAManagement() {
     },
 
     {
-      title: 'Author',
+      title: 'Người Đăng',
       dataIndex: 'author',
       key: 'member',
       align: 'center',
@@ -73,13 +63,13 @@ function QAManagement() {
     {
       title: '',
       key: 'actions',
-
+      align: 'center',
       render: (text, record) => {
         return (
           <Space>
             <Popconfirm
               style={{ width: 800 }}
-              title='Are you sure delete?'
+              title='Bạn Có Chắc Chắn Muốn Xóa ?'
               onConfirm={async () => {
                 const response = await deleteQuestion(record.ID);
                 if(response.data) {
@@ -113,8 +103,7 @@ function QAManagement() {
   return (
     <>
       <Search
-        placeholder="Search By Content"
-        enterButton="Search"
+        placeholder="Tìm Kiếm Theo Nội Dung"
         size="large"
         onChange={(e)=>{searchQuestions({content: e.target.value});}}
         /*onSearch={onSearch}*/

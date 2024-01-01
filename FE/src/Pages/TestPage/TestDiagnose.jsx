@@ -7,7 +7,7 @@ import Styles from "./TestPage.module.css";
 function TestDiagno() {
     const { data, updateData } = useMyContext();
     const [avatar, setAvatar] = useState();
-    const [uploadDescription, setUploadDescription] = useState("Upload the image");
+    const [uploadDescription, setUploadDescription] = useState("Upload Ảnh");
     const [predict, { data: result = '', isLoading }] = diseaseApi.usePredictMutation();
     const fileInputRef = useRef(null);
 
@@ -27,13 +27,13 @@ function TestDiagno() {
         }
     };
     const handleUploadClick = () => {
-        setUploadDescription("Upload the image");
+        setUploadDescription("Upload Ảnh");
         fileInputRef.current.click();
     };
 
     const handleScanClick = async () => {
         if (!avatar) {
-            toast.error('Please Upload Image !',{autoClose: 3000});
+            toast.error('Vui Lòng Upload Thêm Ảnh !',{autoClose: 3000});
         }
         else {
             if (avatar.type === 'image/jpeg' || avatar.type === 'image/png') {
@@ -41,13 +41,13 @@ function TestDiagno() {
                 formData.append('image', avatar);
                 predict(formData);
             } else {
-                toast.error('Image Is Not Valid !',{autoClose: 3000});
+                toast.error('Ảnh Upload Không Hợp Lệ !',{autoClose: 3000});
             }
         }
     }
     return (
         <>
-            <Spin spinning={isLoading} size="large" tip="Predicting...">
+            <Spin spinning={isLoading} size="large" tip="Đang Chẩn Đoán...">
                 <div style={{ textAlign: '-webkit-center' }}>
                     <div className={Styles.testDiagno}>
                         {avatar && (

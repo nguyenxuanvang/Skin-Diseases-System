@@ -3,7 +3,7 @@ import Styles from './Footer.module.css'
 import { FaFacebook, FaYoutube, FaInstagram, FaTwitter } from "react-icons/fa";
 function Footer({
     nameApp = 'SkinDiagnoTech',
-    nameGoal = 'Placing trust as the top priority.',
+    nameGoal = 'Đặt niềm tin lên hàng đầu.',
     phone = '1111-2222-3333',
     email = '123@gmail.com',
     address = 'Da Nang',
@@ -18,10 +18,10 @@ function Footer({
                 </div>
 
                 <div className={Styles.contactUs}>
-                    <p>Contact Us</p>
-                    <span className={Styles.fw_b}>Call: </span><span>{phone}</span><br />
+                    <p>Liên Hệ Với Chúng Tôi</p>
+                    <span className={Styles.fw_b}>Gọi: </span><span>{phone}</span><br />
                     <span className={Styles.fw_b}>Email:</span> <span>{email}</span><br />
-                    <span className={Styles.fw_b}>Address:</span> <span>{address}</span>
+                    <span className={Styles.fw_b}>Địa Chỉ:</span> <span>{address}</span>
                 </div>
             </div>
             <div className={Styles.footer_copyright}>

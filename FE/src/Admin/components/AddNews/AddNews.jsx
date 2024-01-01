@@ -6,10 +6,12 @@ import React_Quill from '../Text-Editor';
 import { ToastContainer, toast } from "react-toastify";
 import Styles from './AddNews.module.css';
 import newsApi from '../../../redux/api/news.slice';
+import diseaseApi from '../../../redux/api/disease.slice';
 function NewsManagement() {
   const [createNews] = newsApi.useCreateNewsMutation();
+  const [uploadDisease] = diseaseApi.useUploadMutation();
   const [avatar, setAvatar] = useState();
-  const [uploadDescription, setUploadDescription] = useState("Upload the image");
+  const [uploadDescription, setUploadDescription] = useState("Upload Ảnh");
   const fileInputRef = useRef(null);
   const [createForm] = Form.useForm();
 
@@ -26,7 +28,7 @@ function NewsManagement() {
   };
 
   const handleUploadClick = () => {
-    setUploadDescription("Upload the image");
+    setUploadDescription("Upload Ảnh");
     fileInputRef.current.click();
   };
 
@@ -53,6 +55,24 @@ function NewsManagement() {
       toast.error("Vui Lòng Nhập Đầy Đủ Tiêu Đề Và Nội Dung !",{autoClose: 3000});
     })
   }
+
+  // const handleUpload = async () => {
+  //   createForm.validateFields().then(values => {
+  //       uploadDisease({
+  //         Title: values.Title,
+  //         Content: values.Content 
+  //       }).then((response)=>{
+  //         if(response.data) {
+  //           toast.success(response.data.message,{autoClose: 1000});
+  //           createForm.resetFields();
+  //         } else {
+  //           toast.error(response.error.data.message,{autoClose: 3000});
+  //         }
+  //       });
+  //   }).catch((error)=>{
+  //     toast.error("Vui Lòng Nhập Đầy Đủ Tiêu Đề Và Nội Dung !",{autoClose: 3000});
+  //   })
+  // }
 
   return (
     <div>

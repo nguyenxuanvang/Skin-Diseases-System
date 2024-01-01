@@ -22,7 +22,7 @@ function HistoryUserQAPage() {
       </div>
       <div style={{ marginLeft: '350px' }}>
         <div style={{ padding: '50px 0 0 50px' }}>
-          <h2>History Q&A</h2>
+          <h2>Lịch Sử Bài Viết Cá Nhân</h2>
         </div>
         {(list?.length > 0) ? list.map(item => (
           <QAquestionUser key={item.Question_id} info={info} item={item} />

@@ -30,11 +30,13 @@
   margin-right: 2.5%;
   margin-top: 5%;
   margin-bottom: 7%;
+  align-items: start;
 }
 .container .form{
   width: 40%;
   display: flex;
   align-items: center;
+  margin-top: 100px;
 }
 .container .form .title{
   font-family: 'Yeseva One';

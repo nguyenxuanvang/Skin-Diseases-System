@@ -93,7 +93,7 @@ function NewsManagement() {
           <Space>
             <Popconfirm
               style={{ width: 800 }}
-              title='Are you sure delete?'
+              title='Bạn Có Chắc Chắn Muốn Xóa ?'
               onConfirm={async () => {
                 const response = await deleteNews(record.id);
                 toast.success(response.data.message,{autoClose: 1000});
@@ -154,8 +154,7 @@ function NewsManagement() {
   return (
     <div>
       <Search
-        placeholder="Search By Title"
-        enterButton="Search"
+        placeholder="Tìm kiếm Theo Tiêu Đề"
         size="large"
         onChange={(e)=>{searchNews({title: e.target.value});}}
         /*onSearch={onSearch}*/

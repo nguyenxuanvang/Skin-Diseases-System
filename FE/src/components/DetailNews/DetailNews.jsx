@@ -2,8 +2,10 @@ import React from 'react'
 import Styles from './DetailNews.module.css'
 function DetailNews({news}) {
     const date = new Date(news?.updatedAt);
-    const time = date.getDate() + '-' + (date.getMonth()+1) + '-' + date.getFullYear() 
-    + ' ' + date.getHours() + ":" + date.getMinutes() + ' ' + ((date.getHours() > 11) ? 'PM' : 'AM');
+    const time = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear()
+        + ' ' + ((date.getHours() > 9) ? date.getHours() : `0${date.getHours()}`)
+        + ":" + ((date.getMinutes() > 9) ? date.getMinutes() : `0${date.getMinutes()}`)
+        + ' ' + ((date.getHours() > 11) ? 'PM' : 'AM');
     return (
         <div className={Styles.detailNews}>
             <div className={Styles.detailNews_title}>

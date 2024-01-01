@@ -23,7 +23,7 @@ function DoctorCareer() {
             className={`nav-link ${activeTab === 'pills-introduction' ? 'active' : ''}`}
             onClick={() => handleTabClick('pills-introduction')}
           >
-            <BsFillInfoCircleFill/><span> Introduction </span>
+            <BsFillInfoCircleFill/><span> Giới Thiệu </span>
           </button>
         </li>
         <li className="nav-item" role="presentation">
@@ -31,7 +31,7 @@ function DoctorCareer() {
             className={`nav-link ${activeTab === 'pills-role' ? 'active' : ''}`}
             onClick={() => handleTabClick('pills-role')}
           >
-            <BsFillBagPlusFill/><span> Role </span>
+            <BsFillBagPlusFill/><span> Chức Vụ </span>
           </button>
         </li>
         <li className="nav-item" role="presentation">
@@ -39,7 +39,7 @@ function DoctorCareer() {
             className={`nav-link ${activeTab === 'pills-address' ? 'active' : ''}`}
             onClick={() => handleTabClick('pills-address')}
           >
-            <BsHospitalFill/><span> Work Address </span>
+            <BsHospitalFill/><span> Địa Chỉ Công Tác </span>
           </button>
         </li>
         <li className="nav-item" role="presentation">
@@ -47,7 +47,7 @@ function DoctorCareer() {
             className={`nav-link ${activeTab === 'pills-experience' ? 'active' : ''}`}
             onClick={() => handleTabClick('pills-experience')}
           >
-            <BsBookFill/><span> Experience </span>
+            <BsBookFill/><span> Kinh Nghiệm </span>
           </button>
         </li>
       </ul>

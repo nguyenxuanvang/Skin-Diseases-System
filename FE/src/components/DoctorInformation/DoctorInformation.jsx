@@ -30,11 +30,10 @@ function DoctorInformation() {
 
             <div className={Styles.doctorInformation_link}>
               <Link to='/Home'><AiTwotoneHome /></Link>
-              <Link to='/Doctor'><FaAngleRight />Doctor</Link>
+              <Link to='/Doctor'><FaAngleRight />Bác Sĩ</Link>
               <span><FaAngleRight />{data.data?.name}</span>
             </div>
-
-            <p>{data.data?.name} <img style={{width: '30px', height: '30px'}} src="http://localhost:3000/doctor/request/tick.png" /></p>
+            <p>{data.data?.name}  {(data.data?.approved) ? <img style={{width: "30px", height: "30px"}} src="http://localhost:3000/doctor/request/tick.png"/> : ''}</p>
           </div>
         </div>
 

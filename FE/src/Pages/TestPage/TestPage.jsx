@@ -24,7 +24,7 @@ function TestPage() {
           <TestPageSlider />
         </div>
         <div className={Styles.testPage_Des}>
-          Diagnose through images
+          Chẩn Đoán Bằng Hình Ảnh
         </div>
 
         <MyProvider>

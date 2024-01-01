@@ -38,7 +38,7 @@ const signUp = async (req, res, next) => {
 
     res.status(200).json({
       status: 200,
-      message: "Create New Member Successfully !",
+      message: "Đăng Ký Thành Công !",
     });
   } catch (error) {
     return next(error);
@@ -56,14 +56,14 @@ const login = async (req, res, next) => {
       if (!isValidPassword) {
         return res.status(400).json({
           status: 400,
-          message: "Email Or Password Is Not Correct !",
+          message: "Email Hoặc Mật Khẩu Không Chính Xác !",
         });
       }
     } else {
       if (password !== user.password) {
         return res.status(400).json({
           status: 400,
-          message: "Email Or Password Is Not Correct !",
+          message: "Email Hoặc Mật Khẩu Không Chính Xác !",
         });
       }
     }
@@ -103,7 +103,7 @@ const login = async (req, res, next) => {
         accessToken,
         role: user.role
       },
-      message: "Login Successfully",
+      message: "Đăng Nhập Thành Công !",
     });
   } catch (error) {
     return next(error);

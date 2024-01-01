@@ -25,7 +25,7 @@ function News({news}) {
                             <p>{news?.Content}</p>
                         </div>
                         <div className={Styles.newsList_btn}>
-                            <button className={Styles.btn_seeMore}><Link to={`/DetailNewsPage/${news?.News_id}`}>See more <FaAngleRight /></Link></button>
+                            <button className={Styles.btn_seeMore}><Link to={`/DetailNewsPage/${news?.News_id}`}>Xem Thêm<FaAngleRight /></Link></button>
                         </div>
                     </div>
                 </div>
