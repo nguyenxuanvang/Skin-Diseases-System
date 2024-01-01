@@ -23,6 +23,7 @@ if predictions[0][0] > 0.5:
   model_path = 'best_model.h5'
   model = keras.models.load_model(model_path)
   class_names = ['Acne','Eczema','Nevus','Normal','Psoriasis','Pyoderma','Ringworm','Scabies','Urticaria','Warts']
+  
   predictions = model.predict(new_data)
   predicted_class = class_names[np.argmax(predictions)]
   print(predicted_class)

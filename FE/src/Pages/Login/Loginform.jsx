@@ -14,7 +14,7 @@ const LoginForm = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     if (email === '' || password === '') {
-      const message = 'Not allowed to be empty !';
+      const message = 'Không Được Phép Bỏ Trống !';
       toast.error(message,{autoClose: 3000});
     } else {
       const response = await login({
@@ -52,12 +52,12 @@ const LoginForm = () => {
     <div className="form">
       <div>
         <div>
-          <div className="title">Login</div>
-          <div className="des">If you don’t have an account register</div>
+          <div className="title">Đăng Nhập</div>
+          <div className="des">Nếu Bạn Chưa Có Tài Khoản</div>
           <div>
             <div className="link">
-              You can &nbsp;
-              <Link to="/Register">Register here !</Link>
+              Bạn Có Thể &nbsp;
+              <Link to="/Register">Đăng Ký Tại Đây !</Link>
             </div>
           </div>
         </div>
@@ -69,7 +69,6 @@ const LoginForm = () => {
               <input
                 type="email"
                 id="email"
-                placeholder="Enter your email address"
                 name="email"
                 value={email}
                 onChange={(e) => { setEmail(e.target.value) }}
@@ -79,12 +78,11 @@ const LoginForm = () => {
               </div>
             </div>
             <div className="group">
-              <label for="password">Password</label>
+              <label for="password">Mật Khẩu</label>
               <br></br>
               <input
                 type="password"
                 id="password"
-                placeholder="Enter your Password"
                 name="password"
                 value={password}
                 onChange={(e) => { setPassword(e.target.value) }}
@@ -103,12 +101,12 @@ const LoginForm = () => {
             </div>
             <div>
               <button className="button" onClick={handleLogin} >
-                Login
+                Đăng Nhập
               </button>
             </div>
           </form>
         </div>
-        <div>
+        {/* <div>
           <div className="continue">or continue with</div>
           <div className="google">
             <button className="btn-gg">Sign in with Google</button>
@@ -120,7 +118,7 @@ const LoginForm = () => {
               />
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
       <ToastContainer />
     </div>

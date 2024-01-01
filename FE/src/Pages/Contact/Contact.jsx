@@ -29,7 +29,7 @@ function Contact() {
 
                     <div className='mt-5'>
                         <div className='list_contact'>
-                            <h2>Contact with us</h2>
+                            <h2>Liên Hệ Với Chúng Tôi</h2>
                         </div>
 
                         <div className='list_contact'>

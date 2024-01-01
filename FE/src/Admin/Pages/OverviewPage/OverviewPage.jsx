@@ -22,29 +22,29 @@ function OverviewPage() {
           <Overview 
             img_icon="news_logo.png"
             total_quantity={objN.data?.length}
-            des_quantity="News"
+            des_quantity="Tin Tức"
           />
           <Overview
             img_icon="doctor_logo.png"
             total_quantity={objD.data?.length}
-            des_quantity="Doctor"
+            des_quantity="Bác Sĩ"
           />
           <Overview
             img_icon="user_logo.png"
             total_quantity={objQ.data?.length}
-            des_quantity="User"
+            des_quantity="Người Dùng"
           />
           <Overview
             img_icon="question_logo.png"
             total_quantity={objQ.data?.length}
-            des_quantity="Question"
+            des_quantity="Bài Viết"
           />
         </div>
         <div className={Styles.chart}>
-          <Chart title='News' values={objN.data}/>
-          <Chart title='Doctor' values={objD.data}/>
-          <Chart title='User' values={objU.data}/>
-          <Chart title='Question' values={objQ.data}/>
+          <Chart title='Tin Tức' values={objN.data}/>
+          <Chart title='Bác Sĩ' values={objD.data}/>
+          <Chart title='Người Dùng' values={objU.data}/>
+          <Chart title='Bài Viết' values={objQ.data}/>
         </div>
       </div>
     </>

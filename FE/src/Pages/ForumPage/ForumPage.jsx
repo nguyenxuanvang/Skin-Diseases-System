@@ -45,6 +45,7 @@ function ForumPage() {
     const response = await createQuestion({Content: content});
     if(response.data) {
       toast.success(response.data.message,{autoClose: 1000});
+      setContent('');
       setShowForm(false);
     } else {
       toast.error(response.error.data.message,{autoClose: 3000});
@@ -62,10 +63,10 @@ function ForumPage() {
       <div>
         <ForumSlider />
       </div>
-      <h1 className='text-center mt-3 bg-primary text-white'>Question And Answer</h1>
+      <h1 className='text-center mt-3 bg-primary text-white'>Trang Hỏi Đáp</h1>
       <div className='create_question' style={{ width: '60%' }}>
         <div className='create_question' >
-          <button style={{ width: 200, borderRadius: 10, margin: '50px 0 0 100px' }} onClick={()=>setShowForm(true)/*createQuestion*/} >Create question</button>
+          <button style={{ width: 200, borderRadius: 10, margin: '50px 0 0 100px' }} onClick={()=>setShowForm(true)/*createQuestion*/} >Tạo Bài Viết</button>
         </div>
 
         {showForm && (
@@ -79,16 +80,18 @@ function ForumPage() {
             />
 
             <div className='text-end' style={{display: 'flex',paddingLeft: '290px'}} >
-              <button style={{ width: 100, borderRadius: 10, margin: '50px 0 0 100px' }} onClick={()=>{setShowForm(false)}}>Cancel</button>
+              <button style={{ width: 100, borderRadius: 10, margin: '50px 0 0 100px' }} onClick={()=>{setShowForm(false)}}>Hủy</button>
               <button type="primary"
                 onClick={() => {
                   if(localStorage.getItem('token')) {
                     onHandleCreate();
                   } else {
                     Modal.confirm({
-                      title: 'Alert',
+                      title: 'Thông Báo',
                       onOk: onOk,
-                      content: 'Please LOGIN before post your question!',
+                      content: 'Vui Lòng Đăng Nhập Trước!',
+                      okText: 'Đăng Nhập',
+                      cancelText: 'Đóng',
                       footer: (_, { OkBtn, CancelBtn }) => (
                         <>
                           <CancelBtn />
@@ -98,7 +101,7 @@ function ForumPage() {
                     });
                   }
                 }} style={{ width: 100, borderRadius: 10, margin: '50px 0 0 100px' }}
-              >Post</button>
+              >Xác Nhận</button>
             </div>
           </div>
         )}
@@ -110,7 +113,7 @@ function ForumPage() {
         ))}
         {
           (data.data?.length > numberQuestion) && <div className='text-center mt-5' >
-          <button style={{ width: 300, borderRadius: 10 }} onClick={showMoreQuestions}>Hiển thêm</button>
+          <button style={{ width: 300, borderRadius: 10 }} onClick={showMoreQuestions}>Hiển Thị thêm</button>
         </div>
         }
           

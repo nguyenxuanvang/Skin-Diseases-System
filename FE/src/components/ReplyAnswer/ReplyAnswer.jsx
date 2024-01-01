@@ -71,9 +71,11 @@ function ReplyAnswer({ reply, idC }) {
             ?
             <span className={Styles.reply_btn} onClick={() => {
               Modal.confirm({
-                title: 'Alert',
-                content: 'Do You Want To Remove This Reply!',
+                title: 'Thông Báo',
+                content: 'Bạn Có Chắc Chắn Muốn Xóa ?',
                 onOk: () => onDelete(reply.Replies_id),
+                okText: 'Xác Nhận',
+                cancelText: 'Đóng',
                 footer: (_, { OkBtn, CancelBtn }) => (
                   <>
                     <CancelBtn />
@@ -98,8 +100,8 @@ function ReplyAnswer({ reply, idC }) {
               onChange={(e) => { setContent(e.target.value) }}
             />
             <div style={{ display: 'flex', justifyContent: 'center', gap: '30px', margin: '15px 0px' }}>
-              <button onClick={() => { setIsEdit(false) }}>Cancel</button>
-              <button onClick={onSave}>Save</button>
+              <button onClick={() => { setIsEdit(false) }}>Hủy</button>
+              <button onClick={onSave}>Lưu</button>
             </div>
           </div>
           :

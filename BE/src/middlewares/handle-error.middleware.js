@@ -1,5 +1,5 @@
 const loggerErrorMiddleware = (err, req, res, next) => {
-  console.log(`❌ Error is : ${err.message}`);
+  console.log(`❌ Lỗi Hệ Thống : ${err.message}`);
 
   next(err);
 };

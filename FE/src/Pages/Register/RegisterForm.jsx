@@ -16,7 +16,7 @@ function RegisterForm() {
   const handleRegister = async (e) => {
     e.preventDefault();
     if (email === '' || name === '' || password === '' || confirmPassword === '') {
-      const message = 'Not allowed to be empty !';
+      const message = 'Không Được Phép Bỏ Trống !';
       toast.error(message,{autoClose: 3000});
     } else {
       if (password === confirmPassword) {
@@ -38,7 +38,7 @@ function RegisterForm() {
           }, [500]);
         }
       } else {
-        const message = "Password Confirmation does not match !";
+        const message = "Mật Khẩu Xác Nhận Sai !";
         toast.error(message,{autoClose: 3000});
       }
     }
@@ -48,14 +48,14 @@ function RegisterForm() {
     <div className="form">
       <div>
         <div>
-          <div className="title">Sign up</div>
+          <div className="title">Đăng Ký</div>
           <div className="des">
-            If you already have an account register
+            Nếu Bạn Đã Có Tài Khoản Trước Đó
           </div>
           <div>
             <div className="link">
-              You can &nbsp;
-              <Link to="/Login">Login here !</Link>
+              Bạn Có Thể &nbsp;
+              <Link to="/Login">Đăng Nhập Tại Đây !</Link>
             </div>
           </div>
         </div>
@@ -67,7 +67,6 @@ function RegisterForm() {
               <input
                 type="email"
                 id="email"
-                placeholder="Enter your email address"
                 name="email"
                 value={email}
                 onChange={(e) => { setEmail(e.target.value) }}
@@ -77,12 +76,11 @@ function RegisterForm() {
               </div>
             </div>
             <div className="group">
-              <label for="username">Name</label>
+              <label for="username">Họ Và Tên</label>
               <br></br>
               <input
                 type="text"
                 id="username"
-                placeholder="Enter your Name"
                 name="username"
                 value={name}
                 onChange={(e) => { setName(e.target.value) }}
@@ -92,12 +90,11 @@ function RegisterForm() {
               </div>
             </div>
             <div className="group">
-              <label for="password">Password</label>
+              <label for="password">Mật Khẩu</label>
               <br></br>
               <input
                 type="password"
                 id="password"
-                placeholder="Enter your Password"
                 name="password"
                 value={password}
                 onChange={(e) => { setPassWord(e.target.value) }}
@@ -107,12 +104,11 @@ function RegisterForm() {
               </div>
             </div>
             <div className="group">
-              <label for="confirmpass">Confirm Password</label>
+              <label for="confirmpass">Xác Nhập Mật Khẩu</label>
               <br></br>
               <input
                 type="password"
                 id="confirmpass"
-                placeholder="Confirm your Password"
                 name="confirmPassword"
                 value={confirmPassword}
                 onChange={(e) => { setConfirmPassWord(e.target.value) }}
@@ -126,11 +122,11 @@ function RegisterForm() {
                 <input type="checkbox" checked={isDoctor}
                   onChange={(e) => { setIsDoctor(e.target.checked) }}></input>
               </div>
-              <div className="remember">You are a Doctor?</div>
+              <div style={{marginTop: '15px'}} className="remember">Bạn Là Bác Sĩ ?</div>
             </div>
             <div>
               <button className="button" onClick={handleRegister}>
-                Register
+                Đăng Ký
               </button>
             </div>
           </form>

@@ -119,8 +119,10 @@ function DetailQuestion() {
 
                     <button className={Styles.btn_remove} onClick={() => {
                         Modal.confirm({
-                            title: 'Alert',
-                            content: 'Do You Want To Remove This Question!',
+                            title: 'Thông Báo',
+                            content: 'Bạn Có Chắc Chắn Muốn Xóa!',
+                            okText: 'Xác Nhận',
+                            cancelText: 'Đóng',
                             onOk: () => onRemove(objQ.data?.Question_id),
                             footer: (_, { OkBtn, CancelBtn }) => (
                                 <>
@@ -150,8 +152,8 @@ function DetailQuestion() {
                         placeholder="Nhập Nội Dung Câu Hỏi"
                     />
                     <div style={{ display: 'flex', justifyContent: 'center', gap: '30px', marginTop: '15px' }}>
-                        <button onClick={() => { setIsEdit(false) }}>Cancle</button>
-                        <button onClick={onSaveEdit}>Save</button>
+                        <button onClick={() => { setIsEdit(false) }}>Hủy</button>
+                        <button onClick={onSaveEdit}>Lưu</button>
                     </div>
                 </div>
                 :
@@ -178,9 +180,11 @@ function DetailQuestion() {
                                     onHandleComment();
                                 } else {
                                     Modal.confirm({
-                                        title: 'Alert',
-                                        content: 'Please LOGIN before post your question!',
+                                        title: 'Thông Báo',
+                                        content: 'Vui Lòng Đăng Nhập Trước!',
                                         onOk: onOk,
+                                        okText: 'Đăng Nhập',
+                                        cancelText: 'Đóng',
                                         footer: (_, { OkBtn, CancelBtn }) => (
                                             <>
                                                 <CancelBtn />
@@ -191,7 +195,7 @@ function DetailQuestion() {
                                 }
 
                             }} style={{ width: 100, borderRadius: 10, marginLeft: '500px', marginTop: '20px' }}
-                        >Comment</button>
+                        >Bình Luận</button>
                     </div>
 
                 </div>
@@ -204,13 +208,13 @@ function DetailQuestion() {
                 ))}
                 {(objQ.data?.comments.length > numberComment) &&
                     <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '15px' }}>
-                        <button className={Styles.btn_more} onClick={handleShowMore} style={{ width: '200px', border: 'none', backgroundColor: '#b1fffb' }}>More Comments...</button>
+                        <button className={Styles.btn_more} onClick={handleShowMore} style={{ width: '200px', border: 'none', backgroundColor: '#b1fffb' }}>Xem Thêm...</button>
                     </div>
                 }
                 
                 {(numberComment > 5) &&
                     <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '15px' }}>
-                        <button className={Styles.btn_more} onClick={handleHideLess} style={{ width: '200px', border: 'none', backgroundColor: '#b1fffb' }}>Hide...</button>
+                        <button className={Styles.btn_more} onClick={handleHideLess} style={{ width: '200px', border: 'none', backgroundColor: '#b1fffb' }}>Ẩn Bớt...</button>
                     </div>
                 }
 

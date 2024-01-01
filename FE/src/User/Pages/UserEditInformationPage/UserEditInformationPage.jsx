@@ -177,7 +177,7 @@ function UserEditInformationPage() {
                 
 
                 <div className='text-center' style={{ marginTop: '70px',marginBottom: '20px', display: 'flex', marginLeft: '230px' }}>
-                    <button className={Style.btn_update} onClick={onHandleUpdate}>Update</button>
+                    <button className={Style.btn_update} onClick={onHandleUpdate}>Cập Nhật</button>
                 </div>
             </div>
             

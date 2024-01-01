@@ -36,7 +36,7 @@ const predict = async (req,res,next) => {
       if(data.trim() === "false") {
         return res.status(200).json({
           status: 400,
-          result: "Invalid Image !"
+          result: "Ảnh Không Hợp Lệ !"
         });
       }
       return res.status(200).json({
@@ -93,7 +93,7 @@ const getImage = async (req,res,next) => {
     if(!findImage) {
       return res.status(404).json({
         status: 404,
-        message: 'File Not Found'
+        message: 'Ảnh Không Tồn Tại !'
       })
     }
     return res.sendFile(path.join(__dirname, "../Images/Diseases", findImage));

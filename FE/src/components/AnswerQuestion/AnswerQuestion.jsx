@@ -70,7 +70,7 @@ function AnswerQuestion({ comment }) {
       toast.error(response.error.data.message, { autoClose: 3000 });
     }
     }else {
-      toast.error('Không Được Phép Bỏ Trống !',{autoClose: 3000});
+      toast.error('Vui Lòng Nhập Nội Dung Bình Luận !',{autoClose: 3000});
     }
     
   }
@@ -80,7 +80,7 @@ function AnswerQuestion({ comment }) {
 
   const onHandleReply = async () => {
     if (Content.trim() === '') {
-      toast.error('Vui Lòng Nhập Nội Dung Bình Luận', { autoClose: 3000 });
+      toast.error('Vui Lòng Nhập Nội Dung Trả Lời', { autoClose: 3000 });
     } else {
       const response = await createReply({
         id: comment.Comment_id,
@@ -105,7 +105,7 @@ function AnswerQuestion({ comment }) {
         <h3>{comment.name} {(comment?.approved) ? <img style={{width: "30px", height: "30px"}} src="http://localhost:3000/doctor/request/tick.png"/> : ''}</h3>
         <div className='d-flex'>
           <p style={{ paddingRight: '30px' }}>{time}</p>
-          <span className={Styles.reply_btn} onClick={() => { setShowReply(true); setContent('') }} >Reply</span>
+          <span className={Styles.reply_btn} onClick={() => { setShowReply(true); setContent('') }} >Trả Lời</span>
           {(isOwner)
             ?
             <span className={Styles.reply_btn} onClick={() => { setIsEdit(true); setContentC(comment.Content) }} ><FiEdit /></span>
@@ -115,8 +115,10 @@ function AnswerQuestion({ comment }) {
             ?
             <span className={Styles.reply_btn} onClick={() => {
               Modal.confirm({
-                title: 'Alert',
-                content: 'Do You Want To Remove This Comment!',
+                title: 'Thông Báo',
+                content: 'Bạn Có Chắc Chắn Muốn Xóa ?',
+                okText: 'Xác Nhận',
+                cancelText: 'Đóng',
                 onOk: () => onDelete(comment.Comment_id),
                 footer: (_, { OkBtn, CancelBtn }) => (
                   <>
@@ -142,8 +144,8 @@ function AnswerQuestion({ comment }) {
               onChange={(e) => setContentC(e.target.value)}
             />
             <div style={{ display: 'flex', justifyContent: 'center', gap: '30px', margin: '15px 0px' }}>
-              <button onClick={() => { setIsEdit(false) }}>Cancel</button>
-              <button onClick={onUpdate}>Save</button>
+              <button onClick={() => { setIsEdit(false) }}>Huỷ</button>
+              <button onClick={onUpdate}>Lưu</button>
             </div>
           </div>
           :
@@ -164,16 +166,18 @@ function AnswerQuestion({ comment }) {
                 value={Content}
                 onChange={(e) => setContent(e.target.value)}
               />
-              <button style={{ width: 100, borderRadius: 10, margin: '25px 0 0 250px' }} onClick={() => { setShowReply(false) }}>Cancel</button>
+              <button style={{ width: 100, borderRadius: 10, margin: '25px 0 0 250px' }} onClick={() => { setShowReply(false) }}>Hủy</button>
               <button type="primary"
                 onClick={() => {
                   if (localStorage.getItem('token')) {
                     onHandleReply();
                   } else {
                     Modal.confirm({
-                      title: 'Alert',
-                      content: 'Please LOGIN before post your question!',
+                      title: 'Thông Báo',
+                      content: 'Vui Lòng Đăng Nhập Trước!',
                       onOk: onOk,
+                      okText: 'Đăng Nhập',
+                      cancelText: 'Đóng',
                       footer: (_, { OkBtn, CancelBtn }) => (
                         <>
                           <CancelBtn />
@@ -184,7 +188,7 @@ function AnswerQuestion({ comment }) {
                   }
 
                 }} style={{ width: 100, borderRadius: 10, margin: '25px 0 0 100px' }}
-              >Reply</button>
+              >Trả Lời</button>
             </div>
           }
 
@@ -195,12 +199,12 @@ function AnswerQuestion({ comment }) {
         ))}
         {(comment.replies.length > numberReply) &&
           <div style={{ display: 'flex', justifyContent: 'center', marginTop: '15px' }}>
-            <button className={Styles.btn_more} onClick={handleShowMore} style={{ width: '200px', border: 'none', backgroundColor: '#ecfffe' }}>More Answers...</button>
+            <button className={Styles.btn_more} onClick={handleShowMore} style={{ width: '200px', border: 'none', backgroundColor: '#ecfffe' }}>Xem Thêm...</button>
           </div>
         }
         {(numberReply > 3) &&
           <div style={{ display: 'flex', justifyContent: 'center', marginTop: '15px' }}>
-            <button className={Styles.btn_more} onClick={handleHideLess} style={{ width: '200px', border: 'none', backgroundColor: '#ecfffe' }}>Hide...</button>
+            <button className={Styles.btn_more} onClick={handleHideLess} style={{ width: '200px', border: 'none', backgroundColor: '#ecfffe' }}>Ẩn Bớt...</button>
           </div>
         }
 

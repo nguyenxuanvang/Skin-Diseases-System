@@ -33,7 +33,7 @@ const getDoctor = async (req, res, next) => {
     if (!findDoctor) {
       return res.status(404).json({
         status: 404,
-        message: 'Doctor Not Found !'
+        message: 'Bác Sĩ Không Tồn Tại !'
       });
     }
     return res.status(200).json({
@@ -73,7 +73,7 @@ const getImage = async (req, res, next) => {
     if (!findDoctor) {
       return res.status(404).json({
         status: 404,
-        message: 'File Not Found !'
+        message: 'Ảnh Không Tồn Tại !'
       });
     }
     return res.sendFile(path.join(__dirname, "../Images/Avatars", findDoctor.avatar));
@@ -151,7 +151,7 @@ const deleteDoctor = async (req, res, next) => {
     }
     return res.status(200).json({
       status: 200,
-      message: "Deleted successfully !",
+      message: "Xóa Thành Công !",
     });
   } catch (error) {
     return next(error);
@@ -204,7 +204,7 @@ const updateDoctor = async (req, res, next) => {
       if (findDoctor && email !== user.email) {
         return res.status(400).json({
           status: 400,
-          message: "Email already exists !",
+          message: "Email Đã Tồn Tại !",
         });
       }
       user.email = email;
@@ -214,7 +214,7 @@ const updateDoctor = async (req, res, next) => {
       if (!isValidPassword) {
         return res.status(400).json({
           status: 400,
-          message: "Old Password Incorrect !"
+          message: "Mật Khẩu Cũ Không Chính Xác !"
         });
       }
       const salt = bcrypt.genSaltSync(saltRounds);
@@ -241,7 +241,7 @@ const updateDoctor = async (req, res, next) => {
     return res.status(200).json({
       status: 200,
       data: user,
-      message: "Updated Successfully !",
+      message: "Cập Nhật Thành Công !",
     });
   } catch (error) {
     return next(error);
@@ -405,7 +405,7 @@ const sendRequest = async (req, res, next) => {
       fs.unlinkSync(`./src/Images/Certificates/${user.certificate}`);
       return res.status(403).json({
         status: 403,
-        message: "Một Yêu Cầu Xét Duyệt Của Bạn Đang Được Xử Lý ! Vui Lòng Chờ Hoặc Xóa Yêu Cầu Trước Đó Để Có Thể Gửi Yêu Cầu Xét Duyệt Mới !"
+        message: "Một Yêu Cầu Xét Duyệt Của Bạn Đang Được Xử Lý ! Vui Lòng Chờ Được Duyệt Hoặc Xóa Yêu Cầu Trước Đó Để Có Thể Gửi Yêu Cầu Xét Duyệt Mới !"
       })
     }
     const approval_id = uuidv4();

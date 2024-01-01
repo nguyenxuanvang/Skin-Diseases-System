@@ -17,7 +17,7 @@ function QAquestionUser({item,info}) {
                     <div className='d-flex'>
                         <p style={{paddingRight:'30px'}}>{newDate}</p>
                         <p style={{paddingRight:'30px'}}><FiMessageCircle/>{item.num_comments}</p>
-                        <Link to={`/DetailForumPage/${item.Question_id}`} style={{textDecoration:'none', color:'black', fontWeight:'bold'}}>See More<AiOutlineRight /></Link>
+                        <Link to={`/DetailForumPage/${item.Question_id}`} style={{textDecoration:'none', color:'black', fontWeight:'bold'}}>Xem Chi Tiết<AiOutlineRight /></Link>
                     </div>
                 </div>
 

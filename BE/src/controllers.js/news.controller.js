@@ -50,7 +50,7 @@ const createNew = async (req, res, next) => {
     return res.status(200).json({
       status: 200,
       data: newNews,
-      message: "Create News Successfully !",
+      message: "Tạo Tin Tức Thành Công !",
     });
   } catch (error) {
     const listNews = fs.readdirSync("./src/Images/News");
@@ -121,9 +121,9 @@ const getNew = async (req, res, next) => {
       },
     });
     if (!findNew) {
-      return res.status(400).json({
-        status: 400,
-        message: "News Is Not Exist !",
+      return res.status(404).json({
+        status: 404,
+        message: "Tin Tức Không Tồn Tại !",
       });
     }
     return res.status(200).json({
@@ -147,7 +147,7 @@ const getImageNews = async (req,res,next) => {
     if (!findImage) {
       return res.status(404).json({
         status: 404,
-        message: 'File Not Found !'
+        message: 'Ảnh Không Tồn Tại !'
       })
     }
     return res.sendFile(path.join(__dirname, "../Images/News", id));
@@ -175,7 +175,7 @@ const updateNew = async (req, res, next) => {
     if (update[0] === 0) {
       return res.status(400).json({
         status: 400,
-        message: 'Update Error !'
+        message: 'Cập Nhật Thất Bại !'
       });
     }
     const updateNews = await News.findOne({
@@ -186,7 +186,7 @@ const updateNew = async (req, res, next) => {
     return res.status(200).json({
       status: 200,
       data: updateNews,
-      message: "Update News Successfully",
+      message: "Cập Nhật Tin Tức Thành Công !",
     });
   } catch (error) {
     return next(error);
@@ -212,7 +212,7 @@ const deleteNew = async (req, res, next) => {
     }
     return res.status(200).json({
       status: 200,
-      message: "Deleted News Successfully !",
+      message: "Xóa Tin Tức Thành Công !",
     });
   } catch (error) {
     return next(error);

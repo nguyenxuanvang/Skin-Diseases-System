@@ -42,7 +42,7 @@ function DetailNewsPage() {
                         <div className={Styles.DetailNewsPage_latest}>
                             <div className={Styles.DetailNewsPage_latest_title}>Bài viết mới nhất</div>
                             <div className={Styles.DetailNewsPage_latest_list} style={{ margin: '10px 0 20px 20px' }}>
-                                {objQ.data?.map(item => (
+                                {objQ.data?.slice(0,5).map(item => (
                                     <LatestNews question={item}/>
                                 ))}
                                 

@@ -74,7 +74,7 @@ const updateImage = async (req, res, next) => {
       return res.status(200).json({
         status: 200,
         data: user,
-        message: 'Update Avatar Successfully !'
+        message: 'Cập Nhật Ảnh Đại Diện Thành Công !'
       });
     }
     await User.update(
@@ -91,7 +91,7 @@ const updateImage = async (req, res, next) => {
     res.status(200).json({
       status: 200,
       data: user,
-      message: 'Upload Avatar Successfully !'
+      message: 'Upload Ảnh Đại Diện Thành Công !'
     })
   } catch (error) {
     return next(error);
@@ -118,7 +118,7 @@ const getImage = async (req, res, next) => {
     if (!findImage) {
       return res.status(404).json({
         status: 404,
-        message: 'File Not Found !'
+        message: 'Ảnh Không Tồn Tại !'
       })
     }
     return res.sendFile(path.join(__dirname, "../Images/Avatars", id));

@@ -8,7 +8,7 @@ const auth = async (req, res, next) => {
     if (!bearerToken) {
       return res.status(401).json({
         status: 401,
-        message: "Unauthorized - User Not Logged In !",
+        message: "Unauthorized - Người Dùng Chưa Đăng Nhập !",
       });
     }
     let { roles } = req;
@@ -20,14 +20,14 @@ const auth = async (req, res, next) => {
     } catch (error) {
       return res.status(401).json({
         status: 401,
-        message: "Unauthorized - Invalid Access Token !",
+        message: "Unauthorized - Token Không Hợp Lệ !",
       });
     }
     
     if (!roles.includes(data.role)) {
       return res.status(403).json({
         status: 403,
-        message: "Unauthorized access to this resource !",
+        message: "Không Có Quyền Truy Cập Vào Tài Nguyên Này !",
       });
     }
     if (data.role === "user") {
@@ -40,7 +40,7 @@ const auth = async (req, res, next) => {
       if(!user) {
         return res.status(403).json({
           status: 403,
-          message: "Unauthorized access to this resource !",
+          message: "Không Có Quyền Truy Cập Vào Tài Nguyên Này !",
         });
       }
       req.user = user;
@@ -57,7 +57,7 @@ const auth = async (req, res, next) => {
       if(!doctor) {
         return res.status(403).json({
           status: 403,
-          message: "Unauthorized access to this resource !",
+          message: "Không Có Quyền Truy Cập Vào Tài Nguyên Này !",
         });
       }
       req.user = doctor;
@@ -72,7 +72,7 @@ const auth = async (req, res, next) => {
     if(!admin) {
       return res.status(403).json({
         status: 403,
-        message: "Unauthorized access to this resource !",
+        message: "Không Có Quyền Truy Cập Vào Tài Nguyên Này !",
       });
     }
     req.user = admin;

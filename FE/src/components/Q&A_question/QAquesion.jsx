@@ -18,7 +18,7 @@ function QaQuestion({question}) {
                     <div className='d-flex'>
                         <p style={{paddingRight:'30px'}}>{time}</p>
                         <p style={{paddingRight:'30px'}}><FiMessageCircle/>{question.num_comments}</p>
-                        <Link to={`/DetailForumPage/${question.Question_id}`} style={{textDecoration:'none', color:'black', fontWeight:'bold'}}>Reply</Link>
+                        <Link to={`/DetailForumPage/${question.Question_id}`} style={{textDecoration:'none', color:'black', fontWeight:'bold'}}>Xem Chi Tiết</Link>
                     </div>
                 </div>
 

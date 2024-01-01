@@ -36,7 +36,7 @@ const getUser = async (req, res, next) => {
     if (!findUser) {
       return res.status(404).json({
         status: 404,
-        message: 'User Not Found !'
+        message: 'Người Dùng Không Tồn Tại !'
       });
     }
     return res.status(200).json({
@@ -135,7 +135,7 @@ const deleteUser = async (req, res, next) => {
     }
     return res.status(200).json({
       status: 200,
-      message: 'Deleted successfully !'
+      message: 'Xóa Thành Công !'
     })
   } catch (error) {
     return next(error);
@@ -153,7 +153,7 @@ const getImage = async (req,res,next) => {
     if (!findUser) {
       return res.status(404).json({
         status: 404,
-        message: 'File Not Found !'
+        message: 'Ảnh Không Tồn Tại !'
       });
     }
     return res.sendFile(path.join(__dirname, "../Images/Avatars", findUser.avatar));
@@ -199,7 +199,7 @@ const updateUser = async (req, res, next) => {
       if (findUser && user.email !== email) {
         return res.status(400).json({
           status: 400,
-          message: 'Email already exists !'
+          message: 'Email Đã Tồn Tại !'
         })
       }
       user.email = email;
@@ -209,7 +209,7 @@ const updateUser = async (req, res, next) => {
       if(!isValidPassword) {
         return res.status(400).json({
           status: 400,
-          message: "Old Password Incorrect !"
+          message: "Mật Khẩu Cũ Không Chính Xác !"
         });
       }
       const salt = bcrypt.genSaltSync(saltRounds);
@@ -232,7 +232,7 @@ const updateUser = async (req, res, next) => {
     return res.status(200).json({
       status: 200,
       data: user,
-      message: 'Updated Successfully !'
+      message: 'Cập Nhật Thành Công !'
     })
   } catch (error) {
     return next(error);

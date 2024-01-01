@@ -19,7 +19,7 @@ const createReplies = async (req, res, next) => {
     if (!comment) {
       return res.status(404).json({
         status: 404,
-        message: "Comment Not Found !",
+        message: "Bình Luận Không Tồn Tại !",
       });
     }
     
@@ -47,7 +47,7 @@ const createReplies = async (req, res, next) => {
     return res.status(200).json({
       status: 200,
       data: newReplies,
-      message: "Replies added successfully!",
+      message: "Thêm Thành Công !",
     });
   } catch (error) {
     return next(error);
@@ -73,7 +73,7 @@ const updateReplies = async (req, res, next) => {
     if (!replies) {
       return res.status(404).json({
         status: 404,
-        message: "Replies Not Found!",
+        message: "Câu Trả Lời Không Tồn Tại !",
       });
     }
     replies.Content = Content;
@@ -82,7 +82,7 @@ const updateReplies = async (req, res, next) => {
     return res.status(200).json({
       status: 200,
       data: replies,
-      message: "Updated Replies Successfully!",
+      message: "Cập Nhật Thành Công !",
     });
   } catch (error) {
     return next(error);
@@ -118,7 +118,7 @@ const deleteReplies = async (req, res, next) => {
     if (!replies) {
       return res.status(404).json({
         status: 404,
-        message: "Replies Not Found !",
+        message: "Câu Trả Lời Không Tồn Tại !",
       });
     }
     const comment = await Comment.findOne({
@@ -137,7 +137,7 @@ const deleteReplies = async (req, res, next) => {
 
     return res.status(200).json({
       status: 200,
-      message: "Deleted Replies Successfully!",
+      message: "Xóa Thành Công !",
     });
   } catch (error) {
     return next(error);

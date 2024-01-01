@@ -43,7 +43,7 @@ const createQuestion = async (req, res, next) => {
     return res.status(200).json({
       status: 200,
       data: newQuestion,
-      message: "Create Questions Successfully !",
+      message: "Đăng Bài Viết Thành Công !",
     });
   } catch (error) {
     return next(error);
@@ -70,7 +70,7 @@ const updateQuestion = async (req, res, next) => {
     if (!existingQuestion) {
       return res.status(403).json({
         status: 403,
-        message: "Unauthorized - You are not the creator of this question!",
+        message: "Unauthorized - Bạn Không Phải Là Tác Giả Của Bài Viết Này !",
       });
     }
 
@@ -96,7 +96,7 @@ const updateQuestion = async (req, res, next) => {
       data: {
         updateQuestion,
       },
-      message: "Update Questions Successfully",
+      message: "Cập Nhật Thành Công !",
     });
   } catch (error) {
     return next(error);
@@ -119,7 +119,7 @@ const deleteQuestion = async (req, res, next) => {
     if(!question) {
       return res.status(404).json({
         status: 404,
-        message: 'Question Is Not Found !'
+        message: 'Bài Viết Không Tồn Tại !'
       })
     }
     if(role !== 'admin') {
@@ -136,7 +136,7 @@ const deleteQuestion = async (req, res, next) => {
     if(!check) {
       return res.status(403).json({
         status: 403,
-        message: 'Unauthorized access to this resource !'
+        message: 'Không Có Quyền Truy Cập Vào Tài Nguyên Này !'
       })
     }
     const comments = await Comment.findAll({
@@ -166,7 +166,7 @@ const deleteQuestion = async (req, res, next) => {
 
     return res.status(200).json({
       status: 200,
-      message: "Deleted Question Successfully",
+      message: "Xóa Thành Công !",
     });
 
   } catch (error) {
@@ -280,7 +280,7 @@ const getQuestion = async (req, res, next) => {
     if (!question) {
       return res.status(404).json({
         status: 404,
-        message: "Question Is Not Found !"
+        message: "Bài Viết Không Tồn Tại !"
       })
     }
     if (question.User_id) {

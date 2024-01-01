@@ -89,7 +89,8 @@ button:hover
     border-radius: 20px;
     margin: 20px auto;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    overflow-y: scroll;
+    overflow: scroll;
+    padding: 15px;
 }
 
 .result_Des::-webkit-scrollbar {
