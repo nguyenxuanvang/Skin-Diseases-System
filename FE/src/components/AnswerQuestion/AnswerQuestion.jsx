@@ -151,7 +151,7 @@ function AnswerQuestion({ comment }) {
           :
 
           <div className=''>
-            <p style={{width: '900px', wordBreak: 'break-word'}}>{comment.Content}</p>
+            <pre style={{width: '900px', whiteSpace: 'pre-line'}}>{comment.Content}</pre>
           </div>
         }
 
