@@ -163,9 +163,9 @@ function DetailQuestion() {
                 </div>
                 :
                 <div style={{ margin: '15px 150px 0 300px', border: '2px solid black', backgroundColor: '#ecfffe', boxShadow: ' 0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-                    <div className='context' style={{ margin: '15px 15px 15px 15px', wordBreak: 'break-word', fontWeight: 600, fontSize: '17px' }}>
+                    <pre className='context' style={{ margin: '15px 15px 15px 15px', whiteSpace: 'pre-line', fontWeight: 600, fontSize: '17px' }}>
                         {objQ.data?.Content}
-                    </div>
+                    </pre>
                 </div>
             }
 

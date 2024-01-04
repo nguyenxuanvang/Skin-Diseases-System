@@ -106,7 +106,7 @@ function ReplyAnswer({ reply, idC }) {
           </div>
           :
           <div className=''>
-            <p style={{width: "830px", wordBreak: 'break-word'}}>{reply.Content}</p>
+            <pre style={{width: "830px", whiteSpace: 'pre-line'}}>{reply.Content}</pre>
           </div>
 
         }

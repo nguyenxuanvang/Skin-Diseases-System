@@ -85,5 +85,8 @@
     margin-bottom: 20px;
     border-bottom: 1px solid gray;
     width: 90%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
