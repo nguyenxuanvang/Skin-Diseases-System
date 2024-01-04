@@ -39,7 +39,7 @@ function HomeDiagnoseList({
                 className={Styles.homeDiagnose_btnScan}
                 onClick={handleTest}
               >
-                Scan
+                Quét ảnh
               </button>
             </div>
           </div>

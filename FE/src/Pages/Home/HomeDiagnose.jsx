@@ -5,8 +5,7 @@ function HomeDiagnose() {
   return (
     <>
     <div className={Styles.homeDiagnoseList}>
-        <HomeDiagnoseList/>
-        <HomeDiagnoseList text_title='Test1' boxColor_Diagnose='#A8B8F4' text_desDiagnose='Context'/>
+        <HomeDiagnoseList text_desDiagnose='SkinDiagnoTech cung cấp chẩn đoán bệnh thông qua hình ảnh là một công cụ chẩn đoán quan trọng có thể giúp bác sĩ xác định bệnh và đưa ra phương pháp điều trị thích hợp.'/>
     </div>
     </>
   )
