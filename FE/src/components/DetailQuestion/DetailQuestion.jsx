@@ -13,7 +13,7 @@ function DetailQuestion() {
     const navigate = useNavigate();
     const { id } = useParams();
     const { data: info = {},isError} = personalApi.useGetDetailInforQuery();
-    const [getQuestion, { data: objQ = {} }] = questionApi.useLazyGetQuestionQuery();
+    const [getQuestion, { data: objQ = {},isError: isErrorQ, isFetching }] = questionApi.useLazyGetQuestionQuery();
     const [createComment] = commentApi.useCreateCommentMutation();
     const [removeQuestion] = questionApi.useDeleteQuestionMutation();
     const [updateQuestion] = questionApi.useUpdateQuestionMutation();
@@ -22,6 +22,11 @@ function DetailQuestion() {
     const [ContentQ, setContentQ] = useState('');
     const [isEdit, setIsEdit] = useState(false);
     const [isOwner, setIsOwner] = useState(false);
+    useEffect(()=>{
+        if(isErrorQ) {
+            navigate("/ForumPage");
+        }
+    },[isErrorQ]);
     useEffect(() => {
         getQuestion(id);
     }, [id]);
@@ -94,7 +99,7 @@ function DetailQuestion() {
             });
             if (response.data) {
                 setContent('');
-                toast.success('Added Comment Successfully !', { autoClose: 1000 });
+                toast.success(response.data.message, { autoClose: 1000 });
 
             } else {
                 toast.error(response.error.data.message, { autoClose: 3000 });
@@ -158,7 +163,7 @@ function DetailQuestion() {
                 </div>
                 :
                 <div style={{ margin: '15px 150px 0 300px', border: '2px solid black', backgroundColor: '#ecfffe', boxShadow: ' 0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-                    <div className='context' style={{ margin: '15px 0px 15px 15px', fontWeight: 600, fontSize: '17px' }}>
+                    <div className='context' style={{ margin: '15px 15px 15px 15px', wordBreak: 'break-word', fontWeight: 600, fontSize: '17px' }}>
                         {objQ.data?.Content}
                     </div>
                 </div>

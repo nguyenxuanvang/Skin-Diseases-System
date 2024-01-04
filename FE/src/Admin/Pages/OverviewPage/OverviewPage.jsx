@@ -31,7 +31,7 @@ function OverviewPage() {
           />
           <Overview
             img_icon="user_logo.png"
-            total_quantity={objQ.data?.length}
+            total_quantity={objU.data?.length}
             des_quantity="Người Dùng"
           />
           <Overview

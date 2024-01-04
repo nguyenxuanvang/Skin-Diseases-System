@@ -89,7 +89,7 @@ function AnswerQuestion({ comment }) {
       if (response.data) {
         setContent('');
         setShowReply(false);
-        toast.success('Added Reply Successfully !', { autoClose: 1000 });
+        toast.success(response.data.message, { autoClose: 1000 });
 
       } else {
         toast.error(response.error.data.message, { autoClose: 3000 });
@@ -151,7 +151,7 @@ function AnswerQuestion({ comment }) {
           :
 
           <div className=''>
-            <p>{comment.Content}</p>
+            <p style={{width: '900px', wordBreak: 'break-word'}}>{comment.Content}</p>
           </div>
         }
 

@@ -40,7 +40,7 @@ function DetailDoctorInformation() {
             <p><FaPhoneAlt />   {(doctor.phone) ? doctor.phone : 'Chưa Cập Nhật'}</p>
             <p><FaAddressCard />  {(doctor.address) ? doctor.address : 'Chưa Cập Nhật'}</p>
             <p><FaMailBulk /> {(doctor.email) ? doctor.email : 'Chưa Cập Nhật'}</p>
-            <p>Trạng Thái: <span style={{color: (doctor.approved) ? '#12d212' : 'red'}}>{(doctor.approved) ? 'Đã Xác Thực' : 'Chưa Xác Thực'}</span></p>
+            <p style={{marginBottom: '15px'}}>Trạng Thái: <span style={{color: (doctor.approved) ? '#12d212' : 'red'}}>{(doctor.approved) ? 'Đã Xác Thực' : 'Chưa Xác Thực'}</span></p>
           </div>
           }
           
