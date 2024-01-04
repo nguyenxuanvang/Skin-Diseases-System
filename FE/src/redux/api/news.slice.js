@@ -53,7 +53,7 @@ const newsApi = apiSlice.injectEndpoints({
 
           const response = await queryFulfilled;
           if (response.data) {
-            const action = apiSlice.util.updateQueryData('getListNews', undefined, draft => {
+            const action = apiSlice.util.updateQueryData('getSearchNews', undefined, draft => {
               const findNews = draft.data.find(item => item.News_id === response.data.data.News_id);
               findNews.Title = response.data.data.Title;
               findNews.Content = response.data.data.Content;
@@ -77,7 +77,7 @@ const newsApi = apiSlice.injectEndpoints({
 
           const response = await queryFulfilled;
           if (response.data) {
-            const action = apiSlice.util.updateQueryData('getListNews', undefined, draft => {
+            const action = apiSlice.util.updateQueryData('getSearchNews', undefined, draft => {
               const findIndex = draft.data.findIndex(item => item.News_id === id);
               draft.data.splice(findIndex, 1);
             });

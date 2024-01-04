@@ -21,7 +21,7 @@ function DetailNews({news}) {
             </div>
 
             <div className={Styles.detailNews_des}>
-                {news?.Content} 
+                <pre style={{ whiteSpace: "break-spaces" }}>{news?.Content}</pre>
             </div>
         </div>
     )

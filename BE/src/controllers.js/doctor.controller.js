@@ -10,6 +10,9 @@ const getDoctors = async (req, res, next) => {
   try {
 
     const doctors = await Doctor.findAll({
+      where: {
+        approved: true
+      },
       order: [["createdAt", /*"DESC"*/ "ASC"]],
     });
     return res.status(200).json({
